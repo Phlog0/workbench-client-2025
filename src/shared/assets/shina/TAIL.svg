@@ -1,0 +1,18 @@
+<svg width="207.000000" height="600.000000" viewBox="0 0 207 600" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<clipPath id="clip5_188">
+			<rect id="TAIL" width="207.000000" height="600.000000" fill="white" fill-opacity="0"/>
+		</clipPath>
+	</defs>
+	<rect id="TAIL" width="207.000000" height="600.000000" fill="#FFFFFF" fill-opacity="0"/>
+	<g clip-path="url(#clip5_188)">
+		<path id="Vector 2" d="M104 -4L104 600" stroke="#000000" stroke-opacity="1.000000" stroke-width="6.000000"/>
+		<path id="Vector 45" d="M193.35 492.75L104 599.24" stroke="#000000" stroke-opacity="1.000000" stroke-width="6.000000"/>
+		<path id="Vector 46" d="M168.05 540L138 575.81" stroke="#000000" stroke-opacity="1.000000" stroke-width="6.000000"/>
+		<path id="Vector 47" d="M151.05 526L121 561.81" stroke="#000000" stroke-opacity="1.000000" stroke-width="6.000000"/>
+		<path id="Убрать верхний слой" d="M183.962 527.03L207.369 476L161.179 507.913L165.946 511.912L192.809 493.353L179.195 523.03L183.962 527.03Z" clip-rule="evenodd" fill="#000000" fill-opacity="1.000000" fill-rule="evenodd"/>
+	</g>
+</svg>
