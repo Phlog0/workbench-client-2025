@@ -9,3 +9,8 @@ export const reactFLowSelectors = (state: AppState) => ({
     setSelectedNodeId: state.setSelectedNodeId,
     addNode: state.addNode,
 });
+
+
+export const getThemeSelector = (state: AppState): "light" | "dark" => state.projectTheme
+
+

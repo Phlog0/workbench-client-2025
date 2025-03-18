@@ -1,27 +1,36 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { getTableData } from "../../entities/lib";
+import React, { useEffect, useState } from "react";
 import { Spinner } from "shared/ui";
 import { AutoSizer, Column, Table } from "react-virtualized";
 import "react-virtualized/styles.css"; // only needs to be imported once
 import TableHeaderRenderer from "./TableHeaderRenderer";
+import { getTableData } from "../lib/api/api-instacne";
 type HandleClick = {
   rowData: unknown;
   index: number;
 };
-export const MyVirtualTable = () => {
-  const { isPending, error, data, isFetching } = useQuery({
-    queryKey: ["repoData"],
-    queryFn: () => getTableData("tn"),
-  });
-  if (isPending && data) return <Spinner />;
 
-  if (error) return "An error has occurred: " + error.message;
+interface CustomError extends Error {
+  message: string;
+}
+
+type MyVirtualTableProps = {
+  param?: string;
+};
+export const MyVirtualTable: React.FC<MyVirtualTableProps> = ({
+  param = "",
+}) => {
+  const { isPending, isLoading, isError, error, data, isFetching } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: async () => await getTableData(param),
+  });
+  // console.log(isError, error, data);
+
   const [widths, setWidths] = useState<null | number[]>(null);
   const [maxDataKey, setMaxDataKey] = useState(0);
   useEffect(() => {
     if (data) {
-      const quantity = Object.values(data.body[0]).length;
+      const quantity = Object.values(data?.body[0]).length;
       setMaxDataKey(quantity - 1);
       setWidths(Array(quantity).fill(1 / quantity));
     }
@@ -35,6 +44,16 @@ export const MyVirtualTable = () => {
     // });
     // onClose();
   };
+
+  if (isLoading)
+    return (
+      <div className="absolute z-10 top-1/2 left-1/2 translate-x-1/2 translate-y-1/2">
+        <Spinner />
+      </div>
+    );
+  if (isError) {
+    return <span>Error: {error.message}</span>;
+  }
   return (
     data &&
     widths && (
@@ -55,7 +74,6 @@ export const MyVirtualTable = () => {
                   label={`${col}`}
                   dataKey={`${index}`}
                   width={widths?.[index] * width}
-                  
                   headerRenderer={() =>
                     TableHeaderRenderer({
                       widths: widths,

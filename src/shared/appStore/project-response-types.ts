@@ -33,12 +33,12 @@ export type Fixation10kV = {
     position: Position
 }
 
-export type Cell10kV = Omit<TCell10Kv, "selected">
+export type Cell10KvResponse = Omit<TCell10Kv, "selected">
 
 
 export type ProjectResponseData = {
     project: Project,
     sections10kV: Section10kV[],
     fixations: Fixation10kV[],
-    cells10kV: Cell10kV[]
+    cells10kV: Cell10KvResponse[]
 }

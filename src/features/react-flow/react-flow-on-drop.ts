@@ -1,5 +1,5 @@
 import { cell10KvProperties } from "@/entities/mockNodeProperties";
-import { PossibleNode } from "@/shared/appStore/types";
+import { nodeTypes, NodeTypesUnion, PossibleNode, TCell10Kv } from "@/shared/appStore/react-flow-types";
 import { XYPosition } from "@xyflow/react";
 import { v4 as uuidv4 } from "uuid";
 type ScreenToFlowPosition = (
@@ -14,8 +14,8 @@ export const onReactFlowDrop =
         event: React.DragEvent<HTMLDivElement>,
         addNode: (node: PossibleNode) => void,
         screenToFlowPosition: ScreenToFlowPosition,
-        type: string | null,
-        projectId: string | undefined
+        type: NodeTypesUnion,
+        projectId: string
     ) => {
         event.preventDefault();
 
@@ -29,17 +29,21 @@ export const onReactFlowDrop =
         });
         const newNodeId = uuidv4();
         let otherProps = {};
-        if (type === "Cell10Kv") otherProps = cell10KvProperties;
+        if (type === 'Cell10Kv') {
+            otherProps = cell10KvProperties;
 
-        const newNode = {
-            ...otherProps,
-            id: newNodeId,
-            type,
-            position,
-            data: { id: `${newNodeId}` },
-            projectId,
-            selected: false,
-        };
-        addNode(newNode);
+            const newNode: TCell10Kv = {
+                ...otherProps,
+                id: newNodeId,
+                type,
+                position,
+                data: { id: `${newNodeId}` },
+                projectId,
+                selected: false,
+                opn: undefined,
+
+            };
+            addNode(newNode);
+        }
         // mutation.mutate(newNode);
     }

@@ -1,16 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { Node, XYPosition } from "@xyflow/react";
-import { motion } from "framer-motion";
+import { useCallback, useMemo, useRef, useState } from "react";
+
 import {
   ReactFlow,
-  useNodesState,
-  useEdgesState,
-  addEdge,
   Controls,
   MiniMap,
   Background,
   BackgroundVariant,
-  Connection,
   useOnSelectionChange,
   useReactFlow,
   useNodes,
@@ -18,35 +13,27 @@ import {
 import { useShallow } from "zustand/react/shallow";
 import "@xyflow/react/dist/style.css";
 import useStore from "shared/appStore/store";
-import { AllNodes, AppState, PossibleNode } from "shared/appStore/types";
-import {
-  Cell04KvNode,
-  Cell10KvNode,
-  nodeTypesEntities,
-  PowerTransformerNode,
-  Section04KvNode,
-  Section10KvNode,
-} from "@/entities/react-flow-nodes";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { fetchAPI } from "@/shared/constants";
-import { ProjectResponseData } from "@/shared/appStore/project-response-types";
+
+import { nodeTypesEntities } from "@/entities/react-flow-nodes";
+
 import { useParams } from "react-router-dom";
-import { Button, Spinner } from "@/shared/ui";
 import { useDnD } from "@/app/DnDContext/DnDContext";
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
-import { cell10KvProperties } from "@/entities/mockNodeProperties";
 
 import { useToast } from "@/shared/lib/use-toast";
 import clsx from "clsx";
-import { reactFLowSelectors } from "@/shared/appStore/my-selectors";
+import {
+  getThemeSelector,
+  reactFLowSelectors,
+} from "@/shared/appStore/my-selectors";
 import { onReactFlowChange, onReactFlowDrop } from "@/features/react-flow";
+import { cn } from "@/shared/lib/react-std";
+import { NodeTypesUnion } from "@/shared/appStore/react-flow-types";
 
 interface ErrorResponse {
   statusCode: number;
   message: string;
 }
-export const Flow = () => {
+export const Flow = ({ className }: { className?: string }) => {
   const { id: projectId } = useParams();
   const { screenToFlowPosition } = useReactFlow();
   const [type] = useDnD();
@@ -95,7 +82,7 @@ export const Flow = () => {
   // console.log(getNodesBounds(nodes));
   const nodeTypes = useMemo(() => nodeTypesEntities, []);
   const [selectedNodes, setSelectedNodes] = useState<string[] | []>([]);
-
+  const projectTheme = useStore(getThemeSelector);
   // const onChange = useCallback(
   //   ({ usenodes }: { usenodes: Node[] }) => {
   //     console.log(useNodes)
@@ -124,7 +111,6 @@ export const Flow = () => {
     event.dataTransfer.dropEffect = "move";
   }, []);
 
-
   const onDrop = useCallback(onReactFlowDrop, [screenToFlowPosition, type]);
 
   const onReactFlowErrorHandler = (code: string, message: string) => {};
@@ -140,12 +126,13 @@ export const Flow = () => {
   // }, [error]);
 
   return (
-    <div
-      style={{ width: "100%", height: "100%" }}
-      ref={reactFlowWrapper}
-      className="relative"
-    >
-      {/* <motion.div
+    <main className={cn("project-flow dark:bg-slate-800}", className)}>
+      <div
+        style={{ width: "100%", height: "100%" }}
+        ref={reactFlowWrapper}
+        className="relative"
+      >
+        {/* <motion.div
         variants={{
           visible: { opacity: 1, display: "block" },
           hidden: { opacity: 0, display: "none" },
@@ -160,36 +147,44 @@ export const Flow = () => {
         <Spinner />
       </motion.div> */}
 
-      {/* ФЛАГИ-КОНСТАНТЫ */}
-      <ReactFlow
-        nodes={nodes || []}
-        edges={edges}
-        nodeTypes={nodeTypes}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onDrop={(event) =>
-          onDrop(event, addNode, screenToFlowPosition, type, projectId)
-        }
-        onDragOver={onDragOver}
-      >
-        <Controls />
-        <MiniMap />
-        <Background
-          id="1"
-          gap={10}
-          color="#f1f1f1"
-          variant={BackgroundVariant.Lines}
-        />
+        {/* ФЛАГИ-КОНСТАНТЫ */}
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          nodeTypes={nodeTypes}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onDrop={(event) =>
+            onDrop(
+              event,
+              addNode,
+              screenToFlowPosition,
+              type as NodeTypesUnion,
+              projectId as string
+            )
+          }
+          onDragOver={onDragOver}
+          colorMode={projectTheme}
+        >
+          <Controls />
+          <MiniMap />
+          <Background
+            id="1"
+            gap={10}
+            color="#f1f1f1"
+            variant={BackgroundVariant.Lines}
+          />
 
-        <Background
-          id="2"
-          gap={100}
-          color="#ccc"
-          variant={BackgroundVariant.Lines}
-        />
-        <p>Selected nodes: {selectedNodes.join(", ")}</p>
-      </ReactFlow>
-    </div>
+          <Background
+            id="2"
+            gap={100}
+            color="#ccc"
+            variant={BackgroundVariant.Lines}
+          />
+          <p>Selected nodes: {selectedNodes.join(", ")}</p>
+        </ReactFlow>
+      </div>
+    </main>
   );
 };

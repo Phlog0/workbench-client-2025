@@ -10,7 +10,7 @@ export const AppRouter = () => {
       loader: Spinner,
     },
     {
-      path: "/projects/:id",
+      path: "/projects/:projectdId",
       element: <FlowLayout />,
       loader: Spinner,
     },

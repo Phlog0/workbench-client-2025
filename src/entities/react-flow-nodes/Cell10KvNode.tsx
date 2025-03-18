@@ -16,7 +16,7 @@ export const Cell10KvNode = ({ data: { id } }: Props) => {
 
   const { getNode } = useReactFlow();
   const nodeInfo = getNode(id);
-  const border = `border-x-2 border-b-2 border-black ${nodeInfo?.selected ? 'bg-red-100' :""}`;
+  const border = `border-x-2 border-b-2 border-black ${nodeInfo?.selected ? 'bg-blue-100 outline outline-dashed outline-indigo-600' :""}`;
   return (
     <div
       className={cn(
@@ -32,6 +32,7 @@ export const Cell10KvNode = ({ data: { id } }: Props) => {
         <img src={TT_3_ABC} alt="" className="" />
         <img src={TT_3_ABC} alt="" className="" />
         <img src={VYKATNOY_RAZJEM_TRANSF} alt="" className="" />
+        
       </div>
       <Handle type="source" position={Position.Bottom}/>
     </div>

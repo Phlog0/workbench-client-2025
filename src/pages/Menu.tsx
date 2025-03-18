@@ -14,7 +14,6 @@ export const Menu = () => {
     },
   });
 
-  console.log('menu!')
   if (isPending && !data) return <Spinner />;
 
   if (error) return "An error has occurred: " + error.message;
@@ -38,7 +37,6 @@ export const Menu = () => {
           </>
         ))}
       </div>
-      
     </div>
   );
 };

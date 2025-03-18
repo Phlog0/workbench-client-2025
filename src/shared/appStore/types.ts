@@ -1,125 +1,84 @@
 import {
   Edge,
-  Node,
   OnNodesChange,
   OnEdgesChange,
   OnConnect,
 } from '@xyflow/react';
+import { AllPossibleNodes, PossibleNode, } from './react-flow-types';
+import { AllNodesPropertiesTypes, NestedPropsTCell10KvKeys } from './properties-types';
 export type TNodePosition = {
   x: number
   y: number
 }
 
-export type TSwitchingDeviceVV = {
-  type: string
-  title: string
-  manufacturer: string
-  ratedCurrent: string
-  ratedBreakingCurrent: string
-  ratedVoltage: string
-}
-export type TSwitchingDeviceVN = {
-  type: string
-  title: string
-  manufacturer: string
-  ratedCurrent: string
-  ratedBreakingCurrent: string
-  ratedVoltage: string
-  numberOfGroundShafts: string
-  locationOfGroundingBlades: string
-  switchDriveLocation: string
-  locationOfTheGroundingBladeDrive: string
-}
-export type TSwitchingDeviceR = {
-  type: string
-  title: string
-  manufacturer: string
-  ratedCurrent: string
-  thermalCurrent: string
-  ratedVoltage: string
-}
-
-export type Tsn = {
-  type: string
-  name: string
-  manufacturer: string
-  ratedPower: string
-}
-export type Tn = {
-  type: string
-  name: string
-  manufacturer: string
-  ratedThreePhasePowerOfTheFirstWinding: string
-  accuracyClassOfTheFirstSecondaryWinding: string
-  ratedThreePhasePowerOfTheSecondSecondaryWinding: string
-  accuracyClassOfTheSecondSecondaryWinding: string
-  ratedThreePhasePowerOfAadditionalSecondaryWinding: string
-  accuracyClassOfSecondaryReturnWires: string
-  ratedLineVoltageAtTheTerminalsOfThePrimaryWinding: string
-}
-export type Tt = {
-  type: string
-  name: string
-  manufacturer: string
-  transformationRatio: string
-  accuracyClass: string
-  oneSecondThermalCurrent: string
-  typeOfService: string
-}
-export type Mircoproc = {
-  type: string
-  name: string
-  manufacturer: string
-
-}
-
-export type Opn = {
-  type: string
-  name: string
-  manufacturer: string
-  ratedOperatingVoltage: string
-  throughput: string
-  ratedDischargeCurrent: string
-  maximumContinuousPermissibleOperatingVoltage: string
-}
 
 
 
-export type TCell10Kv = {
-  id: string
-  type: 'Cell10Kv'
-  width?: number
-  height?: number
-  position: TNodePosition
-  positionAbsolute?: TNodePosition
-  selected?: boolean
-  draggble?: true
-  opn: Opn
-  tt: Tt
-  tn: Tn
-  tsn: Tsn
-  microproc: Mircoproc
-  switchingDeviceVV: TSwitchingDeviceVV
-  switchingDeviceR: TSwitchingDeviceR
-  switchingDeviceVN: TSwitchingDeviceVN
-  ratedCurrentOfTheMainCircuits_10kV: number
-
-} & Node
-export type AppNode = Node; // стандартные
-
-export type AllNodes = TCell10Kv[] | AppNode[]
-export type PossibleNode = AppNode | TCell10Kv
+// export type AllNodesPropertiesTypes = Omit<TCell10Kv | TSection10Kv, "type">
+export type SelectedNodeId = string
 
 export type AppState = {
-  nodes: AppNode[] | TCell10Kv[];
+  // nodes: (Node | PossibleNode)[];
+  nodes: AllPossibleNodes;
   edges: Edge[];
-  selectedNodeId: string | null
-  onNodesChange: OnNodesChange<AppNode>;
+  selectedNodeId: SelectedNodeId;
+  projectTheme: "light" | "dark"
+  onNodesChange: OnNodesChange<PossibleNode>;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
-  setNodes: (nodes: AppNode[]) => void;
+  setNodes: (nodes: AllPossibleNodes) => void;
   setEdges: (edges: Edge[]) => void;
-  setSelectedNodeId: (selectedNodeId: string | null) => void;
+  setSelectedNodeId: (nodeId: SelectedNodeId) => void;
   addNode: (node: PossibleNode) => void
+  // hiNode: (selectedNodeId: string | null) => void
+
+  // qu:keyof AllNodesPropertiesTypes
+  changeSelectPropery: <K extends keyof AllNodesPropertiesTypes>({ nodeId, prop, value }: {
+    nodeId: SelectedNodeId,
+    prop: K,
+    value: AllNodesPropertiesTypes[K]
+  }) => void
+
+
+  //todo Как работать с глубоковложенными объектами да так, чтобы всё можно было автоматизировать
+  changeInputPropertyTCell10Kv: ({ nodeId, keyOne, keyTwo, value }: { nodeId: string, keyOne: string, keyTwo: string, value: any }) => void
+  // changeInputPropertyTCell10Kv: ({ nodeId, keyOne, keyTwo, value }: { nodeId: string, keyOne: NestedPropsTCell10KvKeys, keyTwo: NestedPropsTCell10Kv, value: string | number | boolean }) => void
+
+  changeProjectTheme: (newTheme: "light" | "dark") => void
 };
 
+
+
+// Дан код
+// export type TypeA = {
+//   a: string
+// }
+// export type TypeB = {
+//   age: number
+// }
+
+
+// export type TypeC = TypeA | TypeB
+
+// Представь, что я передаю одно из свойств типа TypeC в redux, чтобы изменить это свойство.Как мне типизировать такой reducer ?
+
+// const c: AllNodesPropertiesTypes = {
+//   opn: {
+
+//   }
+// }
+
+
+// Есть такой объект
+
+// const a = {
+//   adress: {
+//     home: 1
+//     ...
+//   }
+//   ...
+// }
+
+// я хочу написать reducer чтобы изменить a[prop1][prop2] = 3;
+
+// Как мне это типизировать ?

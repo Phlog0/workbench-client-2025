@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* @import "tailwindcss"; */
 @layer base {
+  /* https://ui.shadcn.com/themes. Don't touch */
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -67,7 +69,7 @@
 
 .project-grid {
   display: grid;
-  grid-template-columns: 15vw 70vw 15vw;
+  grid-template-columns: 7vw 70vw 23vw;
   grid-template-rows: 10vh 90vh;
   grid-template-areas:
     "header header header"
@@ -86,7 +88,6 @@
 .project-properties {
   grid-area: properties;
 }
-
 
 .ReactVirtualized__Table__headerRow {
   font-weight: 700;
@@ -110,6 +111,34 @@
   overflow: hidden;
 }
 
+.custom-flex-grow {
+  flex-grow: 2;
+}
+
 /* .ReactVirtualized__Table__headerTruncatedText {
   flex: auto;
 } */
+
+@media (max-width: 80rem) {
+  .project-grid {
+    display: grid;
+    grid-template-columns: 15vw 70vw 15vw;
+    grid-template-rows: 10vh 90vh;
+    grid-template-areas:
+      "header header header"
+      "items flow flow";
+  }
+
+  .project-header {
+    grid-area: header;
+  }
+  .project-items {
+    grid-area: items;
+  }
+  .project-flow {
+    grid-area: flow;
+  }
+  .project-properties {
+    grid-area: properties;
+  }
+}

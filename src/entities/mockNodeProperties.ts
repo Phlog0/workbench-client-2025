@@ -9,5 +9,5 @@ export const cell10KvProperties = {
     switchingDeviceVV: null,
     switchingDeviceR: null,
     switchingDeviceVN: null,
-    ratedCurrentOfTheMainCircuits_10kV: null,
+    ratedCurrentOfTheMainCircuits10kV: null,
 }
