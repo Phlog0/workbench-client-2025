@@ -27,16 +27,13 @@ export const MyInput = ({
 }: TMyInput) => {
   const { getNode } = useReactFlow();
 
-  const nodeId = useStore((state) => state.selectedNodeId);
+  // const nodeId = useStore((state) => state.selectedNodeId);
   const [text, setText] = useState(defaultValue);
-  const [state, setState] = useState(nodeId);
-  const prevStateRef = useRef<string | null>(null);
-  useEffect(() => {
-    prevStateRef.current = state;
-  }, [state]); // Срабатывает при каждом изменении state
+  // const [state, setState] = useState(selectedNodeId);
+
   useEffect(() => {
     setText(defaultValue);
-  }, [nodeId]);
+  }, [selectedNodeId]);
   const changeInputPropertyTCell10Kv = useStore(
     (state) => state.changeInputPropertyTCell10Kv
   );
@@ -52,21 +49,6 @@ export const MyInput = ({
     });
   }, 1000);
 
-  //todo THROTTLE тут пригодица
-  const debounced = useDebouncedCallback(
-    // function
-    (value) => {
-      setText(value);
-      changeInputPropertyTCell10Kv({
-        keyOne,
-        keyTwo,
-        nodeId: prevStateRef.current as string,
-        value,
-      });
-    },
-    1000
-  );
-
   return (
     <form className="flex flex-col items-start">
       <Label htmlFor={inputId}>{label} </Label>
@@ -76,7 +58,7 @@ export const MyInput = ({
         value={text}
         onChange={(e) => {
           setText(e.target.value);
-          throttled(e.target.value, nodeId);
+          throttled(e.target.value, selectedNodeId);
         }}
         type={inputType}
       />

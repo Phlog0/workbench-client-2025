@@ -2,7 +2,7 @@ import useStore from "shared/appStore/store";
 import { useReactFlow } from "@xyflow/react";
 
 import { useGetCurrentNode } from "@/shared/components/model/use-get-current-node";
-import { OpenModalReady, TypeOfSwitchingDevice, TypeOfCell } from "@/features";
+import { PropertiesCell10Kv } from "@/features";
 import { cn } from "@/shared/lib/react-std";
 
 export const SiderbarProperties = ({ className }: { className?: string }) => {
@@ -23,13 +23,10 @@ export const SiderbarProperties = ({ className }: { className?: string }) => {
     >
       <h2>{JSON.stringify(selectedNodeId)}</h2>
       {/* <h2>{JSON.stringify(node)}</h2> */}
-      {selectedNodeId && (
+      {selectedNodeId && node?.type === "Cell10Kv" && (
         //Нужна ещё одна абстракция над каждыми такими элементами
         <>
-          <TypeOfCell selectedNodeId={selectedNodeId} />
-          {/* <SwitchingDeviceVvInput selectedNodeId={selectedNodeId} /> */}
-          <TypeOfSwitchingDevice />
-          <OpenModalReady />
+          <PropertiesCell10Kv selectedNodeId={selectedNodeId} />
         </>
       )}
 

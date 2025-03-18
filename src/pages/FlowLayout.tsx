@@ -1,7 +1,7 @@
 import { ReactFlowProvider, useReactFlow } from "@xyflow/react";
 import { Flow } from "./Flow";
 
-import { SiderbarItems } from "@/widgets/sidebars-properties/SiderbarItems";
+import { SiderbarItems } from "@/widgets/SiderbarItems";
 import { ProjectHeader, SiderbarProperties } from "@/widgets/";
 import { DnDProvider } from "@/app/DnDContext/DnDContext";
 import useStore from "@/shared/appStore/store";

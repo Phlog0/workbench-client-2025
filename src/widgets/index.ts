@@ -1,5 +1,5 @@
 export { ProjectHeader } from './project-header'
 
-export { SiderbarProperties } from './siderbar-items/SiderbarProperties'
+export { SiderbarProperties } from './SiderbarProperties'
 
 export { } from './siderbar-items'

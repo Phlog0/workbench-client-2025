@@ -8,11 +8,12 @@ import {
 } from "shared/ui";
 import useStore from "shared/appStore/store";
 import { AllNodesPropertiesTypes } from "../appStore/properties-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
+import { reactFLowSelectors } from "../appStore/my-selectors";
 
 type MySelect = {
   label?: string;
-  selectId: string;
   // propValue?: AllNodesPropertiesTypes[keyof AllNodesPropertiesTypes];
   propValue?: string;
   setPropValue: React.Dispatch<React.SetStateAction<string>>; // я типо сверху буду провоцировать ре-рендер. Похоже на антипатерн
@@ -24,7 +25,6 @@ type MySelect = {
 
 export const MySelect = ({
   label,
-  selectId,
   propValue,
   setPropValue,
   options,
@@ -33,18 +33,27 @@ export const MySelect = ({
   selectedNodeId,
 }: MySelect) => {
   const { changeSelectPropery } = useStore();
-
   const handleChange = (value: string) => {
-    console.log(value);
     setPropValue(value);
     changeSelectPropery({ nodeId: selectedNodeId, prop, value });
   };
 
+  // const {
+  //   nodes,
+  //   edges,
+  //   onNodesChange,
+  //   onEdgesChange,
+  //   onConnect,
+  //   setSelectedNodeId,
+  //   addNode,
+  // } = useStore(useShallow(reactFLowSelectors));
+
+  const nodes = useStore((state) => state.nodes);
   return (
     <div>
       <Label>{label}</Label>
       <Select
-        data-id={selectId}
+        data-id={prop}
         // defaultValue={value}
         value={propValue}
         onValueChange={(value) => handleChange(value)}

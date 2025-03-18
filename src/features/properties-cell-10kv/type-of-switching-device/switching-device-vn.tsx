@@ -67,13 +67,7 @@ const switchingDeviceVnData = [
     keyTwo: "locationOfGroundingBlades",
     inputId: `switchingDeviceVnLocationOfGroundingBlades`,
   },
-  {
-    inputType: "text",
-    label: "Расположение ножей заземления",
-    keyOne: "switchingDeviceVn",
-    keyTwo: "locationOfGroundingBlades",
-    inputId: `switchingDeviceVnLocationOfGroundingBlades`,
-  },
+
   {
     inputType: "text",
     label: "Расположение привода выключателя",

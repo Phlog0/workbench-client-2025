@@ -56,12 +56,11 @@ const useStore = create<AppState>()(
     },
 
     changeSelectPropery: ({ nodeId, prop, value }) => {
-      console.log(nodeId)
+      console.log(nodeId, prop, value)
 
       set((state) => {
         const node = state.nodes.find((item) => item.id === nodeId) as AllNodesPropertiesTypes
         if (node) {
-
           node[prop] = value
 
         }
@@ -78,8 +77,11 @@ const useStore = create<AppState>()(
     changeInputPropertyTCell10Kv: ({ nodeId, keyOne, keyTwo, value }) => {
       set((state) => {
         const node = state.nodes.find((item) => item.id === nodeId) as TCell10Kv
+        console.log(keyOne, keyTwo)
         if (node) {
-
+          if (!node[keyOne]) {
+            node[keyOne] = {}
+          }
           //ПОТОМ
           node[keyOne][keyTwo] = `${value}`
 

@@ -12,13 +12,14 @@ export function TypeOfCell({
 
   const { node } = useGetCurrentNode(selectedNodeId);
   return (
-    <MySelect
-      label="type of cell"
-      options={["type_1", "type_2", "type_3"]}
-      selectId={selectedNodeId}
-      propValue={node?.typeOfCell}
-      prop={"typeOfCell"}
-      selectedNodeId={selectedNodeId}
-    />
-  )
+    <h1>typeofcell</h1>
+    // <MySelect
+    //   label="type of cell"
+    //   options={["type_1", "type_2", "type_3"]}
+    //   selectId={selectedNodeId}
+    //   propValue={node?.typeOfCell}
+    //   prop={"typeOfCell"}
+    //   selectedNodeId={selectedNodeId}
+    // />
+  );
 }
