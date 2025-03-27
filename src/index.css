@@ -115,6 +115,9 @@
   flex-grow: 2;
 }
 
+.container-save-scroll {
+  scrollbar-gutter: stable;
+}
 /* .ReactVirtualized__Table__headerTruncatedText {
   flex: auto;
 } */

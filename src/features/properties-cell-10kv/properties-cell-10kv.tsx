@@ -9,7 +9,7 @@ export function PropertiesCell10Kv({
   return (
     <div>
       <TypeOfCell selectedNodeId={selectedNodeId} />
-      <TypeOfSwitchingDevice selectedNodeId={selectedNodeId} />
+      {/* <TypeOfSwitchingDevice selectedNodeId={selectedNodeId} /> */}
     </div>
   );
 }

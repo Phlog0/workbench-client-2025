@@ -13,7 +13,7 @@ type TMyInput = {
   keyTwo: string;
   inputType?: string;
   selectedNodeId: string;
-  defaultValue?: string;
+  defaultValue?: string | number;
 };
 export const MyInput = ({
   className,

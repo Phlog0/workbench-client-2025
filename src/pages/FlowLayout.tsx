@@ -21,7 +21,7 @@ export const FlowLayout = () => {
 
             <Flow />
 
-            <SiderbarProperties className="max-xl:hidden px-2" />
+            <SiderbarProperties className="max-xl:hidden container-save-scroll px-2" />
           </div>
         </DnDProvider>
       </ReactFlowProvider>

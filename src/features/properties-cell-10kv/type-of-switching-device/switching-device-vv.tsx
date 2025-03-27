@@ -1,5 +1,11 @@
+import { TSwitchingDeviceVV } from "@/shared/appStore/properties-types";
 import { TCell10Kv } from "@/shared/appStore/react-flow-types";
-import { ModalComponent, MyInput, MyVirtualTable } from "@/shared/components";
+import {
+  FirstInput,
+  ModalComponent,
+  MyInput,
+  MyVirtualTable,
+} from "@/shared/components";
 import { cn } from "@/shared/lib/react-std";
 import {
   Accordion,
@@ -10,48 +16,51 @@ import {
 import { useReactFlow } from "@xyflow/react";
 import { BookOpen } from "lucide-react";
 import { useParams } from "react-router-dom";
+
+const KEY_1 = "switchingDeviceVv";
+const LABEL = "ВВ (вакуумные выключатели)";
 const SwitchingDeviceVvData = [
   {
     inputType: "text",
     label: "Тип",
-    keyOne: "switchingDeviceVv",
+    keyOne: KEY_1,
     keyTwo: "type",
-    inputId: `switchingDeviceVvType`,
+    inputId: `${KEY_1}Type`,
   },
   {
     inputType: "text",
     label: "Наименование",
-    keyOne: "switchingDeviceVv",
+    keyOne: KEY_1,
     keyTwo: "title",
-    inputId: `switchingDeviceVvTitle`,
+    inputId: `${KEY_1}Title`,
   },
   {
     inputType: "text",
     label: "Производитель",
-    keyOne: "switchingDeviceVv",
+    keyOne: KEY_1,
     keyTwo: "manufacturer",
-    inputId: `switchingDeviceVvManufacturer`,
+    inputId: `${KEY_1}Manufacturer`,
   },
   {
     inputType: "number",
     label: "Номинальный ток, А",
-    keyOne: "switchingDeviceVv",
+    keyOne: KEY_1,
     keyTwo: "ratedCurrent",
-    inputId: `switchingDeviceVvRatedCurrent`,
+    inputId: `${KEY_1}RatedCurrent`,
   },
   {
     inputType: "number",
     label: "Номинальный ток отключения, кА",
-    keyOne: "switchingDeviceVv",
+    keyOne: KEY_1,
     keyTwo: "ratedBreakingCurrent",
-    inputId: `switchingDeviceVvRatedBreakingCurrent`,
+    inputId: `${KEY_1}RatedBreakingCurrent`,
   },
   {
     inputType: "number",
     label: "Номинальное напряжение, кВ",
-    keyOne: "switchingDeviceVv",
+    keyOne: KEY_1,
     keyTwo: "ratedVoltage",
-    inputId: `switchingDeviceVvRatedVoltage`,
+    inputId: `${KEY_1}RatedVoltage`,
   },
 ];
 
@@ -70,47 +79,41 @@ export function SwitchingDeviceVv({
   const nodeValue = getNode(selectedNodeId as string) as TCell10Kv;
   const typeInpKeys = SwitchingDeviceVvData[0];
 
-  if ("switchingDeviceVv" in nodeValue) {
-    nodeValue["switchingDeviceVv"]?.manufacturer;
-  }
+  // if (KEY_1 in nodeValue) {
+  //   nodeValue[KEY_1]?.manufacturer;
+  // }
   return (
-    <Accordion type="single" collapsible className={cn("", className)}>
-      <AccordionItem value={`accordion-switchingDeviceVv`}>
-        <AccordionTrigger className="flex items-center gap-3">
-          <div>
-            <MyInput
-              {...SwitchingDeviceVvData[0]}
-              selectedNodeId={selectedNodeId}
+    <div>
+      <Accordion type="single" collapsible className={cn("", className)}>
+        <AccordionItem value={`accordion-${KEY_1}`}>
+          <AccordionTrigger className="flex items-center">
+            {LABEL}
+          </AccordionTrigger>
+          <AccordionContent className="px-4 flex flex-col gap-3">
+            <FirstInput
+              KEY_1={KEY_1}
+              LABEL={LABEL}
+              data={typeInpKeys}
               defaultValue={
-                nodeValue?.[typeInpKeys.keyOne as keyof TCell10Kv]?.[
-                  typeInpKeys.keyTwo
+                nodeValue?.[KEY_1]?.[
+                  typeInpKeys.keyTwo as keyof TSwitchingDeviceVV
                 ]
               }
-            />
-          </div>
-          <ModalComponent
-            content={<MyVirtualTable param="swithcingDeviceVv" />}
-            // content={<MyVirtualTable />}
-            dialogTitle={"ВВ (вакуумные выключатели)"}
-            triggerTitle={
-              <div className="mt-5 border">
-                <BookOpen />
-              </div>
-            }
-            className={cn("")}
-          />
-        </AccordionTrigger>
-        <AccordionContent className="px-4 flex flex-col gap-3">
-          {SwitchingDeviceVvData.slice(1).map((item) => (
-            <MyInput
-              key={item.inputId}
-              {...item}
               selectedNodeId={selectedNodeId}
-              defaultValue={nodeValue[item.keyOne][item.keyTwo]}
             />
-          ))}
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+            {SwitchingDeviceVvData.slice(1).map((item) => (
+              <MyInput
+                key={item.inputId}
+                {...item}
+                selectedNodeId={selectedNodeId}
+                defaultValue={
+                  nodeValue?.[KEY_1]?.[item.keyTwo as keyof TSwitchingDeviceVV]
+                }
+              />
+            ))}
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
   );
 }

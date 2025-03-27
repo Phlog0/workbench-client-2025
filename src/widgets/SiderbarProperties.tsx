@@ -17,7 +17,7 @@ export const SiderbarProperties = ({ className }: { className?: string }) => {
   return (
     <aside
       className={cn(
-        "project-properties outline-1 outline-double dark:bg-slate-800 overflow-y-auto",
+        "project-properties outline-1 outline-double dark:bg-slate-800 overflow-x-hidden",
         className
       )}
     >

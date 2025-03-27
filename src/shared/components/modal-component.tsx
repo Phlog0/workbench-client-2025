@@ -28,7 +28,7 @@ export const ModalComponent = ({
     <Dialog>
       <DialogTrigger
         className={cn(
-          "",
+          "flex items-center justify-center",
 
           className
         )}

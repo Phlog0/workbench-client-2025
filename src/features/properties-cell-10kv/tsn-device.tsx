@@ -1,11 +1,6 @@
-import { TSwitchingDeviceR } from "@/shared/appStore/properties-types";
+import { TTsn } from "@/shared/appStore/properties-types";
 import { TCell10Kv } from "@/shared/appStore/react-flow-types";
-import {
-  FirstInput,
-  ModalComponent,
-  MyInput,
-  MyVirtualTable,
-} from "@/shared/components";
+import { FirstInput, MyInput } from "@/shared/components";
 import { cn } from "@/shared/lib/react-std";
 import {
   Accordion,
@@ -14,12 +9,10 @@ import {
   AccordionTrigger,
 } from "@/shared/ui";
 import { useReactFlow } from "@xyflow/react";
-import { BookOpen } from "lucide-react";
-import { useParams } from "react-router-dom";
 
-const KEY_1 = "switchingDeviceR";
-const LABEL = "Р (разъединители)";
-const switchingDeviceRData = [
+const KEY_1 = "tsn";
+const LABEL = "ТН (трансформаторы напряжения)";
+const tsnDeviceData = [
   {
     inputType: "text",
     label: "Тип",
@@ -43,40 +36,24 @@ const switchingDeviceRData = [
   },
   {
     inputType: "number",
-    label: "Номинальный ток, А",
+    label: "Номинальная мощность (кВА)",
     keyOne: KEY_1,
-    keyTwo: "ratedCurrent",
-    inputId: `${KEY_1}RatedCurrent`,
-  },
-  {
-    inputType: "number",
-    label: "Ток термической стойкости (А)",
-    keyOne: KEY_1,
-    keyTwo: "thermalCurrent",
-    inputId: `${KEY_1}ThermalCurrent`,
-  },
-  {
-    inputType: "number",
-    label: "Номинальное напряжение (кВ)",
-    keyOne: KEY_1,
-    keyTwo: "ratedVoltage",
-    inputId: `${KEY_1}RatedVoltage`,
+    keyTwo: "ratedPower",
+    inputId: `${KEY_1}RatedPower`,
   },
 ];
 
-export function SwitchingDeviceR({
+export function tsnDevice({
   className,
   selectedNodeId,
 }: {
   className?: string;
   selectedNodeId: string;
 }) {
-  // const { node } = useGetCurrentNode(selectedNodeId);
-  // console.log(node);
   const { getNode } = useReactFlow();
 
   const nodeValue = getNode(selectedNodeId as string) as TCell10Kv;
-  const typeInpKeys = switchingDeviceRData[0];
+  const typeInpKeys = tsnDeviceData[0];
 
   return (
     <div>
@@ -91,20 +68,16 @@ export function SwitchingDeviceR({
               LABEL={LABEL}
               data={typeInpKeys}
               defaultValue={
-                nodeValue?.[KEY_1]?.[
-                  typeInpKeys.keyTwo as keyof TSwitchingDeviceR
-                ]
+                nodeValue?.[KEY_1]?.[typeInpKeys.keyTwo as keyof TTsn]
               }
               selectedNodeId={selectedNodeId}
             />
-            {switchingDeviceRData.slice(1).map((item) => (
+            {tsnDeviceData.slice(1).map((item) => (
               <MyInput
                 key={item.inputId}
                 {...item}
                 selectedNodeId={selectedNodeId}
-                defaultValue={
-                  nodeValue?.[KEY_1]?.[item.keyTwo as keyof TSwitchingDeviceR]
-                }
+                defaultValue={nodeValue?.[KEY_1]?.[item.keyTwo as keyof TTsn]}
               />
             ))}
           </AccordionContent>

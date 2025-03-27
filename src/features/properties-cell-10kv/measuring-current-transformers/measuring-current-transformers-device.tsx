@@ -1,11 +1,7 @@
-import { TSwitchingDeviceR } from "@/shared/appStore/properties-types";
+import { TMeasuringCurrentTransformersDevice } from "@/shared/appStore/properties-types";
 import { TCell10Kv } from "@/shared/appStore/react-flow-types";
-import {
-  FirstInput,
-  ModalComponent,
-  MyInput,
-  MyVirtualTable,
-} from "@/shared/components";
+import { ModalComponent, MyInput, MyVirtualTable } from "@/shared/components";
+import { FirstInput } from "@/shared/components";
 import { cn } from "@/shared/lib/react-std";
 import {
   Accordion,
@@ -14,25 +10,24 @@ import {
   AccordionTrigger,
 } from "@/shared/ui";
 import { useReactFlow } from "@xyflow/react";
-import { BookOpen } from "lucide-react";
 import { useParams } from "react-router-dom";
 
-const KEY_1 = "switchingDeviceR";
-const LABEL = "Р (разъединители)";
-const switchingDeviceRData = [
+const KEY_1 = "measuringCurrentTransformersDevice";
+const LABEL = "ТТ (Измерительные Трансформаторы Тока)";
+const measuringCurrentTransformersDeviceData = [
   {
     inputType: "text",
     label: "Тип",
     keyOne: KEY_1,
     keyTwo: "type",
-    inputId: `${KEY_1}Type`,
+    inputId: `switchingDeviceRType`,
   },
   {
     inputType: "text",
     label: "Наименование",
     keyOne: KEY_1,
     keyTwo: "title",
-    inputId: `${KEY_1}Title`,
+    inputId: `switchingDeviceRTitle`,
   },
   {
     inputType: "text",
@@ -42,29 +37,36 @@ const switchingDeviceRData = [
     inputId: `${KEY_1}Manufacturer`,
   },
   {
-    inputType: "number",
-    label: "Номинальный ток, А",
+    inputType: "text",
+    label: "Коэффициент трансформации",
     keyOne: KEY_1,
-    keyTwo: "ratedCurrent",
-    inputId: `${KEY_1}RatedCurrent`,
+    keyTwo: "transformationRatio",
+    inputId: `${KEY_1}TransformationRatio`,
+  },
+  {
+    inputType: "text",
+    label: "Класс точности",
+    keyOne: KEY_1,
+    keyTwo: "accuracyClass",
+    inputId: `${KEY_1}AccuracyClass`,
   },
   {
     inputType: "number",
-    label: "Ток термической стойкости (А)",
+    label: "Односекундный ток термической стойкости, кА",
     keyOne: KEY_1,
-    keyTwo: "thermalCurrent",
-    inputId: `${KEY_1}ThermalCurrent`,
+    keyTwo: "oneSecondThermalCurrent",
+    inputId: `${KEY_1}OneSecondThermalCurrent`,
   },
   {
-    inputType: "number",
-    label: "Номинальное напряжение (кВ)",
+    inputType: "text",
+    label: "Вид обслуживания",
     keyOne: KEY_1,
-    keyTwo: "ratedVoltage",
-    inputId: `${KEY_1}RatedVoltage`,
+    keyTwo: "typeOfService",
+    inputId: `${KEY_1}TypeOfService`,
   },
 ];
 
-export function SwitchingDeviceR({
+export function MeasuringCurrentTransformersDevice({
   className,
   selectedNodeId,
 }: {
@@ -76,8 +78,7 @@ export function SwitchingDeviceR({
   const { getNode } = useReactFlow();
 
   const nodeValue = getNode(selectedNodeId as string) as TCell10Kv;
-  const typeInpKeys = switchingDeviceRData[0];
-
+  const typeInpKeys = measuringCurrentTransformersDeviceData[0];
   return (
     <div>
       <Accordion type="single" collapsible className={cn("", className)}>
@@ -92,18 +93,20 @@ export function SwitchingDeviceR({
               data={typeInpKeys}
               defaultValue={
                 nodeValue?.[KEY_1]?.[
-                  typeInpKeys.keyTwo as keyof TSwitchingDeviceR
+                  typeInpKeys.keyTwo as keyof TMeasuringCurrentTransformersDevice
                 ]
               }
               selectedNodeId={selectedNodeId}
             />
-            {switchingDeviceRData.slice(1).map((item) => (
+            {measuringCurrentTransformersDeviceData.slice(1).map((item) => (
               <MyInput
                 key={item.inputId}
                 {...item}
                 selectedNodeId={selectedNodeId}
                 defaultValue={
-                  nodeValue?.[KEY_1]?.[item.keyTwo as keyof TSwitchingDeviceR]
+                  nodeValue?.[KEY_1]?.[
+                    item.keyTwo as keyof TMeasuringCurrentTransformersDevice
+                  ]
                 }
               />
             ))}

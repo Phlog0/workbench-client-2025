@@ -30,13 +30,13 @@ export type TSwitchingDeviceR = {
     ratedVoltage: number
 }
 
-export type Tsn = {
+export type TTsn = {
     type: string
     title: string
     manufacturer: string
     ratedPower: string
 }
-export type Tn = {
+export type TTn = {
     type: string
     title: string
     manufacturer: string
@@ -48,7 +48,7 @@ export type Tn = {
     accuracyClassOfSecondaryReturnWires: string
     ratedLineVoltageAtTheTerminalsOfThePrimaryWinding: string
 }
-export type Tt = {
+export type TMeasuringCurrentTransformersDevice = {
     type: string
     title: string
     manufacturer: string
@@ -57,14 +57,14 @@ export type Tt = {
     oneSecondThermalCurrent: string
     typeOfService: string
 }
-export type Mircoproc = {
+export type Tmpdaa = {
     type: string
     title: string
     manufacturer: string
 
 }
 
-export type Opn = {
+export type TOpn = {
     type: string
     title: string
     manufacturer: string

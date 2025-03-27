@@ -4,15 +4,12 @@ import { Spinner } from "shared/ui";
 import { AutoSizer, Column, Table } from "react-virtualized";
 import "react-virtualized/styles.css"; // only needs to be imported once
 import TableHeaderRenderer from "./TableHeaderRenderer";
-import { getTableData } from "../lib/api/api-instacne";
+import { fetchData } from "../lib/api/api-instacne";
+import { useGetProjectData } from "../lib/api/use-get-project-data";
 type HandleClick = {
   rowData: unknown;
   index: number;
 };
-
-interface CustomError extends Error {
-  message: string;
-}
 
 type MyVirtualTableProps = {
   param?: string;
@@ -20,11 +17,7 @@ type MyVirtualTableProps = {
 export const MyVirtualTable: React.FC<MyVirtualTableProps> = ({
   param = "",
 }) => {
-  const { isPending, isLoading, isError, error, data, isFetching } = useQuery({
-    queryKey: ["repoData"],
-    queryFn: async () => await getTableData(param),
-  });
-  // console.log(isError, error, data);
+  const { isLoading, isError, error, data } = useGetProjectData({ q: param });
 
   const [widths, setWidths] = useState<null | number[]>(null);
   const [maxDataKey, setMaxDataKey] = useState(0);

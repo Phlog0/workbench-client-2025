@@ -1,5 +1,5 @@
 import { DeepMergeTwoTypes } from "./GetObjDifferentKeys-types";
-import { Mircoproc, Opn, PossiblePropertyValues, Tn, Tsn, TSwitchingDeviceR, TSwitchingDeviceVN, TSwitchingDeviceVV, Tt } from "./properties-types";
+import { TOpn, PossiblePropertyValues, TTn, TTsn, TSwitchingDeviceR, TSwitchingDeviceVN, TSwitchingDeviceVV, TMeasuringCurrentTransformersDevice, Tmpdaa } from "./properties-types";
 import { Node } from "@xyflow/react";
 
 type ReactFlowNode = Node
@@ -25,16 +25,22 @@ export type TCell10Kv = {
     // position: TNodePosition
     // positionAbsolute?: TNodePosition
     selected?: boolean
-    draggble: true
+    draggble?: true | false
     typeOfCell?: string
-    // opn: Opn
-    // tt: Tt
-    // tn?: Tn
-    // tsn?: Tsn
-    // microproc?: Mircoproc
+    isMeasuringCurrentTransformersDevice?: string
+    typeOfSwitchingDevice?: string
     switchingDeviceVv?: TSwitchingDeviceVV
-    // switchingDeviceR?: TSwitchingDeviceR
-    // switchingDeviceVN?: TSwitchingDeviceVN
+    switchingDeviceVn?: TSwitchingDeviceVN
+    switchingDeviceR?: TSwitchingDeviceR
+    measuringCurrentTransformersDevice?: TMeasuringCurrentTransformersDevice
+    isThereMicroprocessorDevice?: "нет" | "есть"
+    mpdaa?: Tmpdaa
+    isThereOpnDevice?: "нет" | "есть"
+    opn: TOpn
+    tsn?: TTsn
+    tn?: TTn
+
+
     // ratedCurrentOfTheMainCircuits10kV?: number
 
 } & ReactFlowNode
