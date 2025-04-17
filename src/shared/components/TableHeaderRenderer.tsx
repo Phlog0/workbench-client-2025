@@ -17,7 +17,6 @@ interface ITableHeaderRenderer {
   //   sortDirection: SortDirectionType;
 }
 
-import * as styles from "./TableHeaderRenderer.module.scss";
 const TableHeaderRenderer = ({
   dataKey,
   label,
@@ -53,6 +52,7 @@ ITableHeaderRenderer) => {
             })
           }
           zIndex={999}
+
           // @ts-ignore 👿👿👿👿👿👿👿👿
           position={{ x: 0 }}
         >

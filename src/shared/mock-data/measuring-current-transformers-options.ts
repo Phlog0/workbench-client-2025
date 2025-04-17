@@ -5,7 +5,7 @@ const images = [TT_0, TT_2_AC, TT_3_AC, TT_4_AC, TT_2_ABC, TT_3_ABC, TT_4_ABC]
 
 
 
-export let currentImageObject: Record<string, string> = {};
+export let currentImageObject: Record < string, string > = {};
 isMeasuringCurrentTransformersDeviceOptions.map((item, index) => {
     currentImageObject[item] = images[index]
     // console.log(currentImageObject[item])
@@ -14,5 +14,3 @@ isMeasuringCurrentTransformersDeviceOptions.map((item, index) => {
 //     currentImageObject[item] = images[index]
 //     return acc;
 // }, {})
-
-console.log(currentImageObject);

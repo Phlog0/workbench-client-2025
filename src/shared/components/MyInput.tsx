@@ -26,21 +26,25 @@ export const MyInput = ({
   defaultValue = "", //мб в будущем с сервака?
 }: TMyInput) => {
   const { getNode } = useReactFlow();
+  const nodeValue = getNode(selectedNodeId as string);
+  console.log(nodeValue);
+  const nodes = useStore((state) => state.nodes);
+  const currentNode = nodes.find((item) => item.id === selectedNodeId);
 
   // const nodeId = useStore((state) => state.selectedNodeId);
   const [text, setText] = useState(defaultValue);
   // const [state, setState] = useState(selectedNodeId);
 
+
   useEffect(() => {
-    setText(defaultValue);
-  }, [selectedNodeId]);
+    setText(currentNode?.[keyOne]?.[keyTwo] || defaultValue);
+  }, [selectedNodeId,currentNode?.[keyOne]?.[keyTwo]]);
   const changeInputPropertyTCell10Kv = useStore(
     (state) => state.changeInputPropertyTCell10Kv
   );
 
   const throttled = useThrottledCallback((value, eventNodeId: string) => {
     // setText(value);
-    console.log(eventNodeId);
     changeInputPropertyTCell10Kv({
       keyOne,
       keyTwo,

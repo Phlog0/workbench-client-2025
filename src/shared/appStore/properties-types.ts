@@ -74,6 +74,17 @@ export type TOpn = {
     maximumContinuousPermissibleOperatingVoltage: string
 }
 
+export type TUkrm = {
+    title: string
+    power: number
+    adjustmentStepsFix: string
+    adjustmentStepsReg: string
+    dimensions: string
+    currentAt6_3kV: number
+    currentAt10_5kV: number
+    weight: number
+}
+
 
 export type AllNodesPropertiesTypes = DeepMergeTwoTypes<TCell10Kv, TSection10Kv>
 

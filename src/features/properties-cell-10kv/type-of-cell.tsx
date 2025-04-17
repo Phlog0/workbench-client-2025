@@ -12,6 +12,7 @@ import { OpnDevice } from "./opn/opn-device";
 import { UkrmDevice } from "./ukrm-device";
 import { IsThereMeasuringCurrentTransformersDevice } from "./measuring-current-transformers/is-there-measuring-current-transformers-device";
 import { TCell10Kv } from "@/shared/appStore/react-flow-types";
+import { TsnDevice } from "./tsn-device";
 const PARAM = "typeOfCell";
 export function TypeOfCell({
   className,
@@ -58,13 +59,46 @@ export function TypeOfCell({
         propValue={typeOfCell}
         setPropValue={setTypeOfCell}
       />
-      <TypeOfSwitchingDevice selectedNodeId={selectedNodeId} />
-      <IsThereMeasuringCurrentTransformersDevice
-        selectedNodeId={selectedNodeId}
-      />
-      <VoltageTransformerDevice selectedNodeId={selectedNodeId} />
-      <OpnDevice selectedNodeId={selectedNodeId} />
-      <UkrmDevice selectedNodeId={selectedNodeId} />
+      {[
+        "ТСН (Трансформатор собсвтенных нужд)",
+        "СВ (Секционный выключатель)",
+        "СР (Секционный разъединитель)",
+        "Ввод",
+        "Отходящая линия",
+        "УКРМ (Устройство компенсации реактивной мощности)",
+        "ТН (Трансформатор напряжения)",
+      ].includes(typeOfCell) && (
+        <TypeOfSwitchingDevice selectedNodeId={selectedNodeId} />
+      )}
+      {["ТН (Трансформатор напряжения)"].includes(typeOfCell) && (
+        <VoltageTransformerDevice selectedNodeId={selectedNodeId} />
+      )}
+
+      {[
+        "ТСН (Трансформатор собсвтенных нужд)",
+        "СВ (Секционный выключатель)",
+        "Ввод",
+        "Отходящая линия",
+        "УКРМ (Устройство компенсации реактивной мощности)",
+        "ТН (Трансформатор напряжения)",
+      ].includes(typeOfCell) && (
+        <IsThereMeasuringCurrentTransformersDevice
+          selectedNodeId={selectedNodeId}
+        />
+      )}
+      {[
+        "ТСН (Трансформатор собсвтенных нужд)",
+
+        "Ввод",
+        "Отходящая линия",
+      ].includes(typeOfCell) && <OpnDevice selectedNodeId={selectedNodeId} />}
+
+      {["ТСН (Трансформатор собсвтенных нужд)"].includes(typeOfCell) && (
+        <TsnDevice selectedNodeId={selectedNodeId} />
+      )}
+      {["УКРМ (Устройство компенсации реактивной мощности)"].includes(
+        typeOfCell
+      ) && <UkrmDevice selectedNodeId={selectedNodeId} />}
     </div>
   );
 }

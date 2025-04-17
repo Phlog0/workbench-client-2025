@@ -22,6 +22,7 @@ export function FirstInput({
   defaultValue,
   selectedNodeId,
 }: FirstInputProps) {
+
   return (
     <div className="flex">
       <div className="flex-1">
@@ -33,7 +34,9 @@ export function FirstInput({
       </div>
 
       <ModalComponent
-        content={<MyVirtualTable param={KEY_1} />}
+
+  
+        content={<MyVirtualTable   param={KEY_1} />}
         dialogTitle={LABEL}
         triggerTitle={<BookOpen className="mt-4" />}
       />

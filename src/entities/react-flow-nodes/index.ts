@@ -2,19 +2,19 @@ import { nodeTypes } from '@/shared/appStore/react-flow-types'
 import { Cell04KvNode } from './Cell04KvNode'
 import { Cell10KvNode } from './cell10kv/Cell10KvNode'
 import { PowerTransformerNode } from './PowerTransformerNode'
-import { Section04KvNode } from './Section04KvNode'
-import { Section10KvNode } from './Section10KvNode'
-import { ReactElement, ReactNode } from 'react'
+import { Section04KvNode } from './section04kv/Section04KvNode'
+import { Section10KvNode } from './section10kv/Section10KvNode'
+import { ReactElement, ReactNode, useMemo } from 'react'
 
 export { Cell10KvNode } from './cell10kv/Cell10KvNode'
-export { Section10KvNode } from './Section10KvNode'
+export { Section10KvNode } from './section10kv/Section10KvNode'
 export { PowerTransformerNode } from './PowerTransformerNode'
 export { Cell04KvNode } from './Cell04KvNode'
-export { Section04KvNode } from './Section04KvNode'
+export { Section04KvNode } from './section04kv/Section04KvNode'
 
 
 type NodeTypeEntities = Record<keyof typeof nodeTypes, ({ data: { id } }: Props) => JSX.Element>
-
+// ? откуда Props?
 export const nodeTypesEntities: NodeTypeEntities = {
     Cell10Kv: Cell10KvNode,
     Section10Kv: Section10KvNode,

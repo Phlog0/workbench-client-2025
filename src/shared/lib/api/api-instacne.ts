@@ -1,8 +1,8 @@
 type Headers = Record<string, string>
-type Body = (Record<string, string>)[]
+type Body = (Record<string, string | number>)[]
 
 type TableData = {
-    headers: Headers;
+    tableHeaders: Headers;
     body: Body
 }
 

@@ -12,7 +12,7 @@ export function OpenModalPropertiesButton() {
   return (
     // <Button className="hidden max-xl:inline-flex" onClick={handleClick}>
     <ModalComponent
-      content={<SiderbarProperties />}
+      content={<SiderbarProperties headerMode={true}/>}
       dialogTitle="Свойства"
       triggerTitle={
         <div className="flex items-center">
@@ -20,7 +20,7 @@ export function OpenModalPropertiesButton() {
           Свойства
         </div>
       }
-      className={cn("hidden max-xl:block")}
+      className={cn("properties-button")}
       projectTheme={projectTheme}
     />
     // </Button>

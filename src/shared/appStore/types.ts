@@ -5,7 +5,7 @@ import {
   OnConnect,
 } from '@xyflow/react';
 import { AllPossibleNodes, PossibleNode, } from './react-flow-types';
-import { AllNodesPropertiesTypes, NestedPropsTCell10KvKeys } from './properties-types';
+import { AllNodesPropertiesTypes } from './properties-types';
 export type TNodePosition = {
   x: number
   y: number
@@ -15,14 +15,16 @@ export type TNodePosition = {
 
 
 // export type AllNodesPropertiesTypes = Omit<TCell10Kv | TSection10Kv, "type">
-export type SelectedNodeId = string
+export type reactFLowNodeId = string
+export type SelectedNodeId = reactFLowNodeId
 
+export type ProjectTheme = "light" | "dark"
 export type AppState = {
   // nodes: (Node | PossibleNode)[];
   nodes: AllPossibleNodes;
   edges: Edge[];
   selectedNodeId: SelectedNodeId;
-  projectTheme: "light" | "dark"
+  projectTheme: ProjectTheme
   onNodesChange: OnNodesChange<PossibleNode>;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
@@ -42,9 +44,12 @@ export type AppState = {
 
   //todo Как работать с глубоковложенными объектами да так, чтобы всё можно было автоматизировать
   changeInputPropertyTCell10Kv: ({ nodeId, keyOne, keyTwo, value }: { nodeId: string, keyOne: string, keyTwo: string, value: any }) => void
+  selectReadyMadeSolution: ({ nodeId, keyOne, value }: { nodeId: string, keyOne: string, value: any }) => void
   // changeInputPropertyTCell10Kv: ({ nodeId, keyOne, keyTwo, value }: { nodeId: string, keyOne: NestedPropsTCell10KvKeys, keyTwo: NestedPropsTCell10Kv, value: string | number | boolean }) => void
 
-  changeProjectTheme: (newTheme: "light" | "dark") => void
+  changeProjectTheme: (newTheme: ProjectTheme) => void
+
+  increaseSectionWidth: ({ sectionId }: { sectionId: reactFLowNodeId }) => void
 };
 
 

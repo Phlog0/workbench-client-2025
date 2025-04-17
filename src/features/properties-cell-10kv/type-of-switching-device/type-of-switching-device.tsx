@@ -51,6 +51,7 @@ export function TypeOfSwitchingDevice({
         options={typeOfSwitchingDeviceOptions}
         propValue={typeOfSwitchingDevice}
         setPropValue={setTypeOfSwitchingDevice}
+        
       />
       {typeOfSwitchingDevice === "вв" && (
         <SwitchingDeviceVv selectedNodeId={selectedNodeId} />

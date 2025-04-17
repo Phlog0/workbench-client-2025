@@ -1,5 +1,5 @@
 import { DeepMergeTwoTypes } from "./GetObjDifferentKeys-types";
-import { TOpn, PossiblePropertyValues, TTn, TTsn, TSwitchingDeviceR, TSwitchingDeviceVN, TSwitchingDeviceVV, TMeasuringCurrentTransformersDevice, Tmpdaa } from "./properties-types";
+import { TOpn, PossiblePropertyValues, TTn, TTsn, TSwitchingDeviceR, TSwitchingDeviceVN, TSwitchingDeviceVV, TMeasuringCurrentTransformersDevice, Tmpdaa, TUkrm } from "./properties-types";
 import { Node } from "@xyflow/react";
 
 type ReactFlowNode = Node
@@ -39,6 +39,7 @@ export type TCell10Kv = {
     opn: TOpn
     tsn?: TTsn
     tn?: TTn
+    ukrm?:TUkrm
 
 
     // ratedCurrentOfTheMainCircuits10kV?: number
@@ -49,6 +50,7 @@ export type TSection10Kv = {
     id: string
     projectId: string
     type: typeof nodeTypes["Section10Kv"],
+    width: number
 
 } & ReactFlowNode
 

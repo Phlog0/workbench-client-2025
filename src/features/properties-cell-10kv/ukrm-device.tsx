@@ -1,3 +1,4 @@
+import { TUkrm } from "@/shared/appStore/properties-types";
 import { TCell10Kv } from "@/shared/appStore/react-flow-types";
 import {
   FirstInput,
@@ -30,8 +31,8 @@ const ukrmDeviceData = [
     inputType: "number",
     label: "Мощность, Квар",
     keyOne: KEY_1,
-    keyTwo: "title",
-    inputId: `${KEY_1}Title`,
+    keyTwo: "power",
+    inputId: `${KEY_1}Power`,
   },
   {
     inputType: "text",
@@ -104,9 +105,7 @@ export function UkrmDevice({
               LABEL={LABEL}
               data={typeInpKeys}
               defaultValue={
-                nodeValue?.[typeInpKeys.keyOne as keyof TCell10Kv]?.[
-                  typeInpKeys.keyTwo
-                ]
+                nodeValue?.[KEY_1]?.[typeInpKeys.keyTwo as keyof TUkrm]
               }
               selectedNodeId={selectedNodeId}
             />
@@ -115,7 +114,7 @@ export function UkrmDevice({
                 key={item.inputId}
                 {...item}
                 selectedNodeId={selectedNodeId}
-                defaultValue={nodeValue?.[item.keyOne]?.[item.keyTwo]}
+                defaultValue={nodeValue?.[KEY_1]?.[item.keyTwo as keyof TUkrm]}
               />
             ))}
           </AccordionContent>

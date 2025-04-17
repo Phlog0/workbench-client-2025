@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogDescription,
@@ -11,19 +10,21 @@ import {
 import { cn } from "../lib/react-std";
 import useStore from "../appStore/store";
 import { getThemeSelector } from "../appStore/my-selectors";
+import { ProjectTheme } from "../appStore/types";
 export const ModalComponent = ({
   content,
   className,
   dialogTitle,
   triggerTitle,
+  projectTheme,
 }: {
   className?: string;
   content: ReactNode;
   triggerTitle: string | ReactNode;
   dialogTitle: string;
-}) => {
-  const projectTheme = useStore(getThemeSelector);
 
+  projectTheme?: ProjectTheme;
+}) => {
   return (
     <Dialog>
       <DialogTrigger
@@ -36,14 +37,16 @@ export const ModalComponent = ({
         {triggerTitle}
       </DialogTrigger>
       <DialogContent
-        className={cn("max-w-full h-screen", {
+        className={cn("h-screen max-w-screen-lg overflow-hidden", {
           "": projectTheme === "light",
           "bg-slate-800": projectTheme === "dark",
         })}
       >
         <DialogHeader>
           <DialogTitle>{dialogTitle}</DialogTitle>
-          <DialogDescription className="h-full">{content}</DialogDescription>
+          <DialogDescription className="h-full overflow-hidden">
+            <div className="h-[90vh] overflow-y-auto container-save-scroll">{content}</div>
+          </DialogDescription>
         </DialogHeader>
       </DialogContent>
     </Dialog>

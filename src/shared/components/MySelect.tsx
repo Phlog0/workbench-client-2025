@@ -21,6 +21,7 @@ type MySelect = {
   q?: string;
   prop: keyof AllNodesPropertiesTypes; //ключ, который отвечает за select (ex.: typeOfCell)
   selectedNodeId: string;
+  
 };
 
 export const MySelect = ({
@@ -63,7 +64,7 @@ export const MySelect = ({
         </SelectTrigger>
         <SelectContent>
           {options?.map((opt) => (
-            <SelectItem key={opt} value={opt}>
+            <SelectItem  key={opt} value={opt}>
               {opt}
             </SelectItem>
           ))}

@@ -5,7 +5,13 @@ import { useGetCurrentNode } from "@/shared/components/model/use-get-current-nod
 import { PropertiesCell10Kv } from "@/features";
 import { cn } from "@/shared/lib/react-std";
 
-export const SiderbarProperties = ({ className }: { className?: string }) => {
+export const SiderbarProperties = ({
+  className,
+  headerMode = false,
+}: {
+  className?: string;
+  headerMode?: boolean;
+}) => {
   const { getNode } = useReactFlow();
   const { selectedNodeId, changeSelectPropery, nodes } = useStore();
   const nodeInfo = getNode(selectedNodeId as string);
@@ -17,7 +23,12 @@ export const SiderbarProperties = ({ className }: { className?: string }) => {
   return (
     <aside
       className={cn(
-        "project-properties outline-1 outline-double dark:bg-slate-800 overflow-x-hidden",
+        {
+          "container-save-scroll overflow-auto project-properties outline-1 outline-double dark:bg-slate-800":
+            headerMode === false,
+          "p-6":
+            headerMode === true,
+        },
         className
       )}
     >

@@ -13,17 +13,15 @@ export const FlowLayout = () => {
   return (
     <div className={cn(projectTheme)}>
       <ReactFlowProvider>
-        <DnDProvider>
-          <div className="project-grid dark:text-white">
-            <ProjectHeader />
-
+        <div className="project-grid dark:text-white">
+          <ProjectHeader />
+          <DnDProvider>
             <SiderbarItems className="px-2" />
 
             <Flow />
-
-            <SiderbarProperties className="max-xl:hidden container-save-scroll px-2" />
-          </div>
-        </DnDProvider>
+          </DnDProvider>
+          <SiderbarProperties className="px-2" />
+        </div>
       </ReactFlowProvider>
     </div>
   );

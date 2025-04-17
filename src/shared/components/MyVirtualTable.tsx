@@ -1,22 +1,29 @@
-import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Spinner } from "shared/ui";
 import { AutoSizer, Column, Table } from "react-virtualized";
 import "react-virtualized/styles.css"; // only needs to be imported once
 import TableHeaderRenderer from "./TableHeaderRenderer";
-import { fetchData } from "../lib/api/api-instacne";
 import { useGetProjectData } from "../lib/api/use-get-project-data";
+import useStore from "../appStore/store";
+import { CustomRowRenderer } from "./custom-row-renderer";
 type HandleClick = {
-  rowData: unknown;
+  rowData: (string | number)[];
   index: number;
 };
 
 type MyVirtualTableProps = {
   param?: string;
+ 
 };
 export const MyVirtualTable: React.FC<MyVirtualTableProps> = ({
   param = "",
+
 }) => {
+  const selectReadyMadeSolution = useStore(
+    (state) => state.selectReadyMadeSolution
+  );
+
+  const selectedNodeId = useStore((state) => state.selectedNodeId);
   const { isLoading, isError, error, data } = useGetProjectData({ q: param });
 
   const [widths, setWidths] = useState<null | number[]>(null);
@@ -28,8 +35,14 @@ export const MyVirtualTable: React.FC<MyVirtualTableProps> = ({
       setWidths(Array(quantity).fill(1 / quantity));
     }
   }, [data]);
-  const handleClick = async ({ rowData, index }: HandleClick) => {
-    console.log(rowData);
+  const handleClick = ({ rowData, index }: HandleClick) => {
+    selectReadyMadeSolution({
+      nodeId: selectedNodeId,
+      keyOne: param,
+      value: data?.body[index],
+    });
+    // setOpen(false)
+
     // await selectSolution({
     //   electricalPanelId: currentElectricalPanelId,
     //   prop: prop,
@@ -61,8 +74,9 @@ export const MyVirtualTable: React.FC<MyVirtualTableProps> = ({
               rowCount={data?.body?.length}
               rowGetter={({ index }) => Object.values(data?.body[index])}
               onRowClick={handleClick}
+              rowRenderer={CustomRowRenderer}
             >
-              {Object.values(data?.headers).map((col, index) => (
+              {Object.values(data?.tableHeaders).map((col, index) => (
                 <Column
                   label={`${col}`}
                   dataKey={`${index}`}

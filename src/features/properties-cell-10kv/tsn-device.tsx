@@ -11,7 +11,7 @@ import {
 import { useReactFlow } from "@xyflow/react";
 
 const KEY_1 = "tsn";
-const LABEL = "ТН (трансформаторы напряжения)";
+const LABEL = "ТСН (Трансформатор собсвтенных нужд)";
 const tsnDeviceData = [
   {
     inputType: "text",
@@ -43,7 +43,7 @@ const tsnDeviceData = [
   },
 ];
 
-export function tsnDevice({
+export function TsnDevice({
   className,
   selectedNodeId,
 }: {

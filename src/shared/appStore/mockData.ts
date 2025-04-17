@@ -49,7 +49,8 @@ export const initialNodes: AllPossibleNodes = [
         id: '2',
         data: { id: '2' },
         position: { x: 100, y: 125 },
-        type: "Section10Kv"
+        type: "Section10Kv",
+        width: 1500,
     },
     // {
     //     id: '3',
@@ -62,6 +63,7 @@ export const initialNodes: AllPossibleNodes = [
         type: 'Section10Kv',
         data: { id: '4' },
         position: { x: 350, y: 250 },
+        width: 750,
     },
 ]
 

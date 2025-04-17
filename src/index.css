@@ -68,14 +68,19 @@
 }
 
 .project-grid {
+  height: 100dvh;
+  width: 100vw;
   display: grid;
-  grid-template-columns: 7vw 70vw 23vw;
-  grid-template-rows: 10vh 90vh;
+  grid-template-columns: 7% 70% 23%;
+  grid-template-rows: 10% 90%;
   grid-template-areas:
     "header header header"
     "items flow properties";
+  overflow: hidden;
 }
-
+.properties-button {
+  display: none;
+}
 .project-header {
   grid-area: header;
 }
@@ -111,6 +116,11 @@
   overflow: hidden;
 }
 
+.ReactVirtualized__Table__rowColumn {
+  display: flex;
+  justify-content: start;
+}
+
 .custom-flex-grow {
   flex-grow: 2;
 }
@@ -125,11 +135,13 @@
 @media (max-width: 80rem) {
   .project-grid {
     display: grid;
-    grid-template-columns: 15vw 70vw 15vw;
-    grid-template-rows: 10vh 90vh;
     grid-template-areas:
       "header header header"
       "items flow flow";
+  }
+
+  .properties-button {
+    display: block;
   }
 
   .project-header {

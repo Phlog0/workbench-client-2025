@@ -49,7 +49,7 @@ const opnDeviceRData = [
     inputId: `${KEY_1}Throughput`,
   },
   {
-    inputType: "text",
+    inputType: "number",
     label: "Номинальный разрядный ток, А",
     keyOne: KEY_1,
     keyTwo: "ratedDischargeCurrent",
