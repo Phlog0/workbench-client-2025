@@ -1,4 +1,20 @@
 export { Moon } from "./moon"
 export { Sun } from "./sun"
-
+export { VerticalLine } from './vertical-line'
+export { Tt2Abc } from './tt/tt-2-abc-icon'
+export { Tt2Ac } from './tt/tt-2-ac-icon'
+export { Tt3Abc } from './tt/tt-3-abc-icon'
+export { Tt3Ac } from './tt/tt-3-ac-icon'
+export { Tt4Abc } from './tt/tt-4-abc-icon'
+export { Tt4Ac } from './tt/tt-4-ac-icon'
+export { OpnIcon } from './other/opn-icon'
+export { SwithcerRIcon } from './switchers/switcher-r-icon'
+export { SwithcerVn1Icon } from './switchers/switcher-vn-1-icon'
+export { SwithcerVn2Icon } from './switchers/switcher-vn-2-icon'
+export { SwithcerVn3Icon } from './switchers/switcher-vn-3-icon'
+export { SwithcerVvIcon } from './switchers/switcher-vv-icon'
+export {HeaderTireIcon} from './tires/header-tire-icon'
+export {TnIcon} from './other/tn-icon'
+export {TsnIcon} from './other/tsn-icon'
 export { BurgerMenu } from "./burger-menu"
+export {VykatnoyRazjem1Icon} from './other/vykatnoy-razjem-1-icon'

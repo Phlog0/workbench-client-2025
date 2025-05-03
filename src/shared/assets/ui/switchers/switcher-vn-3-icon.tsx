@@ -1,0 +1,159 @@
+export function SwithcerVn3Icon({
+  className,
+  color,
+  height,
+  strokeWidth,
+}: {
+  className?: string;
+  height?: number;
+  strokeWidth?: number;
+  color?: string;
+}) {
+  return (
+    <svg
+      width="600.000000"
+      height={height || "600.000000"}
+      viewBox="0 0 600 600"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+    >
+      <desc>Created with Pixso.</desc>
+      <defs>
+        <clipPath id="clip4_31">
+          <rect
+            id="VYKL_VN_1"
+            width="600.000000"
+            height="600.000000"
+            fill="white"
+            fill-opacity="0"
+          />
+        </clipPath>
+      </defs>
+      <rect
+        id="VYKL_VN_1"
+        width="600.000000"
+        height="600.000000"
+        fill="#FFFFFF"
+        fill-opacity="0"
+      />
+      <g clip-path="url(#clip4_31)">
+        <path
+          id="Vector 2"
+          d="M300 335L300 600"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Vector 9"
+          d="M180 300L270 300"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Vector 11"
+          d="M210 414L300 414"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Vector 10"
+          d="M180 396L180 297"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Vector 13"
+          d="M119.99 395.98L210 354.01"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Vector 14"
+          d="M55 396L122 396"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <g opacity="0.900000">
+          <path
+            id="Vector 15"
+            d="M53 429L53 363"
+            stroke="#000000"
+            stroke-opacity="1.000000"
+            stroke-width={strokeWidth || "6.000000"}
+          />
+        </g>
+        <g opacity="0.900000">
+          <path
+            id="Vector 16"
+            d="M36 416L36 376"
+            stroke="#000000"
+            stroke-opacity="1.000000"
+            stroke-width={strokeWidth || "6.000000"}
+          />
+        </g>
+        <g opacity="0.900000">
+          <path
+            id="Vector 17"
+            d="M19 405L19 386"
+            stroke="#000000"
+            stroke-opacity="1.000000"
+            stroke-width={strokeWidth || "6.000000"}
+          />
+        </g>
+        <path
+          id="Vector 12"
+          d="M210 432L210 396"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Vector 8"
+          d="M300 -5L300 255"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Vector 7"
+          d="M240 264L300.9 336.58"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Форма 10"
+          d="M286 258L314.28 258"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <circle
+          id="Эллипс 1"
+          cx="300.000000"
+          cy="265.000000"
+          r="7.000000"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <circle
+          id="Эллипс 2"
+          cx="299.000000"
+          cy="414.000000"
+          r="5.000000"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+      </g>
+    </svg>
+  );
+}

@@ -4,7 +4,7 @@ import {
   OnEdgesChange,
   OnConnect,
 } from '@xyflow/react';
-import { AllPossibleNodes, PossibleNode, } from './react-flow-types';
+import { AllPossibleNodes, PossibleNode, TCell10Kv, } from './react-flow-types';
 import { AllNodesPropertiesTypes } from './properties-types';
 export type TNodePosition = {
   x: number
@@ -15,43 +15,50 @@ export type TNodePosition = {
 
 
 // export type AllNodesPropertiesTypes = Omit<TCell10Kv | TSection10Kv, "type">
-export type reactFLowNodeId = string
-export type SelectedNodeId = reactFLowNodeId
+export type ReactFLowNodeId = string
+export type SelectedNodeId = ReactFLowNodeId
 
 export type ProjectTheme = "light" | "dark"
 export type AppState = {
   // nodes: (Node | PossibleNode)[];
-  nodes: AllPossibleNodes;
+  nodes: PossibleNode[];
   edges: Edge[];
-  selectedNodeId: SelectedNodeId;
+  selectedNodeIds: SelectedNodeId[];
   projectTheme: ProjectTheme
+  changeProjectTheme: (newTheme: ProjectTheme) => void
+
+};
+
+
+export type AppReactFlowBasicActions = {
   onNodesChange: OnNodesChange<PossibleNode>;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
-  setNodes: (nodes: AllPossibleNodes) => void;
+  setNodes: (payload: PossibleNode[] | ((nodes: PossibleNode[]) => PossibleNode[])) => void;
   setEdges: (edges: Edge[]) => void;
-  setSelectedNodeId: (nodeId: SelectedNodeId) => void;
+  setSelectedNodeId: (nodeIds: SelectedNodeId[]) => void;
   addNode: (node: PossibleNode) => void
-  // hiNode: (selectedNodeId: string | null) => void
+  removeNode: (nodeIds: ReactFLowNodeId[]) => void
+}
 
-  // qu:keyof AllNodesPropertiesTypes
+export type AppPropertiesAction = {
   changeSelectPropery: <K extends keyof AllNodesPropertiesTypes>({ nodeId, prop, value }: {
     nodeId: SelectedNodeId,
     prop: K,
     value: AllNodesPropertiesTypes[K]
   }) => void
 
-
   //todo Как работать с глубоковложенными объектами да так, чтобы всё можно было автоматизировать
-  changeInputPropertyTCell10Kv: ({ nodeId, keyOne, keyTwo, value }: { nodeId: string, keyOne: string, keyTwo: string, value: any }) => void
+  changeInputPropertyTCell10Kv: ({ nodeId, keyOne, keyTwo, value }: { nodeId: string, keyOne: string, keyTwo: string | null, value: any }) => void
   selectReadyMadeSolution: ({ nodeId, keyOne, value }: { nodeId: string, keyOne: string, value: any }) => void
   // changeInputPropertyTCell10Kv: ({ nodeId, keyOne, keyTwo, value }: { nodeId: string, keyOne: NestedPropsTCell10KvKeys, keyTwo: NestedPropsTCell10Kv, value: string | number | boolean }) => void
+  setMultipleProps: ({ nodeId, options }:
+    { nodeId: string, options: Partial<TCell10Kv> }) => void
 
-  changeProjectTheme: (newTheme: ProjectTheme) => void
 
-  increaseSectionWidth: ({ sectionId }: { sectionId: reactFLowNodeId }) => void
-};
-
+  increaseSectionWidth: ({ sectionId, fixatorContainerId }: { sectionId: ReactFLowNodeId, fixatorContainerId: ReactFLowNodeId }) => void
+  decreaseSectionWidth: ({ sectionId, fixatorContainerId, lastFixatorId }: { sectionId: ReactFLowNodeId, fixatorContainerId: ReactFLowNodeId, lastFixatorId: ReactFLowNodeId }) => void
+}
 
 
 // Дан код

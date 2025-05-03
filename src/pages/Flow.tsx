@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 
 import {
   ReactFlow,
@@ -9,6 +9,8 @@ import {
   useOnSelectionChange,
   useReactFlow,
   useNodes,
+  useNodesState,
+  Node,
 } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 import "@xyflow/react/dist/style.css";
@@ -20,14 +22,19 @@ import { useParams } from "react-router-dom";
 import { useDnD } from "@/app/DnDContext/DnDContext";
 
 import { useToast } from "@/shared/lib/use-toast";
-import clsx from "clsx";
 import {
   getThemeSelector,
   reactFLowSelectors,
 } from "@/shared/appStore/my-selectors";
-import { onReactFlowChange, onReactFlowDrop } from "@/features/react-flow";
+import {
+  useReactFlowOnNodeDragStop,
+  useReactFlowOnNodeDrag,
+  useDragAndDropItems,
+  useReactFlowOnChange,
+} from "@/features/react-flow";
 import { cn } from "@/shared/lib/react-std";
-import { NodeTypesUnion } from "@/shared/appStore/react-flow-types";
+import { useRemoveNodeIds } from "@/shared/lib/model";
+import { PossibleNode } from "@/shared/appStore/react-flow-types";
 
 interface ErrorResponse {
   statusCode: number;
@@ -35,11 +42,19 @@ interface ErrorResponse {
 }
 export const Flow = ({ className }: { className?: string }) => {
   const { id: projectId } = useParams();
-  const { screenToFlowPosition } = useReactFlow();
+
   const [type] = useDnD();
   const reactFlowWrapper = useRef(null);
   const { toast } = useToast();
 
+  const { onReactFlowNodeDragStop } = useReactFlowOnNodeDragStop();
+  const { onReactFlowNodeDrag } = useReactFlowOnNodeDrag();
+  const { onDragOver, onReactFlowDrop } = useDragAndDropItems();
+  const { onChange } = useReactFlowOnChange();
+
+  const selectedNodeIds = useStore((state) => state.selectedNodeIds);
+
+  const { extractIds } = useRemoveNodeIds();
   // todo вынести
   // const { data, isFetching, error } = useQuery<
   //   ProjectResponseData,
@@ -68,50 +83,14 @@ export const Flow = ({ className }: { className?: string }) => {
   //   },
   // });
 
-  const {
-    nodes,
-    edges,
-    onNodesChange,
-    onEdgesChange,
-    onConnect,
-    setSelectedNodeId,
-    addNode,
-  } = useStore(useShallow(reactFLowSelectors));
-  const usenodes = useNodes();
-  const { getNodesBounds } = useReactFlow();
-  // console.log(getNodesBounds(nodes));
-  const nodeTypes = useMemo(() => nodeTypesEntities, []);
-  const [selectedNodes, setSelectedNodes] = useState<string[] | []>([]);
-  const projectTheme = useStore(getThemeSelector);
-  // const onChange = useCallback(
-  //   ({ usenodes }: { usenodes: Node[] }) => {
-  //     console.log(useNodes)
-  //     setSelectedNodes(usenodes.map((node) => node.id));
-  //     if (usenodes.length === 0) {
-  //       setSelectedNodeId(null);
-  //     }
-  //     // setSelectedNodeId(nodes[0].id);
-  //   },
-
-  //   []
-  // );
-
-  // * -------------------------SELECTING -------------------------
-  const onChange = useCallback(
-    onReactFlowChange(setSelectedNodeId, setSelectedNodes),
-    []
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useStore(
+    useShallow(reactFLowSelectors)
   );
-  useOnSelectionChange({
-    onChange,
-  });
-  // * ------------------------------------------------------------
 
-  const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  }, []);
-
-  const onDrop = useCallback(onReactFlowDrop, [screenToFlowPosition, type]);
+  const usenodes = useNodes();
+  const nodeTypes = useMemo(() => nodeTypesEntities, []); //Вынести в хук
+  const removeNode = useStore((state) => state.removeNode);
+  const projectTheme = useStore(getThemeSelector);
 
   const onReactFlowErrorHandler = (code: string, message: string) => {};
 
@@ -125,6 +104,18 @@ export const Flow = ({ className }: { className?: string }) => {
   //   }
   // }, [error]);
 
+  const handleDelete = (nodes: PossibleNode[]) => {
+    console.log(nodes);
+    const idsToDelete = extractIds([...selectedNodeIds]);
+    removeNode([...idsToDelete, ...selectedNodeIds]);
+  };
+  // * -------------------------SELECTING -------------------------
+  // * https://reactflow.dev/api-reference/hooks/use-on-selection-change
+  useOnSelectionChange({
+    onChange,
+  });
+  // * ------------------------------------------------------------
+  console.log(nodes);
   return (
     <main className={cn("project-flow dark:bg-slate-800}", className)}>
       <div
@@ -155,17 +146,13 @@ export const Flow = ({ className }: { className?: string }) => {
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
-          onDrop={(event) =>
-            onDrop(
-              event,
-              addNode,
-              screenToFlowPosition,
-              type as NodeTypesUnion,
-              projectId as string
-            )
-          }
+          onDrop={onReactFlowDrop}
           onDragOver={onDragOver}
           colorMode={projectTheme}
+          onNodeDrag={onReactFlowNodeDrag}
+          onNodeDragStop={onReactFlowNodeDragStop}
+          minZoom={0.05}
+          onNodesDelete={handleDelete}
         >
           <Controls />
           <MiniMap />
@@ -182,7 +169,7 @@ export const Flow = ({ className }: { className?: string }) => {
             color="#ccc"
             variant={BackgroundVariant.Lines}
           />
-          <p>Selected nodes: {selectedNodes.join(", ")}</p>
+          <p>Selected nodes: {selectedNodeIds.join(", ")}</p>
         </ReactFlow>
       </div>
     </main>

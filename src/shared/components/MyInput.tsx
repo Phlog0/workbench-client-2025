@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { useDebounce, useDebouncedCallback } from "use-debounce";
 import { Input, Label } from "shared/ui";
 import useStore from "../appStore/store";
@@ -15,7 +15,7 @@ type TMyInput = {
   selectedNodeId: string;
   defaultValue?: string | number;
 };
-export const MyInput = ({
+export const MyInput = memo(function MyInput({
   className,
   inputId,
   selectedNodeId,
@@ -24,7 +24,7 @@ export const MyInput = ({
   keyOne,
   keyTwo,
   defaultValue = "", //мб в будущем с сервака?
-}: TMyInput) => {
+}: TMyInput) {
   const { getNode } = useReactFlow();
   const nodeValue = getNode(selectedNodeId as string);
   console.log(nodeValue);
@@ -35,10 +35,9 @@ export const MyInput = ({
   const [text, setText] = useState(defaultValue);
   // const [state, setState] = useState(selectedNodeId);
 
-
   useEffect(() => {
     setText(currentNode?.[keyOne]?.[keyTwo] || defaultValue);
-  }, [selectedNodeId,currentNode?.[keyOne]?.[keyTwo]]);
+  }, [selectedNodeId, currentNode?.[keyOne]?.[keyTwo]]);
   const changeInputPropertyTCell10Kv = useStore(
     (state) => state.changeInputPropertyTCell10Kv
   );
@@ -68,4 +67,4 @@ export const MyInput = ({
       />
     </form>
   );
-};
+});

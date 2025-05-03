@@ -13,17 +13,16 @@ type HandleClick = {
 
 type MyVirtualTableProps = {
   param?: string;
- 
 };
 export const MyVirtualTable: React.FC<MyVirtualTableProps> = ({
   param = "",
-
 }) => {
   const selectReadyMadeSolution = useStore(
     (state) => state.selectReadyMadeSolution
   );
 
-  const selectedNodeId = useStore((state) => state.selectedNodeId);
+  const selectedNodeIds = useStore((state) => state.selectedNodeIds);
+  const selectedNodeId = selectedNodeIds[0];
   const { isLoading, isError, error, data } = useGetProjectData({ q: param });
 
   const [widths, setWidths] = useState<null | number[]>(null);
@@ -41,16 +40,8 @@ export const MyVirtualTable: React.FC<MyVirtualTableProps> = ({
       keyOne: param,
       value: data?.body[index],
     });
-    // setOpen(false)
-
-    // await selectSolution({
-    //   electricalPanelId: currentElectricalPanelId,
-    //   prop: prop,
-    //   data: data.body[index],
-    // });
-    // onClose();
   };
-
+  console.log(data);
   if (isLoading)
     return (
       <div className="absolute z-10 top-1/2 left-1/2 translate-x-1/2 translate-y-1/2">

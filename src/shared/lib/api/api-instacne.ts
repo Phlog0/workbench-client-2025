@@ -19,7 +19,8 @@ class HttpErrorResponse extends Error {
     }
 }
 
-export const fetchData = async (query: string): Promise<TableData> => {
+export const fetchData = async (query = "1"): Promise<TableData> => {
+    console.log(query)
     const response = await fetch(`${BASE_URL}/api/cell-10-kv/${query}`)
     if (!response.ok) {
         const error = await response.json();

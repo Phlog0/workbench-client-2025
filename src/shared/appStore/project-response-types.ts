@@ -1,4 +1,5 @@
-import { TCell10Kv, TSwitchingDeviceR, TSwitchingDeviceVN, TSwitchingDeviceVV } from "./types"
+import { TCell10Kv } from "./react-flow-types"
+
 
 export type Position = {
     x: number

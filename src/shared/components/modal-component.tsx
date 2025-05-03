@@ -17,12 +17,14 @@ export const ModalComponent = ({
   dialogTitle,
   triggerTitle,
   projectTheme,
+  isOverflowContainerEnabled = false,
 }: {
   className?: string;
   content: ReactNode;
   triggerTitle: string | ReactNode;
   dialogTitle: string;
 
+  isOverflowContainerEnabled?: boolean;
   projectTheme?: ProjectTheme;
 }) => {
   return (
@@ -37,7 +39,7 @@ export const ModalComponent = ({
         {triggerTitle}
       </DialogTrigger>
       <DialogContent
-        className={cn("h-screen max-w-screen-lg overflow-hidden", {
+        className={cn("h-screen max-w-screen overflow-hidden", {
           "": projectTheme === "light",
           "bg-slate-800": projectTheme === "dark",
         })}
@@ -45,7 +47,13 @@ export const ModalComponent = ({
         <DialogHeader>
           <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription className="h-full overflow-hidden">
-            <div className="h-[90vh] overflow-y-auto container-save-scroll">{content}</div>
+            <div
+              className={cn("h-[87vh] container-save-scroll", {
+                "overflow-auto": isOverflowContainerEnabled,
+              })}
+            >
+              {content}
+            </div>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

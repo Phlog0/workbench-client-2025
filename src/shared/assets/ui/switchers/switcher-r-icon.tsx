@@ -1,0 +1,121 @@
+export function SwithcerRIcon({
+  className,
+  color,
+  height,
+  strokeWidth,
+}: {
+  className?: string;
+  height?: number;
+  strokeWidth?: number;
+  color?: string;
+}) {
+  return (
+    <svg
+      width="600.000000"
+      height={height || "600.000000"}
+      viewBox="0 0 600 600"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+    >
+      <desc>Created with Pixso.</desc>
+      <defs>
+        <clipPath id="clip4_47">
+          <rect
+            id="VYKL_R"
+            width="600.000000"
+            height="600.000000"
+            fill="white"
+            fill-opacity="0"
+          />
+        </clipPath>
+      </defs>
+      <rect
+        id="VYKL_R"
+        width="600.000000"
+        height="600.000000"
+        fill="#FFFFFF"
+        fill-opacity="0"
+      />
+      <g clip-path="url(#clip4_47)">
+        <path
+          id="Vector 2"
+          d="M300 78L300 522"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Vector 5"
+          d="M300 0L300 60"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Vector 6"
+          d="M300 540L300 600"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Форма 1"
+          d="M276 82L302 56"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Форма 5"
+          d="M302 526L276 500"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Форма 3"
+          d="M276 100L302 74"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Форма 6"
+          d="M302 544L276 518"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Форма 2"
+          d="M298 56L324 82"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Форма 7"
+          d="M324 500L298 526"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Форма 4"
+          d="M298 74L324 100"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+        <path
+          id="Форма 8"
+          d="M324 518L298 544"
+          stroke="#000000"
+          stroke-opacity="1.000000"
+          stroke-width={strokeWidth || "6.000000"}
+        />
+      </g>
+    </svg>
+  );
+}

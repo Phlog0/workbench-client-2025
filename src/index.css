@@ -71,8 +71,8 @@
   height: 100dvh;
   width: 100vw;
   display: grid;
-  grid-template-columns: 7% 70% 23%;
-  grid-template-rows: 10% 90%;
+  grid-template-columns: 10% 70% 23%;
+  grid-template-rows: 15% 85%;
   grid-template-areas:
     "header header header"
     "items flow properties";

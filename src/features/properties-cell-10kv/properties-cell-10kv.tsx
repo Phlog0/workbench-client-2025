@@ -6,6 +6,7 @@ export function PropertiesCell10Kv({
 }: {
   selectedNodeId: string;
 }) {
+  console.log(selectedNodeId)
   return (
     <div>
       <TypeOfCell selectedNodeId={selectedNodeId} />

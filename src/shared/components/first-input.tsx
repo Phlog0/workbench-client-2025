@@ -2,8 +2,10 @@ import { BookOpen } from "lucide-react";
 import { ModalComponent } from "./modal-component";
 import { MyInput } from "./MyInput";
 import { MyVirtualTable } from "./MyVirtualTable";
+import { TtCount } from "@/features/properties-cell-10kv/measuring-current-transformers/is-there-measuring-current-transformers-device";
 type FirstInputProps = {
   KEY_1: string;
+  ttCount?: TtCount;
   data: {
     inputType: string;
     label: string;
@@ -17,12 +19,12 @@ type FirstInputProps = {
 };
 export function FirstInput({
   KEY_1,
+  ttCount = "",
   LABEL,
   data,
   defaultValue,
   selectedNodeId,
 }: FirstInputProps) {
-
   return (
     <div className="flex">
       <div className="flex-1">
@@ -34,9 +36,7 @@ export function FirstInput({
       </div>
 
       <ModalComponent
-
-  
-        content={<MyVirtualTable   param={KEY_1} />}
+        content={<MyVirtualTable param={`${KEY_1}/${ttCount}`} />}
         dialogTitle={LABEL}
         triggerTitle={<BookOpen className="mt-4" />}
       />

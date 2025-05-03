@@ -1,7 +1,12 @@
-import { ChangeThemeButton, OpenModalPropertiesButton } from "@/features";
+import {
+  ChangeThemeButton,
+  OpenModalPropertiesButton,
+  RemoveReactFlowNodeButton,
+} from "@/features";
 import { cn } from "@/shared/lib/react-std";
 
 export function ProjectHeader({ className }: { className?: string }) {
+  
   return (
     <header
       className={cn(
@@ -13,6 +18,7 @@ export function ProjectHeader({ className }: { className?: string }) {
     >
       <ChangeThemeButton className="max-h-full" />
       <OpenModalPropertiesButton />
+      <RemoveReactFlowNodeButton />
     </header>
   );
 }

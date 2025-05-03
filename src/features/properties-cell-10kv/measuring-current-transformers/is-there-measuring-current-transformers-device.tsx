@@ -10,6 +10,8 @@ import {
   isMeasuringCurrentTransformersDeviceParam,
 } from "@/shared/mock-data";
 import { TCell10Kv } from "@/shared/appStore/react-flow-types";
+
+export type TtCount = string | number;
 export function IsThereMeasuringCurrentTransformersDevice({
   className,
   selectedNodeId,
@@ -28,6 +30,34 @@ export function IsThereMeasuringCurrentTransformersDevice({
     nodeInfo?.[isMeasuringCurrentTransformersDeviceParam] ||
     isMeasuringCurrentTransformersDeviceOptions[0];
   const [value, setValue] = useState(mockValue);
+
+  const [ttCount, setTtCount] = useState<TtCount>("");
+
+  useEffect(() => {
+    if (value === "нет") setTtCount("");
+    if (
+      [
+        "2 Трансформатора тока 2 обмотки",
+        "3 Трансформатора тока 2 обмотки",
+      ].includes(value)
+    )
+      setTtCount(2);
+    if (
+      [
+        "2 Трансформатора тока 3 обмотки",
+        "3 Трансформатора тока 3 обмотки",
+      ].includes(value)
+    )
+      setTtCount(3);
+    if (
+      [
+        "2 Трансформатора тока 4 обмотки",
+        "3 Трансформатора тока 4 обмотки",
+      ].includes(value)
+    )
+      setTtCount(4);
+  }, [value]);
+
   useEffect(() => {
     setValue(mockValue);
   }, [selectedNodeId]);
@@ -47,7 +77,10 @@ export function IsThereMeasuringCurrentTransformersDevice({
         setPropValue={setValue}
       />
       {value !== "нет" && (
-        <MeasuringCurrentTransformersDevice selectedNodeId={selectedNodeId} />
+        <MeasuringCurrentTransformersDevice
+          ttCount={ttCount}
+          selectedNodeId={selectedNodeId}
+        />
       )}
     </div>
   );

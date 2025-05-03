@@ -3,6 +3,7 @@ import { TCell10Kv } from "@/shared/appStore/react-flow-types";
 import { ModalComponent, MyInput, MyVirtualTable } from "@/shared/components";
 import { FirstInput } from "@/shared/components";
 import { cn } from "@/shared/lib/react-std";
+import { isMeasuringCurrentTransformersDeviceOptions } from "@/shared/mock-data";
 import {
   Accordion,
   AccordionContent,
@@ -11,8 +12,10 @@ import {
 } from "@/shared/ui";
 import { useReactFlow } from "@xyflow/react";
 import { useParams } from "react-router-dom";
+import { TtCount } from "./is-there-measuring-current-transformers-device";
 
 const KEY_1 = "measuringCurrentTransformersDevice";
+
 const LABEL = "ТТ (Измерительные Трансформаторы Тока)";
 const measuringCurrentTransformersDeviceData = [
   {
@@ -69,9 +72,11 @@ const measuringCurrentTransformersDeviceData = [
 export function MeasuringCurrentTransformersDevice({
   className,
   selectedNodeId,
+  ttCount,
 }: {
   className?: string;
   selectedNodeId: string;
+  ttCount?: TtCount;
 }) {
   // const { node } = useGetCurrentNode(selectedNodeId);
   // console.log(node);
@@ -89,6 +94,7 @@ export function MeasuringCurrentTransformersDevice({
           <AccordionContent className="px-4 flex flex-col gap-3">
             <FirstInput
               KEY_1={KEY_1}
+              ttCount={ttCount}
               LABEL={LABEL}
               data={typeInpKeys}
               defaultValue={

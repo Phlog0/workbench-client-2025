@@ -11,13 +11,14 @@ import { AllNodesPropertiesTypes } from "../appStore/properties-types";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { reactFLowSelectors } from "../appStore/my-selectors";
+import { TypeOfCellOptions } from "../constants/constants";
 
 type MySelect = {
   label?: string;
   // propValue?: AllNodesPropertiesTypes[keyof AllNodesPropertiesTypes];
   propValue?: string;
   setPropValue: React.Dispatch<React.SetStateAction<string>>; // я типо сверху буду провоцировать ре-рендер. Похоже на антипатерн
-  options: string[];
+  options: string[]
   q?: string;
   prop: keyof AllNodesPropertiesTypes; //ключ, который отвечает за select (ex.: typeOfCell)
   selectedNodeId: string;
@@ -49,7 +50,7 @@ export const MySelect = ({
   //   addNode,
   // } = useStore(useShallow(reactFLowSelectors));
 
-  const nodes = useStore((state) => state.nodes);
+  // const nodes = useStore((state) => state.nodes);
   return (
     <div>
       <Label>{label}</Label>

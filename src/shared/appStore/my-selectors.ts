@@ -1,6 +1,6 @@
-import { AppState } from "./types";
+import { AppReactFlowBasicActions, AppState } from "./types";
 
-export const reactFLowSelectors = (state: AppState) => ({
+export const reactFLowSelectors = (state: AppState & AppReactFlowBasicActions) => ({
     nodes: state.nodes,
     edges: state.edges,
     onNodesChange: state.onNodesChange,
@@ -8,6 +8,7 @@ export const reactFLowSelectors = (state: AppState) => ({
     onConnect: state.onConnect,
     setSelectedNodeId: state.setSelectedNodeId,
     addNode: state.addNode,
+    setNodes: state.setNodes
 });
 
 

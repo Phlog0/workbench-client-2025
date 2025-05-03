@@ -8,11 +8,12 @@ import { Spinner } from "@/shared/ui";
 import { TypeOfSwitchingDevice } from "./type-of-switching-device/type-of-switching-device";
 
 import { VoltageTransformerDevice } from "./voltage-transformer-device";
-import { OpnDevice } from "./opn/opn-device";
 import { UkrmDevice } from "./ukrm-device";
 import { IsThereMeasuringCurrentTransformersDevice } from "./measuring-current-transformers/is-there-measuring-current-transformers-device";
 import { TCell10Kv } from "@/shared/appStore/react-flow-types";
 import { TsnDevice } from "./tsn-device";
+import { IsThereOpnDevice } from "./opn/is-there-opn-device";
+import { TYPE_OF_CELL_OPTIONS } from "@/shared/constants/constants";
 const PARAM = "typeOfCell";
 export function TypeOfCell({
   className,
@@ -21,17 +22,7 @@ export function TypeOfCell({
   className?: string;
   selectedNodeId: string;
 }) {
-  const options = [
-    "ТСН (Трансформатор собсвтенных нужд)",
-    "Шинный мост",
-    "СВ (Секционный выключатель)",
-    "СР (Секционный разъединитель)",
-    "Шинный переход",
-    "Ввод",
-    "Отходящая линия",
-    "УКРМ (Устройство компенсации реактивной мощности)",
-    "ТН (Трансформатор напряжения)",
-  ];
+  const options = TYPE_OF_CELL_OPTIONS;
 
   const { data, isLoading, isError, error } = useGetProjectData({ q: PARAM });
   const { getNode } = useReactFlow();
@@ -91,7 +82,9 @@ export function TypeOfCell({
 
         "Ввод",
         "Отходящая линия",
-      ].includes(typeOfCell) && <OpnDevice selectedNodeId={selectedNodeId} />}
+      ].includes(typeOfCell) && (
+        <IsThereOpnDevice selectedNodeId={selectedNodeId} />
+      )}
 
       {["ТСН (Трансформатор собсвтенных нужд)"].includes(typeOfCell) && (
         <TsnDevice selectedNodeId={selectedNodeId} />
