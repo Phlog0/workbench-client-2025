@@ -11,6 +11,7 @@ export function VykatnoyRazjem1Icon({
 }) {
   return (
     <svg
+      className={className}
       width="600.000000"
       height={height || "600.000000"}
       viewBox="0 0 600 600"

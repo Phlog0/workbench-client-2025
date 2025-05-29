@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 
 import {
   ReactFlow,
@@ -7,10 +7,7 @@ import {
   Background,
   BackgroundVariant,
   useOnSelectionChange,
-  useReactFlow,
-  useNodes,
-  useNodesState,
-  Node,
+  NodeChange,
 } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 import "@xyflow/react/dist/style.css";
@@ -18,43 +15,39 @@ import useStore from "shared/appStore/store";
 
 import { nodeTypesEntities } from "@/entities/react-flow-nodes";
 
-import { useParams } from "react-router-dom";
-import { useDnD } from "@/app/DnDContext/DnDContext";
-
-import { useToast } from "@/shared/lib/use-toast";
-import {
-  getThemeSelector,
-  reactFLowSelectors,
-} from "@/shared/appStore/my-selectors";
+import { getThemeSelector, reactFLowSelectors } from "@/shared/appStore/my-selectors";
 import {
   useReactFlowOnNodeDragStop,
   useReactFlowOnNodeDrag,
   useDragAndDropItems,
   useReactFlowOnChange,
+  useReactFlowContextMenu,
+  useReactFlowHelperLine,
 } from "@/features/react-flow";
 import { cn } from "@/shared/lib/react-std";
 import { useRemoveNodeIds } from "@/shared/lib/model";
-import { PossibleNode } from "@/shared/appStore/react-flow-types";
+import { ContextMenu, HelperLinesRenderer } from "@/shared/components";
 
-interface ErrorResponse {
-  statusCode: number;
-  message: string;
-}
+// interface ErrorResponse {
+//   statusCode: number;
+//   message: string;
+// }
 export const Flow = ({ className }: { className?: string }) => {
-  const { id: projectId } = useParams();
+  // const { id: projectId } = useParams();
 
-  const [type] = useDnD();
+  // const [type] = useDnD();
   const reactFlowWrapper = useRef(null);
-  const { toast } = useToast();
 
   const { onReactFlowNodeDragStop } = useReactFlowOnNodeDragStop();
   const { onReactFlowNodeDrag } = useReactFlowOnNodeDrag();
   const { onDragOver, onReactFlowDrop } = useDragAndDropItems();
   const { onChange } = useReactFlowOnChange();
 
+  const { helperLineHorizontal, helperLineVertical, updateHelperLines } = useReactFlowHelperLine();
   const selectedNodeIds = useStore((state) => state.selectedNodeIds);
 
   const { extractIds } = useRemoveNodeIds();
+  const { menu, onNodeContextMenu, onPaneClick, reactFlowRef } = useReactFlowContextMenu();
   // todo вынести
   // const { data, isFetching, error } = useQuery<
   //   ProjectResponseData,
@@ -84,15 +77,14 @@ export const Flow = ({ className }: { className?: string }) => {
   // });
 
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useStore(
-    useShallow(reactFLowSelectors)
+    useShallow(reactFLowSelectors),
   );
 
-  const usenodes = useNodes();
   const nodeTypes = useMemo(() => nodeTypesEntities, []); //Вынести в хук
   const removeNode = useStore((state) => state.removeNode);
   const projectTheme = useStore(getThemeSelector);
 
-  const onReactFlowErrorHandler = (code: string, message: string) => {};
+  // const onReactFlowErrorHandler = (code: string, message: string) => {};
 
   // useEffect(() => {
   //   if (error) {
@@ -104,25 +96,30 @@ export const Flow = ({ className }: { className?: string }) => {
   //   }
   // }, [error]);
 
-  const handleDelete = (nodes: PossibleNode[]) => {
-    console.log(nodes);
+  const handleDelete = () => {
     const idsToDelete = extractIds([...selectedNodeIds]);
     removeNode([...idsToDelete, ...selectedNodeIds]);
   };
+
+  const handleNodeChange = useCallback(
+    (changes: NodeChange[]) => {
+      const sections = nodes.filter((item) => item.type === "Section10Kv");
+      const updatedChanges = updateHelperLines(changes, sections);
+      onNodesChange(updatedChanges);
+    },
+    [updateHelperLines, nodes, onNodesChange],
+  );
+  // Close the context menu if it's open whenever the window is clicked.
+
   // * -------------------------SELECTING -------------------------
   // * https://reactflow.dev/api-reference/hooks/use-on-selection-change
   useOnSelectionChange({
     onChange,
   });
   // * ------------------------------------------------------------
-  console.log(nodes);
   return (
     <main className={cn("project-flow dark:bg-slate-800}", className)}>
-      <div
-        style={{ width: "100%", height: "100%" }}
-        ref={reactFlowWrapper}
-        className="relative"
-      >
+      <div style={{ width: "100%", height: "100%" }} ref={reactFlowWrapper} className="relative">
         {/* <motion.div
         variants={{
           visible: { opacity: 1, display: "block" },
@@ -140,10 +137,11 @@ export const Flow = ({ className }: { className?: string }) => {
 
         {/* ФЛАГИ-КОНСТАНТЫ */}
         <ReactFlow
+          ref={reactFlowRef}
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
-          onNodesChange={onNodesChange}
+          onNodesChange={handleNodeChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           onDrop={onReactFlowDrop}
@@ -153,23 +151,18 @@ export const Flow = ({ className }: { className?: string }) => {
           onNodeDragStop={onReactFlowNodeDragStop}
           minZoom={0.05}
           onNodesDelete={handleDelete}
+          onNodeContextMenu={onNodeContextMenu}
+          onPaneClick={onPaneClick}
+          // elevateNodesOnSelect
         >
           <Controls />
           <MiniMap />
-          <Background
-            id="1"
-            gap={10}
-            color="#f1f1f1"
-            variant={BackgroundVariant.Lines}
-          />
+          <Background id="1" gap={10} color="#f1f1f1" variant={BackgroundVariant.Lines} />
 
-          <Background
-            id="2"
-            gap={100}
-            color="#ccc"
-            variant={BackgroundVariant.Lines}
-          />
+          <Background id="2" gap={100} color="#ccc" variant={BackgroundVariant.Lines} />
           <p>Selected nodes: {selectedNodeIds.join(", ")}</p>
+          {menu && <ContextMenu onClick={onPaneClick} contextMenuCoordinats={menu} />}
+          <HelperLinesRenderer horizontal={helperLineHorizontal} vertical={helperLineVertical} />
         </ReactFlow>
       </div>
     </main>

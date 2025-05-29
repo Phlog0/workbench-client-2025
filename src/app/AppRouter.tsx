@@ -1,3 +1,4 @@
+//! в shared
 import { Spinner } from "shared/ui";
 import { FlowLayout, Menu } from "pages/index";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";

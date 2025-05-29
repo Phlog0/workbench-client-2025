@@ -13,7 +13,6 @@ export function RemoveReactFlowNodeButton({
   const { extractIds } = useRemoveNodeIds();
   const handleClick = () => {
     const idsToDelete = extractIds(selectedNodeIds);
-    // console.log(idsToDelete);
     removeNode([...idsToDelete, ...selectedNodeIds]);
   };
 

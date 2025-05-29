@@ -1,41 +1,13 @@
 import { Tmpdaa } from "@/shared/appStore/properties-types";
-import { TCell10Kv } from "@/shared/appStore/react-flow-types";
-import { FirstInput, MyInput } from "@/shared/components";
-import { cn } from "@/shared/lib/react-std";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/shared/ui";
+import { TCell10Kv } from "@/shared/appStore/react-flow-node-types";
+import { UiInput, HeaderInput } from "@/shared/components";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/shared/ui";
 import { useReactFlow } from "@xyflow/react";
-
-const KEY_1 = "mpdaa";
-const LABEL = "Микропроцессорное устройство защиты и автоматики";
-const microprocessorProtectionDeviceData = [
-  {
-    inputType: "text",
-    label: "Тип",
-    keyOne: KEY_1,
-    keyTwo: "type",
-    inputId: `${KEY_1}Type`,
-  },
-  {
-    inputType: "text",
-    label: "Наименование",
-    keyOne: KEY_1,
-    keyTwo: "title",
-    inputId: `${KEY_1}Title`,
-  },
-  {
-    inputType: "text",
-    label: "Производитель",
-    keyOne: KEY_1,
-    keyTwo: "manufacturer",
-    inputId: `${KEY_1}Manufacturer`,
-  },
-];
-
+import {
+  MICROPROCESSOR_DEVICE_DATA_10KV,
+  MICROPROCESSOR_DEVICE_KEY_1_10KV,
+  MICROPROCESSOR_DEVICE_LABEL_10KV,
+} from "@/shared/constants";
 export function MicroprocessorProtectionDevice({
   className,
   selectedNodeId,
@@ -48,31 +20,34 @@ export function MicroprocessorProtectionDevice({
   const { getNode } = useReactFlow();
 
   const nodeValue = getNode(selectedNodeId as string) as TCell10Kv;
-  const typeInpKeys = microprocessorProtectionDeviceData[0];
 
   return (
     <div>
-      <Accordion type="single" collapsible className={cn("", className)}>
-        <AccordionItem value={`accordion-${KEY_1}`}>
+      <Accordion type="single" collapsible className={className}>
+        <AccordionItem value={`accordion-${MICROPROCESSOR_DEVICE_KEY_1_10KV}`}>
           <AccordionTrigger className="flex items-center">
-            {LABEL}
+            {MICROPROCESSOR_DEVICE_LABEL_10KV}
           </AccordionTrigger>
           <AccordionContent className="px-4 flex flex-col gap-3">
-            <FirstInput
-              KEY_1={KEY_1}
-              LABEL={LABEL}
-              data={typeInpKeys}
+            <HeaderInput
+              KEY_1={MICROPROCESSOR_DEVICE_KEY_1_10KV}
+              LABEL={MICROPROCESSOR_DEVICE_LABEL_10KV}
+              data={MICROPROCESSOR_DEVICE_DATA_10KV[0]}
               defaultValue={
-                nodeValue?.[KEY_1]?.[typeInpKeys.keyTwo as keyof Tmpdaa]
+                nodeValue?.[MICROPROCESSOR_DEVICE_KEY_1_10KV]?.[
+                  MICROPROCESSOR_DEVICE_DATA_10KV[0].keyTwo as keyof Tmpdaa
+                ]
               }
               selectedNodeId={selectedNodeId}
             />
-            {microprocessorProtectionDeviceData.slice(1).map((item) => (
-              <MyInput
+            {MICROPROCESSOR_DEVICE_DATA_10KV.slice(1).map((item) => (
+              <UiInput
                 key={item.inputId}
                 {...item}
                 selectedNodeId={selectedNodeId}
-                defaultValue={nodeValue?.[KEY_1]?.[item.keyTwo as keyof Tmpdaa]}
+                defaultValue={
+                  nodeValue?.[MICROPROCESSOR_DEVICE_KEY_1_10KV]?.[item.keyTwo as keyof Tmpdaa]
+                }
               />
             ))}
           </AccordionContent>

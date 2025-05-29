@@ -1,12 +1,12 @@
 //! ЛОМАЕТСЯ FSD. ИСПРАВИТЬ
 
-import { NodeTypesUnion } from "@/shared/appStore/react-flow-types";
+import { NodeTypesUnion } from "@/shared/appStore/react-flow-node-types";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 // Define the type for the context value
 type DnDContextType = [
   NodeTypesUnion | null,
-  React.Dispatch<React.SetStateAction<NodeTypesUnion | null>>
+  React.Dispatch<React.SetStateAction<NodeTypesUnion | null>>,
 ];
 
 // Create the context with a default value
@@ -19,11 +19,7 @@ interface DnDProviderProps {
 export const DnDProvider: React.FC<DnDProviderProps> = ({ children }) => {
   const [type, setType] = useState<NodeTypesUnion | null>(null);
 
-  return (
-    <DnDContext.Provider value={[type, setType]}>
-      {children}
-    </DnDContext.Provider>
-  );
+  return <DnDContext.Provider value={[type, setType]}>{children}</DnDContext.Provider>;
 };
 
 export default DnDContext;

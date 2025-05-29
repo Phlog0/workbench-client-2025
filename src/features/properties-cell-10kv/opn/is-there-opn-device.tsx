@@ -1,12 +1,14 @@
-import useStore from "@/shared/appStore/store";
-import { MySelect } from "@/shared/components";
+import { UiSelect } from "@/shared/components";
 import { useReactFlow } from "@xyflow/react";
 import { useEffect, useState } from "react";
-import { useGetProjectData } from "@/shared/lib/api/use-get-project-data";
-import { Spinner } from "@/shared/ui";
+
 import { OpnDevice } from "./opn-device";
-import { TCell10Kv } from "@/shared/appStore/react-flow-types";
-const PARAM = "isThereOpnDevice";
+import { TCell10Kv } from "@/shared/appStore/react-flow-node-types";
+import {
+  IS_THERE_OPN_KEY_1_10KV,
+  IS_THERE_OPN_DEVICE_OPTIONS_10KV,
+  IS_THERE_OPN_LABEL_10KV,
+} from "@/shared/constants";
 export function IsThereOpnDevice({
   className,
   selectedNodeId,
@@ -14,14 +16,12 @@ export function IsThereOpnDevice({
   className?: string;
   selectedNodeId: string;
 }) {
-  const options = ["нет", "есть"];
-
   // const { data, isLoading, isError, error } = useGetProjectData({ q: PARAM });
   const { getNode } = useReactFlow();
 
   const nodeInfo = getNode(selectedNodeId as string) as TCell10Kv;
 
-  const mockValue = nodeInfo?.[PARAM] || options[0];
+  const mockValue = nodeInfo?.[IS_THERE_OPN_KEY_1_10KV] || IS_THERE_OPN_DEVICE_OPTIONS_10KV[0];
   const [isThereOpnDevice, setIsThereOpnDevice] = useState(mockValue);
   useEffect(() => {
     setIsThereOpnDevice(mockValue);
@@ -32,18 +32,16 @@ export function IsThereOpnDevice({
   //   return <span>Error: {error.message}</span>;
   // }
   return (
-    <div>
-      <MySelect
-        prop={PARAM}
-        label="Есть ОПН"
+    <div className={className}>
+      <UiSelect
+        prop={IS_THERE_OPN_KEY_1_10KV}
+        label={IS_THERE_OPN_LABEL_10KV}
         selectedNodeId={selectedNodeId}
-        options={options}
+        options={IS_THERE_OPN_DEVICE_OPTIONS_10KV}
         propValue={isThereOpnDevice}
         setPropValue={setIsThereOpnDevice}
       />
-      {isThereOpnDevice === "есть" && (
-        <OpnDevice selectedNodeId={selectedNodeId} />
-      )}
+      {isThereOpnDevice === "есть" && <OpnDevice selectedNodeId={selectedNodeId} />}
     </div>
   );
 }

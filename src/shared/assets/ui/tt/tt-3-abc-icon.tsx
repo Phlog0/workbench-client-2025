@@ -1,5 +1,5 @@
 //3 transormers with 2 obmotki
-export function Tt3Abc({
+export function Tt3AbcIcon({
   className,
   color,
   height,
@@ -32,13 +32,7 @@ export function Tt3Abc({
           />
         </clipPath>
       </defs>
-      <rect
-        id="TT_3_ABC"
-        width="600.000000"
-        height="600.000000"
-        fill="#FFFFFF"
-        fill-opacity="0"
-      />
+      <rect id="TT_3_ABC" width="600.000000" height="600.000000" fill="#FFFFFF" fill-opacity="0" />
       <g clip-path="url(#clip8_294)">
         <path
           id="Vector"

@@ -1,5 +1,5 @@
 //3 transormers with 2 obmotki
-export function Tt3Ac({
+export function Tt3AcIcon({
   className,
   color,
   height,
@@ -22,22 +22,10 @@ export function Tt3Ac({
       <desc>Created with Pixso.</desc>
       <defs>
         <clipPath id="clip8_194">
-          <rect
-            id="TT_3_AC"
-            width="600.000000"
-            height="600.000000"
-            fill="white"
-            fill-opacity="0"
-          />
+          <rect id="TT_3_AC" width="600.000000" height="600.000000" fill="white" fill-opacity="0" />
         </clipPath>
       </defs>
-      <rect
-        id="TT_3_AC"
-        width="600.000000"
-        height="600.000000"
-        fill="#FFFFFF"
-        fill-opacity="0"
-      />
+      <rect id="TT_3_AC" width="600.000000" height="600.000000" fill="#FFFFFF" fill-opacity="0" />
       <g clip-path="url(#clip8_194)">
         <path
           id="Vector"

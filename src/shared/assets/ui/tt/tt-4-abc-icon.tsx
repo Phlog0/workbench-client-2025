@@ -1,5 +1,5 @@
 //3 transormers with 2 obmotki
-export function Tt4Abc({
+export function Tt4AbcIcon({
   className,
   color,
   height,
@@ -12,7 +12,7 @@ export function Tt4Abc({
 }) {
   return (
     <svg
-    className={className}
+      className={className}
       width="600.000000"
       height={height?.toString() || "600.000000"}
       viewBox="0 0 600 600"
@@ -32,13 +32,7 @@ export function Tt4Abc({
           />
         </clipPath>
       </defs>
-      <rect
-        id="TT_4_ABC"
-        width="600.000000"
-        height="600.000000"
-        fill="#FFFFFF"
-        fill-opacity="0"
-      />
+      <rect id="TT_4_ABC" width="600.000000" height="600.000000" fill="#FFFFFF" fill-opacity="0" />
       <g clip-path="url(#clip8_621)">
         <path
           id="Vector"

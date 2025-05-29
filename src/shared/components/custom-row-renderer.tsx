@@ -1,7 +1,11 @@
-import { defaultRowRenderer as DefaultRowRenderer } from "react-virtualized/dist/es/Table";
+import {
+  defaultRowRenderer as DefaultRowRenderer,
+  TableRowProps,
+} from "react-virtualized/dist/es/Table";
 import { cn } from "../lib/react-std";
 import { DialogClose } from "../ui";
-export function CustomRowRenderer(props) {
+export function CustomRowRenderer(props: TableRowProps) {
+  // console.log({ index: props.index, data: props.rowData });
   return (
     <DialogClose>
       <DefaultRowRenderer

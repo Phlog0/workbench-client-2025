@@ -1,17 +1,17 @@
-import useStore from "@/shared/appStore/store";
-import { MySelect } from "@/shared/components";
+import { UiSelect } from "@/shared/components";
 import { useReactFlow } from "@xyflow/react";
 import { SwitchingDeviceVv } from "./switching-device-vv";
 import { SwitchingDeviceVn } from "./switching-device-vn";
 import { SwitchingDeviceR } from "./switching-device-r";
 import { useEffect, useState } from "react";
-import { useGetProjectData } from "@/shared/lib/api/use-get-project-data";
-import { Spinner } from "@/shared/ui";
+
 import {
-  typeOfSwitchingDeviceOptions,
-  typeOfSwitchingDeviceParam,
-} from "@/shared/mock-data";
-import { TCell10Kv } from "@/shared/appStore/react-flow-types";
+  TYPE_OF_SWITCHING_DEVICE_LABEL_10KV,
+  TYPE_OF_SWITCHING_DEVICE_OPTIONS_10KV,
+  TYPE_OF_SWITCHING_DEVICE_PARAM_10KV,
+  TypeOfSwitchingDeviceOptions_10KV,
+} from "@/shared/constants";
+import { TCell10Kv } from "@/shared/appStore/react-flow-node-types";
 export function TypeOfSwitchingDevice({
   className,
   selectedNodeId,
@@ -27,8 +27,9 @@ export function TypeOfSwitchingDevice({
   const nodeInfo = getNode(selectedNodeId as string) as TCell10Kv;
 
   const mockValue =
-    nodeInfo?.[typeOfSwitchingDeviceParam] || typeOfSwitchingDeviceOptions[0];
-  const [typeOfSwitchingDevice, setTypeOfSwitchingDevice] = useState(mockValue);
+    nodeInfo?.[TYPE_OF_SWITCHING_DEVICE_PARAM_10KV] || TYPE_OF_SWITCHING_DEVICE_OPTIONS_10KV[0];
+  const [typeOfSwitchingDevice, setTypeOfSwitchingDevice] =
+    useState<TypeOfSwitchingDeviceOptions_10KV>(mockValue);
 
   //? 1.Итак я знаю шо при возбуждении хуков происходит ре-рендер. И что же ререндерится? Почему я должен использовать useEffect? Почему я жду магию? Потому что я изменил selectedNodeId => в момент перерендера заново просчиталось getNode и в typeOfSwitchingDevice должны попасть обновлённые данные. Но этого не происходит. Что на что триггерица - вот в чём вопрос...
 
@@ -36,7 +37,7 @@ export function TypeOfSwitchingDevice({
 
   useEffect(() => {
     setTypeOfSwitchingDevice(mockValue);
-  }, [selectedNodeId]);
+  }, [selectedNodeId, mockValue]);
 
   // if (isLoading) return <Spinner />;
   // if (isError) {
@@ -44,22 +45,21 @@ export function TypeOfSwitchingDevice({
   // }
   return (
     <div>
-      <MySelect
-        prop={typeOfSwitchingDeviceParam}
-        label="Тип коммутационного аппарата"
+      <UiSelect
+        prop={TYPE_OF_SWITCHING_DEVICE_PARAM_10KV}
+        label={TYPE_OF_SWITCHING_DEVICE_LABEL_10KV}
         selectedNodeId={selectedNodeId}
-        options={typeOfSwitchingDeviceOptions}
+        options={TYPE_OF_SWITCHING_DEVICE_OPTIONS_10KV}
         propValue={typeOfSwitchingDevice}
         setPropValue={setTypeOfSwitchingDevice}
-        
       />
-      {typeOfSwitchingDevice === "вв" && (
+      {typeOfSwitchingDevice === TYPE_OF_SWITCHING_DEVICE_OPTIONS_10KV[1] && (
         <SwitchingDeviceVv selectedNodeId={selectedNodeId} />
       )}
-      {typeOfSwitchingDevice === "вн" && (
+      {typeOfSwitchingDevice === TYPE_OF_SWITCHING_DEVICE_OPTIONS_10KV[2] && (
         <SwitchingDeviceVn selectedNodeId={selectedNodeId} />
       )}
-      {typeOfSwitchingDevice === "р" && (
+      {typeOfSwitchingDevice === TYPE_OF_SWITCHING_DEVICE_OPTIONS_10KV[3] && (
         <SwitchingDeviceR selectedNodeId={selectedNodeId} />
       )}
     </div>

@@ -1,5 +1,4 @@
-import useStore from "@/shared/appStore/store";
-import { MySelect } from "@/shared/components";
+import { UiSelect } from "@/shared/components";
 import { useReactFlow } from "@xyflow/react";
 
 import { useEffect, useState } from "react";
@@ -9,12 +8,16 @@ import { TypeOfSwitchingDevice } from "./type-of-switching-device/type-of-switch
 
 import { VoltageTransformerDevice } from "./voltage-transformer-device";
 import { UkrmDevice } from "./ukrm-device";
-import { IsThereMeasuringCurrentTransformersDevice } from "./measuring-current-transformers/is-there-measuring-current-transformers-device";
-import { TCell10Kv } from "@/shared/appStore/react-flow-types";
+import { TypeOfMeasuringCurrentTransformersDevice } from "./measuring-current-transformers/type-of-measuring-current-transformers-device";
+import { TCell10Kv } from "@/shared/appStore/react-flow-node-types";
 import { TsnDevice } from "./tsn-device";
 import { IsThereOpnDevice } from "./opn/is-there-opn-device";
-import { TYPE_OF_CELL_OPTIONS } from "@/shared/constants/constants";
-const PARAM = "typeOfCell";
+import {
+  TYPE_OF_CELL_LABEL_10KV,
+  TYPE_OF_CELL_OPTIONS_10KV,
+  TYPE_OF_CELL_PARAM_10KV,
+  TypeOfCellOptions_10KV,
+} from "@/shared/constants";
 export function TypeOfCell({
   className,
   selectedNodeId,
@@ -22,76 +25,65 @@ export function TypeOfCell({
   className?: string;
   selectedNodeId: string;
 }) {
-  const options = TYPE_OF_CELL_OPTIONS;
+  const options = TYPE_OF_CELL_OPTIONS_10KV;
 
-  const { data, isLoading, isError, error } = useGetProjectData({ q: PARAM });
+  const { data, isLoading, isError, error } = useGetProjectData({ q: TYPE_OF_CELL_PARAM_10KV });
   const { getNode } = useReactFlow();
 
   const nodeInfo = getNode(selectedNodeId as string) as TCell10Kv;
 
-  const mockValue = nodeInfo?.[PARAM] || options[0];
-  const [typeOfCell, setTypeOfCell] = useState(mockValue);
+  const mockValue = nodeInfo?.[TYPE_OF_CELL_PARAM_10KV] || options[0];
+  const [typeOfCell, setTypeOfCell] = useState<TypeOfCellOptions_10KV>(mockValue);
 
   useEffect(() => {
     setTypeOfCell(mockValue);
-  }, [selectedNodeId]);
+  }, [selectedNodeId, mockValue]);
 
   if (isLoading) return <Spinner />;
   if (isError) {
     return <span>Error: {error.message}</span>;
   }
   return (
-    <div>
-      <MySelect
-        prop={PARAM}
-        label="Тип ячейки"
+    <div className={className}>
+      <UiSelect
+        prop={TYPE_OF_CELL_PARAM_10KV}
+        label={TYPE_OF_CELL_LABEL_10KV}
         selectedNodeId={selectedNodeId}
         options={options}
         propValue={typeOfCell}
         setPropValue={setTypeOfCell}
       />
-      {[
-        "ТСН (Трансформатор собсвтенных нужд)",
-        "СВ (Секционный выключатель)",
-        "СР (Секционный разъединитель)",
-        "Ввод",
-        "Отходящая линия",
-        "УКРМ (Устройство компенсации реактивной мощности)",
-        "ТН (Трансформатор напряжения)",
-      ].includes(typeOfCell) && (
+      {(typeOfCell === "ТСН (Трансформатор собсвтенных нужд)" ||
+        typeOfCell === "СВ (Секционный выключатель)" ||
+        typeOfCell === "СР (Секционный разъединитель)" ||
+        typeOfCell === "Ввод" ||
+        typeOfCell === "Отходящая линия" ||
+        typeOfCell === "УКРМ (Устройство компенсации реактивной мощности)" ||
+        typeOfCell === "ТН (Трансформатор напряжения)") && (
         <TypeOfSwitchingDevice selectedNodeId={selectedNodeId} />
       )}
-      {["ТН (Трансформатор напряжения)"].includes(typeOfCell) && (
+      {typeOfCell === "ТН (Трансформатор напряжения)" && (
         <VoltageTransformerDevice selectedNodeId={selectedNodeId} />
       )}
 
-      {[
-        "ТСН (Трансформатор собсвтенных нужд)",
-        "СВ (Секционный выключатель)",
-        "Ввод",
-        "Отходящая линия",
-        "УКРМ (Устройство компенсации реактивной мощности)",
-        "ТН (Трансформатор напряжения)",
-      ].includes(typeOfCell) && (
-        <IsThereMeasuringCurrentTransformersDevice
-          selectedNodeId={selectedNodeId}
-        />
+      {(typeOfCell === "ТСН (Трансформатор собсвтенных нужд)" ||
+        typeOfCell === "СВ (Секционный выключатель)" ||
+        typeOfCell === "Ввод" ||
+        typeOfCell === "Отходящая линия" ||
+        typeOfCell === "УКРМ (Устройство компенсации реактивной мощности)" ||
+        typeOfCell === "ТН (Трансформатор напряжения)") && (
+        <TypeOfMeasuringCurrentTransformersDevice selectedNodeId={selectedNodeId} />
       )}
-      {[
-        "ТСН (Трансформатор собсвтенных нужд)",
-
-        "Ввод",
-        "Отходящая линия",
-      ].includes(typeOfCell) && (
+      {["ТСН (Трансформатор собсвтенных нужд)", "Ввод", "Отходящая линия"].includes(typeOfCell) && (
         <IsThereOpnDevice selectedNodeId={selectedNodeId} />
       )}
 
-      {["ТСН (Трансформатор собсвтенных нужд)"].includes(typeOfCell) && (
+      {typeOfCell === "ТСН (Трансформатор собсвтенных нужд)" && (
         <TsnDevice selectedNodeId={selectedNodeId} />
       )}
-      {["УКРМ (Устройство компенсации реактивной мощности)"].includes(
-        typeOfCell
-      ) && <UkrmDevice selectedNodeId={selectedNodeId} />}
+      {typeOfCell === "УКРМ (Устройство компенсации реактивной мощности)" && (
+        <UkrmDevice selectedNodeId={selectedNodeId} />
+      )}
     </div>
   );
 }

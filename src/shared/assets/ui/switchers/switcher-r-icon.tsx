@@ -11,6 +11,7 @@ export function SwithcerRIcon({
 }) {
   return (
     <svg
+      className={className}
       width="600.000000"
       height={height || "600.000000"}
       viewBox="0 0 600 600"
@@ -21,22 +22,10 @@ export function SwithcerRIcon({
       <desc>Created with Pixso.</desc>
       <defs>
         <clipPath id="clip4_47">
-          <rect
-            id="VYKL_R"
-            width="600.000000"
-            height="600.000000"
-            fill="white"
-            fill-opacity="0"
-          />
+          <rect id="VYKL_R" width="600.000000" height="600.000000" fill="white" fill-opacity="0" />
         </clipPath>
       </defs>
-      <rect
-        id="VYKL_R"
-        width="600.000000"
-        height="600.000000"
-        fill="#FFFFFF"
-        fill-opacity="0"
-      />
+      <rect id="VYKL_R" width="600.000000" height="600.000000" fill="#FFFFFF" fill-opacity="0" />
       <g clip-path="url(#clip4_47)">
         <path
           id="Vector 2"

@@ -22,22 +22,10 @@ export function UkrmIcon({
       <desc>Created with Pixso.</desc>
       <defs>
         <clipPath id="clip4_4734">
-          <rect
-            id="UKRM"
-            width="600.000000"
-            height="600.000000"
-            fill="white"
-            fill-opacity="0"
-          />
+          <rect id="UKRM" width="600.000000" height="600.000000" fill="white" fill-opacity="0" />
         </clipPath>
       </defs>
-      <rect
-        id="UKRM"
-        width="600.000000"
-        height="600.000000"
-        fill="#FFFFFF"
-        fill-opacity="0"
-      />
+      <rect id="UKRM" width="600.000000" height="600.000000" fill="#FFFFFF" fill-opacity="0" />
       <g clip-path="url(#clip4_4734)">
         <path
           id="Vector 2"

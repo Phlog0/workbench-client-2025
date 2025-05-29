@@ -1,4 +1,4 @@
-import { fetchAPI } from "@/shared/constants/constants";
+import { fetchAPI } from "@/shared/constants/10kv/options";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { Spinner } from "shared/ui";

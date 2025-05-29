@@ -10,7 +10,7 @@ import {
 import { cn } from "../lib/react-std";
 import useStore from "../appStore/store";
 import { getThemeSelector } from "../appStore/my-selectors";
-import { ProjectTheme } from "../appStore/types";
+import { ProjectTheme } from "../appStore/appStore-types";
 export const ModalComponent = ({
   content,
   className,
@@ -33,7 +33,7 @@ export const ModalComponent = ({
         className={cn(
           "flex items-center justify-center",
 
-          className
+          className,
         )}
       >
         {triggerTitle}

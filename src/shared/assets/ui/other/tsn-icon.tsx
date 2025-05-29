@@ -11,6 +11,7 @@ export function TsnIcon({
 }) {
   return (
     <svg
+      className={className}
       width="600.000000"
       height={height || "600.000000"}
       viewBox="0 0 600 600"
@@ -21,22 +22,10 @@ export function TsnIcon({
       <desc>Created with Pixso.</desc>
       <defs>
         <clipPath id="clip4_4780">
-          <rect
-            id="TSN"
-            width="600.000000"
-            height="600.000000"
-            fill="white"
-            fill-opacity="0"
-          />
+          <rect id="TSN" width="600.000000" height="600.000000" fill="white" fill-opacity="0" />
         </clipPath>
       </defs>
-      <rect
-        id="TSN"
-        width="600.000000"
-        height="600.000000"
-        fill="#FFFFFF"
-        fill-opacity="0"
-      />
+      <rect id="TSN" width="600.000000" height="600.000000" fill="#FFFFFF" fill-opacity="0" />
       <g clip-path="url(#clip4_4780)">
         <path
           id="Vector 2"

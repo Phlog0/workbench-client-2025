@@ -11,6 +11,7 @@ export function SwithcerVn2Icon({
 }) {
   return (
     <svg
+      className={className}
       width="600.000000"
       height={height || "600.000000"}
       viewBox="0 0 600 600"
@@ -30,13 +31,7 @@ export function SwithcerVn2Icon({
           />
         </clipPath>
       </defs>
-      <rect
-        id="VYKL_VN_2"
-        width="600.000000"
-        height="600.000000"
-        fill="#FFFFFF"
-        fill-opacity="0"
-      />
+      <rect id="VYKL_VN_2" width="600.000000" height="600.000000" fill="#FFFFFF" fill-opacity="0" />
       <g clip-path="url(#clip4_2134)">
         <path
           id="Vector 2"

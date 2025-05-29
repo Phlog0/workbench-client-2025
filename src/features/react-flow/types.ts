@@ -1,6 +1,6 @@
 import { Node, Rect } from "@xyflow/react";
 
-export type NodeDragEventType = React.MouseEvent<Element, MouseEvent>
+export type ReactMouseEvent = React.MouseEvent<Element, MouseEvent>
 export type TGetIntersectingNodes = (
     node:
         | Node

@@ -1,5 +1,5 @@
 //3 transormers with 2 obmotki
-export function Tt2Ac({
+export function Tt2AcIcon({
   className,
   color,
   height,

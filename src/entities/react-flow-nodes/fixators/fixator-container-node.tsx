@@ -1,5 +1,5 @@
-import { TFixatorContainer } from "@/shared/appStore/react-flow-types";
-import { INITIAL_FIXATOR_CONTAINER_METRICS } from "@/shared/constants/measures";
+import { TFixatorContainer } from "@/shared/appStore/react-flow-node-types";
+import { INITIAL_FIXATOR_CONTAINER_METRICS } from "@/shared/constants/measures/measures";
 import { useReactFlow } from "@xyflow/react";
 
 type Props = {
@@ -19,6 +19,8 @@ export const FixatorContainerNode = ({ data: { id } }: Props) => {
       style={{
         width: nodeInfo?.measured?.width,
         height: INITIAL_FIXATOR_CONTAINER_METRICS.measured.height,
+        // zIndex:,
+        display: "none",
       }}
     >
       <div className="absolute text-black top-[-3rem]">
