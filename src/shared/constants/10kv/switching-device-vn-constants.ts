@@ -1,4 +1,4 @@
-export const SWITCHING_DEVICE_VN_KEY_1_10KV = "switchingDeviceVn";
+export const SWITCHING_DEVICE_VN_KEY_1_10KV = "switchingDevice";
 export const SWITCHING_DEVICE_VN_LABEL_10KV = "ВН (выключатели нагрузки)";
 export const SWITCHING_DEVICE_VN_DATA_10KV = [
   {

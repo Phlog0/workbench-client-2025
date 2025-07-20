@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "GOST Type A";
+  src: url("/src/shared/assets/fonts/GOST_A.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* Оптимизация загрузки */
+}
+@font-face {
+  font-family: "Cascadia Mono";
+  src: url("/src/shared/assets/fonts/CascadiaMono-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

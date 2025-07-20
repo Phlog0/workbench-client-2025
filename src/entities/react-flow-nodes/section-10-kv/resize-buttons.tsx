@@ -1,10 +1,15 @@
-import { TFixator10Kv } from "@/shared/appStore/react-flow-node-types";
-import useStore from "@/shared/appStore/store";
-import { useGetLastFixator, useGetNodeChildrenIds, useRemoveNodeIds } from "@/shared/lib/model";
+import { TFixator10Kv } from "@/shared/types";
 
-import { cn } from "@/shared/lib/react-std";
+import { cn } from "@/shared/lib";
+import { useGetLastFixator, useGetNodeChildrenIds, useRemoveNodeIds } from "@/shared/lib/nodes-std";
 import { Button } from "@/shared/ui";
 import { Minus, Plus } from "lucide-react";
+import { useBoundStore } from "@/shared/appStore";
+import {
+  ReactFlowNodeId,
+  ReactFlowNodeIdFixator10Kv,
+  ReactFlowNodeIdFixatorContainer,
+} from "@/shared/appStore/slices/types";
 
 export function ResizeButtons({
   className,
@@ -12,24 +17,24 @@ export function ResizeButtons({
   sectionWidth,
 }: {
   className?: string;
-  sectionId: string;
+  sectionId: ReactFlowNodeId;
   sectionWidth?: number;
 }) {
   // console.log("<<<resize-buttons-render>>>");
   const [fixatorContainerId] = useGetNodeChildrenIds(sectionId);
   const fixatorsIds = useGetNodeChildrenIds(fixatorContainerId);
-  const increaseSectionWidth = useStore((state) => state.increaseSectionWidth);
-  const decreaseSectionWidth = useStore((state) => state.decreaseSectionWidth);
+  const increaseSectionWidth = useBoundStore((state) => state.increaseSectionWidth);
+  const decreaseSectionWidth = useBoundStore((state) => state.decreaseSectionWidth);
 
-  const addNode = useStore((state) => state.addNode);
-  const removeNode = useStore((state) => state.removeNode);
+  const addNode = useBoundStore((state) => state.addNode);
+  const removeNode = useBoundStore((state) => state.removeNode);
   const { lastFixatorId } = useGetLastFixator(fixatorContainerId);
-  const { extractIds } = useRemoveNodeIds();
+  const extractIds = useRemoveNodeIds();
   const handleIncrease = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
     increaseSectionWidth({ sectionId, fixatorContainerId });
 
-    const fixatorID = `f-${Date.now()}`;
+    const fixatorID: TFixator10Kv["id"] = `fixator-10-kv-${Date.now()}`;
 
     const newFixator: TFixator10Kv = {
       id: fixatorID,
@@ -38,9 +43,9 @@ export function ResizeButtons({
       },
       //
       position: { y: 0, x: fixatorsIds.length * 300 - 8 },
-      parentId: fixatorContainerId,
+      parentId: fixatorContainerId as ReactFlowNodeIdFixatorContainer,
       type: "Fixator10Kv",
-      projectId: "123",
+      deletable: false,
       draggable: false,
     };
     addNode(newFixator);

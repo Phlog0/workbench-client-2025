@@ -6,15 +6,16 @@
   "tailwind": {
     "config": "tailwind.config.js",
     "css": "src/index.css",
-    "baseColor": "slate",
+    "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
   },
   "aliases": {
     "components": "@/shared/components",
-    "utils": "@/shared/lib/cn",
+    "utils": "@/shared/lib/utils",
     "ui": "@/shared/ui",
     "lib": "@/lib",
     "hooks": "@/hooks"
-  }
+  },
+  "iconLibrary": "lucide"
 }

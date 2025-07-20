@@ -1,19 +1,19 @@
 import { useCallback, useRef, useState } from "react";
 import { ReactMouseEvent } from "./types";
-import { PossibleNode } from "@/shared/appStore/react-flow-node-types";
-import { ReactFLowNodeId } from "@/shared/appStore/appStore-types";
-import useStore from "@/shared/appStore/store";
+import { PossibleNode } from "@/shared/types/react-flow-node-types";
+import { ReactFlowNodeId } from "@/shared/appStore/slices/types/react-flow-nodes";
+import { useBoundStore } from "@/shared/appStore";
 
 type MenuType = {
-  id: ReactFLowNodeId;
+  id: ReactFlowNodeId;
   top?: number;
   left?: number;
   right?: number;
   bottom?: number;
 };
 export function useReactFlowContextMenu() {
-  const setSelectedNodeId = useStore((state) => state.setSelectedNodeId);
-  const selectedNodeIds = useStore((state) => state.selectedNodeIds);
+  const setSelectedNodeId = useBoundStore((state) => state.setSelectedNodeId);
+  const selectedNodeIds = useBoundStore((state) => state.selectedNodeIds);
   const [menu, setMenu] = useState<MenuType | null>();
   const reactFlowRef = useRef<null | HTMLDivElement>(null);
 

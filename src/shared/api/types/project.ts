@@ -1,0 +1,29 @@
+import { PossibleEdge, PossibleNode } from "@/shared/types";
+import { z } from "zod/v4";
+import { RFJsonObject } from "./react-flow-instance";
+
+export const ProjectInfoSchema = z.object({
+  id: z.union([z.number(), z.string()]),
+  projectType: z.enum(["ТП", "КТП", "РП"]),
+  title: z.string().nonempty().trim(),
+  description: z.string().nonempty().trim(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+export type ProjectInfo = z.infer<typeof ProjectInfoSchema>;
+
+export type ProjectId = ProjectInfo["id"];
+export type ProjectType = ProjectInfo["projectType"];
+
+export type SuccessUpdateProjectResponse = { message: string };
+export type ProjectInfoTextData = Pick<ProjectInfo, "description" | "title" | "projectType">;
+
+export type SuccessDeleteProjectResponse = { message: string };
+export type SuccessAddProjectResponse = { message: string; newProject: ProjectInfo };
+export type SuccessSyncProjectScheme = {
+  message: string;
+};
+export type SuccessGetProjectScheme = {
+  message: string;
+  projectScheme: RFJsonObject | null;
+};

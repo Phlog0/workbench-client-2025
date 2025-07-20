@@ -1,16 +1,13 @@
 import "./App.css";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-  Toaster,
-} from "shared/ui";
+import { Toaster } from "shared/ui";
 import { AppRouter } from "./AppRouter";
+
 function App() {
   return (
-    <div className="w-40">
+    <div>
+      {/* <div className="w-40"> */}
       <AppRouter />
+
       <Toaster />
     </div>
   );

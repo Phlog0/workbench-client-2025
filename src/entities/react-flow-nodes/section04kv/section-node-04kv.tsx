@@ -1,8 +1,6 @@
 import { Handle, Position, useReactFlow } from "@xyflow/react";
-import { cn } from "@/shared/lib/react-std";
+import { cn } from "@/shared/lib/cn";
 
-import header from "shared/assets/shina/SHINA_HEADER.svg";
-import { TT_3_ABC } from "@/shared/assets/measuring-transformers";
 import { useState } from "react";
 type Props = {
   data: {

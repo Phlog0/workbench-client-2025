@@ -1,12 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-    darkMode: ["class"],
-    content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  darkMode: ["class"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
   	extend: {
+  		fontFamily: {
+  			gost: [
+  				'GOST Type A',
+  				'sans-serif'
+  			],
+  			cascadiaMono: [
+  				'Cascadia Mono',
+  				'sans-serif'
+  			]
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -79,5 +86,4 @@ export default {
   	}
   },
   plugins: [require("tailwindcss-animate")],
-}
-
+};

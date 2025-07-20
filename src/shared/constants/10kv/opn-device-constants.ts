@@ -1,4 +1,4 @@
-export const IS_THERE_OPN_DEVICE_OPTIONS_10KV = ["нет", "есть"] as const;
+export const IS_THERE_OPN_DEVICE_OPTIONS_10KV = ["Нет", "Есть"] as const;
 
 export const IS_THERE_OPN_KEY_1_10KV = "isThereOpnDevice";
 export const IS_THERE_OPN_LABEL_10KV = "Есть ОПН";

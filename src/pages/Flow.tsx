@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useRef } from "react";
-
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { motion } from "motion/react";
 import {
   ReactFlow,
   Controls,
@@ -8,34 +8,41 @@ import {
   BackgroundVariant,
   useOnSelectionChange,
   NodeChange,
+  Panel,
 } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 import "@xyflow/react/dist/style.css";
-import useStore from "shared/appStore/store";
 
 import { nodeTypesEntities } from "@/entities/react-flow-nodes";
 
-import { getThemeSelector, reactFLowSelectors } from "@/shared/appStore/my-selectors";
+import { reactFlowBaseSelector } from "@/shared/appStore/slices/selectors";
+
+import { cn } from "@/shared/lib";
+
+import { ContextMenu } from "@/features/react-flow/context-menu";
+
+import { HelperLinesRenderer } from "@/features/react-flow/helper-lines";
 import {
-  useReactFlowOnNodeDragStop,
   useReactFlowOnNodeDrag,
-  useDragAndDropItems,
-  useReactFlowOnChange,
-  useReactFlowContextMenu,
-  useReactFlowHelperLine,
-} from "@/features/react-flow";
-import { cn } from "@/shared/lib/react-std";
-import { useRemoveNodeIds } from "@/shared/lib/model";
-import { ContextMenu, HelperLinesRenderer } from "@/shared/components";
+  useReactFlowOnNodeDragStop,
+} from "@/features/react-flow/node-drag-on-flow";
+import { useDragAndDropItems } from "@/features/react-flow/create-new-nodes-by-dnd";
+import { useReactFlowContextMenu, useReactFlowOnChange } from "@/features/react-flow";
+import { useReactFlowHelperLine } from "@/features/react-flow/helper-lines";
+import { useRemoveNodeIds } from "@/shared/lib/nodes-std";
+import { useBoundStore } from "@/shared/appStore";
+import { getThemeSelector } from "@/shared/appStore/slices/selectors";
+import { Spinner } from "@/shared/ui";
+import { PossibleNode } from "@/shared/types";
+import { useParams } from "react-router-dom";
+import { ImportProjectButton, useGetProjectScheme } from "@/features";
+import { debounce } from "lodash";
+import { ExportJsonProjectButton } from "@/features/export-json-project";
+import { RFInstance } from "@/shared/api/types";
+import { CACHE_KEYS, queryClient } from "@/shared/api";
+import { SESSION_STORAGE_KEYS } from "@/shared/constants";
 
-// interface ErrorResponse {
-//   statusCode: number;
-//   message: string;
-// }
 export const Flow = ({ className }: { className?: string }) => {
-  // const { id: projectId } = useParams();
-
-  // const [type] = useDnD();
   const reactFlowWrapper = useRef(null);
 
   const { onReactFlowNodeDragStop } = useReactFlowOnNodeDragStop();
@@ -44,45 +51,43 @@ export const Flow = ({ className }: { className?: string }) => {
   const { onChange } = useReactFlowOnChange();
 
   const { helperLineHorizontal, helperLineVertical, updateHelperLines } = useReactFlowHelperLine();
-  const selectedNodeIds = useStore((state) => state.selectedNodeIds);
 
-  const { extractIds } = useRemoveNodeIds();
+  const extractIds = useRemoveNodeIds();
   const { menu, onNodeContextMenu, onPaneClick, reactFlowRef } = useReactFlowContextMenu();
-  // todo вынести
-  // const { data, isFetching, error } = useQuery<
-  //   ProjectResponseData,
-  //   ErrorResponse
-  // >({
-  //   queryKey: ["project"],
-  //   // onError: (error) => alert(`Something went wrong: ${error.message}`),
-  //   queryFn: async (): Promise<ProjectResponseData> => {
-  //     const response = await fetch(`${fetchAPI}projects/${projectId}a`);
-  //     if (!response.ok) {
-  //       console.log(response);
-  //       const errorResponse = await response.json();
-  //       const { statusCode, message } = errorResponse;
-  //       throw { statusCode, message };
-  //     }
-  //     const result = await response.json();
 
-  //     return result;
-  //   },
-  // });
-
-  // todo вынести
-  // const mutation = useMutation({
-  //   mutationFn: (newTodo: PossibleNode) => {
-  //     return axios.post(`${fetchAPI}projects`, newTodo);
-  //   },
-  // });
-
-  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useStore(
-    useShallow(reactFLowSelectors),
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useBoundStore(
+    useShallow(reactFlowBaseSelector),
   );
 
+  const setViewportSync = useBoundStore((state) => state.setViewportSync);
+  const selectedNodeIds = useBoundStore((state) => state.selectedNodeIds);
+  const viewport = useBoundStore((state) => state.viewport);
+  const removeNode = useBoundStore((state) => state.removeNode);
+  const projectTheme = useBoundStore(getThemeSelector);
+
+  const { projectId } = useParams();
+
+  // const { isLoading } = useFetchProjectScheme();
+
+  // console.log(rfInstance);
+  const { data, isLoading, isError, error } = useGetProjectScheme(projectId);
+  // console.log({ data, projectdId, nodes });
+  const [rfInstance, setRfInstance] = useState<RFInstance | null>(null);
+  useEffect(() => {
+    if (!projectId) {
+      console.error("Нет id проекта");
+      return;
+    }
+    sessionStorage.setItem(SESSION_STORAGE_KEYS.projectId, projectId);
+  }, [projectId]);
+
+  useEffect(() => {
+    return () => {
+      queryClient.resetQueries({ queryKey: [CACHE_KEYS.PROJECT_SCHEME, `${projectId}`] });
+      useBoundStore.getState().resetState(); // Сброс Zustand-стейта
+    };
+  }, [projectId]);
   const nodeTypes = useMemo(() => nodeTypesEntities, []); //Вынести в хук
-  const removeNode = useStore((state) => state.removeNode);
-  const projectTheme = useStore(getThemeSelector);
 
   // const onReactFlowErrorHandler = (code: string, message: string) => {};
 
@@ -98,44 +103,49 @@ export const Flow = ({ className }: { className?: string }) => {
 
   const handleDelete = () => {
     const idsToDelete = extractIds([...selectedNodeIds]);
+
     removeNode([...idsToDelete, ...selectedNodeIds]);
   };
 
   const handleNodeChange = useCallback(
-    (changes: NodeChange[]) => {
+    (changes: NodeChange<PossibleNode>[]) => {
       const sections = nodes.filter((item) => item.type === "Section10Kv");
       const updatedChanges = updateHelperLines(changes, sections);
+
       onNodesChange(updatedChanges);
     },
     [updateHelperLines, nodes, onNodesChange],
   );
-  // Close the context menu if it's open whenever the window is clicked.
 
   // * -------------------------SELECTING -------------------------
   // * https://reactflow.dev/api-reference/hooks/use-on-selection-change
   useOnSelectionChange({
     onChange,
   });
+
   // * ------------------------------------------------------------
+
+  const debouncedSetViewport = debounce(setViewportSync, 1000);
   return (
     <main className={cn("project-flow dark:bg-slate-800}", className)}>
       <div style={{ width: "100%", height: "100%" }} ref={reactFlowWrapper} className="relative">
-        {/* <motion.div
-        variants={{
-          visible: { opacity: 1, display: "block" },
-          hidden: { opacity: 0, display: "none" },
-        }}
-        initial="visible"
-        animate={!isFetching && "hidden"}
-        className={clsx(
-          "absolute top-0 left-0 backdrop-blur-2xl w-full h-full z-10",
-          "grid place-content-center"
-        )}
-      >
-        <Spinner />
-      </motion.div> */}
+        <motion.div
+          variants={{
+            visible: { opacity: 1, display: "block" },
+            hidden: { opacity: 0, display: "none" },
+          }}
+          initial="visible"
+          animate={!isLoading && "hidden"}
+          className={cn(
+            "absolute top-0 left-0 backdrop-blur-2xl w-full h-full z-10",
+            "grid place-content-center",
+          )}
+        >
+          <Spinner />
+        </motion.div>
 
         {/* ФЛАГИ-КОНСТАНТЫ */}
+
         <ReactFlow
           ref={reactFlowRef}
           nodes={nodes}
@@ -153,16 +163,28 @@ export const Flow = ({ className }: { className?: string }) => {
           onNodesDelete={handleDelete}
           onNodeContextMenu={onNodeContextMenu}
           onPaneClick={onPaneClick}
-          // elevateNodesOnSelect
+          onInit={setRfInstance}
+          defaultViewport={viewport}
+          onViewportChange={(viewport) => debouncedSetViewport(viewport)}
         >
           <Controls />
           <MiniMap />
           <Background id="1" gap={10} color="#f1f1f1" variant={BackgroundVariant.Lines} />
 
           <Background id="2" gap={100} color="#ccc" variant={BackgroundVariant.Lines} />
-          <p>Selected nodes: {selectedNodeIds.join(", ")}</p>
+
           {menu && <ContextMenu onClick={onPaneClick} contextMenuCoordinats={menu} />}
           <HelperLinesRenderer horizontal={helperLineHorizontal} vertical={helperLineVertical} />
+          <Panel position="top-left">
+            <div className="metrics w-8">
+              <p>Selected nodes: {selectedNodeIds.join(", ")}</p>
+              {JSON.stringify(viewport)}
+            </div>
+          </Panel>
+          <Panel position="top-right" className="flex gap-3">
+            <ExportJsonProjectButton rfInstance={rfInstance} projectId={projectId} />
+            <ImportProjectButton />
+          </Panel>
         </ReactFlow>
       </div>
     </main>

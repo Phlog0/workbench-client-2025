@@ -1,4 +1,4 @@
-export const SWITCHING_DEVICE_R_KEY_1_10KV = "switchingDeviceR";
+export const SWITCHING_DEVICE_R_KEY_1_10KV = "switchingDevice";
 export const SWITCHING_DEVICE_R_LABEL_10KV = "Р (разъединители)";
 export const SWITCHING_DEVICE_R_DATA_10KV = [
   {

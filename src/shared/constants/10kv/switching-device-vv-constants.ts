@@ -1,4 +1,6 @@
-export const SWITCHING_DEVICE_VV_KEY_1_10KV = "switchingDeviceVv";
+export const SWITCHING_DEVICE_VV_KEY_1_10KV = "switchingDevice";
+export const SWITCHING_DEVICE_VV_PARAM_10KV = "switchingDeviceVv";
+
 export const SWITCHING_DEVICE_VV_LABEL_10KV = "ВВ (вакуумные выключатели)";
 export const SWITCHING_DEVICE_VV_DATA_10KV = [
   {

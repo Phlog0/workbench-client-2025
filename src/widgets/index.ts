@@ -1,5 +1,3 @@
-export { ProjectHeader } from './project-header'
+export { ProjectHeaderTools } from "./project-header-tools";
 
-export { SiderbarProperties } from './SiderbarProperties'
-
-export { } from './siderbar-items'
+export { SiderbarProperties } from "./siderbar-properties";

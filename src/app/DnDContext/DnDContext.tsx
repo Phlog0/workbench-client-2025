@@ -1,6 +1,6 @@
 //! ЛОМАЕТСЯ FSD. ИСПРАВИТЬ
 
-import { NodeTypesUnion } from "@/shared/appStore/react-flow-node-types";
+import { NodeTypesUnion } from "@/shared/types/react-flow-node-types";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 // Define the type for the context value

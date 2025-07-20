@@ -1,5 +1,5 @@
 export const TYPE_OF_MEASURING_CURRENT_TRANSFORMERS_DEVICE_OPTIONS_10KV = [
-  "нет",
+  "Нет",
   "2 Трансформатора тока 2 обмотки",
   "2 Трансформатора тока 3 обмотки",
   "2 Трансформатора тока 4 обмотки",
@@ -7,6 +7,15 @@ export const TYPE_OF_MEASURING_CURRENT_TRANSFORMERS_DEVICE_OPTIONS_10KV = [
   "3 Трансформатора тока 3 обмотки",
   "3 Трансформатора тока 4 обмотки",
 ] as const;
+// export const TYPE_OF_MEASURING_CURRENT_TRANSFORMERS_DEVICE_OPTIONS_10KV = {
+//   no: "Нет",
+//   ac2: "2 Трансформатора тока 2 обмотки",
+//   ac3: "2 Трансформатора тока 3 обмотки",
+//   ac4: "2 Трансформатора тока 4 обмотки",
+//   abc2: "3 Трансформатора тока 2 обмотки",
+//   abc3: "3 Трансформатора тока 3 обмотки",
+//   abc4: "3 Трансформатора тока 4 обмотки",
+// } as const;
 
 export type TypeOfMeasuringCurrentTransformersDeviceOptions_10KV =
   (typeof TYPE_OF_MEASURING_CURRENT_TRANSFORMERS_DEVICE_OPTIONS_10KV)[number];

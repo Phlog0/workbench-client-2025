@@ -1,20 +1,21 @@
-import { ReactFlowProvider, useReactFlow } from "@xyflow/react";
+import { ReactFlowProvider } from "@xyflow/react";
 import { Flow } from "./Flow";
 
-import { SiderbarItems } from "@/widgets/SiderbarItems";
-import { ProjectHeader, SiderbarProperties } from "@/widgets/";
+import { SiderbarItems } from "@/widgets/siderbar-items";
+import { ProjectHeaderTools, SiderbarProperties } from "@/widgets/";
 import { DnDProvider } from "@/app/DnDContext/DnDContext";
-import useStore from "@/shared/appStore/store";
-import { getThemeSelector } from "@/shared/appStore/my-selectors";
-import { cn } from "@/shared/lib/react-std";
+
+import { getThemeSelector } from "@/shared/appStore/slices/selectors";
+import { cn } from "@/shared/lib";
+import { useBoundStore } from "@/shared/appStore";
 
 export const FlowLayout = () => {
-  const projectTheme = useStore(getThemeSelector);
+  const projectTheme = useBoundStore(getThemeSelector);
   return (
     <div className={cn(projectTheme)}>
       <ReactFlowProvider>
         <div className="project-grid dark:text-white">
-          <ProjectHeader />
+          <ProjectHeaderTools />
           <DnDProvider>
             <SiderbarItems className="px-2" />
 

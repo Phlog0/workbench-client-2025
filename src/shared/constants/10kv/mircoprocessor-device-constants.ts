@@ -1,4 +1,4 @@
-export const IS_THERE_MICROPROCESSOR_DEVICE_OPTIONS_10KV = ["нет", "есть"] as const;
+export const IS_THERE_MICROPROCESSOR_DEVICE_OPTIONS_10KV = ["Нет", "Есть"] as const;
 export const IS_THERE_MICROPROCESSOR_DEVICE_KEY_1_10KV = "isThereMicroprocessorDevice";
 export const IS_THERE_MICROPROCESSOR_DEVICE_LABEL_10KV =
   "Есть микропроцессорное устройство защиты и автоматики";
