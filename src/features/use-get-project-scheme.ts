@@ -16,14 +16,14 @@ export function useGetProjectScheme(projectId?: ProjectId | string) {
         setAfterFetch([], [], { x: 0, y: 0, zoom: 0.5 });
 
         setViewport({ x: 0, y: 0, zoom: 0.5 });
-        return;
+        return null;
       }
-      const response = await projectApi.getProjectSheme(Number(projectId));
+      const response = await projectApi.getProjectSheme(projectId);
       if (response.projectScheme === null) {
         setAfterFetch([], [], { x: 0, y: 0, zoom: 0.5 });
 
         setViewport({ x: 0, y: 0, zoom: 0.5 });
-        return;
+        return null;
       }
       setAfterFetch(
         response.projectScheme.nodes,

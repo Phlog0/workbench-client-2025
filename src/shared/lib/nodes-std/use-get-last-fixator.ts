@@ -1,10 +1,13 @@
 import { useBoundStore } from "@/shared/appStore";
-import { ReactFlowNodeId } from "@/shared/appStore/slices/types/react-flow-nodes";
+import { ElectricityVoltage, ReactFlowNodeId } from "@/shared/react-flow/nodes";
 
-export function useGetLastFixator(fixatorContainerId: ReactFlowNodeId) {
+export function useGetLastFixator(
+  fixatorContainerId: ReactFlowNodeId,
+  fixatorVoltage: ElectricityVoltage,
+) {
   const nodes = useBoundStore((state) => state.nodes);
   const fixators = nodes.filter(
-    (item) => item.type === "Fixator10Kv" && item.parentId === fixatorContainerId,
+    (item) => item.type === `Fixator${fixatorVoltage}Kv` && item.parentId === fixatorContainerId,
   );
 
   const lastFixator = fixators.reduce((acc, item, index, array) => {

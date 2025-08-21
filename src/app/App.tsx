@@ -1,14 +1,16 @@
 import "./App.css";
-import { Toaster } from "shared/ui";
+import { Toaster, TooltipProvider } from "shared/ui";
 import { AppRouter } from "./AppRouter";
 
 function App() {
   return (
     <div>
       {/* <div className="w-40"> */}
-      <AppRouter />
+      <TooltipProvider>
+        <AppRouter />
 
-      <Toaster />
+        <Toaster />
+      </TooltipProvider>
     </div>
   );
 }

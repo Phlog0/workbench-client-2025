@@ -1,13 +1,14 @@
-import { Node, Rect } from "@xyflow/react";
+import { PossibleNode } from "@/shared/react-flow/nodes";
+import { Rect } from "@xyflow/react";
 
-export type ReactMouseEvent = React.MouseEvent<Element, MouseEvent>
+export type ReactMouseEvent = React.MouseEvent<Element, MouseEvent>;
 export type TGetIntersectingNodes = (
-    node:
-        | Node
-        | Rect
-        | {
-            id: Node["id"];
-        },
-    partially?: boolean,
-    nodes?: Node[] | undefined
-) => Node[]
+  node:
+    | PossibleNode
+    | Rect
+    | {
+        id: PossibleNode["id"];
+      },
+  partially?: boolean,
+  nodes?: PossibleNode[] | undefined,
+) => PossibleNode[];

@@ -1,8 +1,8 @@
 import { useReactFlow } from "@xyflow/react";
 import { ReactMouseEvent } from "../types";
-import { PossibleNode } from "@/shared/types/react-flow-node-types";
 import { useCallback } from "react";
 import { useBoundStore } from "@/shared/appStore";
+import { PossibleNode } from "@/shared/react-flow/nodes";
 
 export function useReactFlowOnNodeDrag() {
   const { getIntersectingNodes } = useReactFlow();
@@ -19,9 +19,21 @@ export function useReactFlowOnNodeDrag() {
               ...n,
 
               className:
-                n.id === fixatorId
-                  ? "w-4 h-4 rounded-full bg-blue-500 outline outline-blue-400"
-                  : "",
+                n.id === fixatorId ? "rounded-full bg-blue-500 outline outline-blue-400" : "",
+            };
+          }),
+        );
+      }
+      if (node.type === "Cell04Kv") {
+        const fixatorId = intersec?.find((item) => item.type === "Fixator04Kv")?.id;
+        // setNodes((prev) => prev.map((item) => item));
+        setNodes((ns) =>
+          ns.map((n) => {
+            return {
+              ...n,
+
+              className:
+                n.id === fixatorId ? "rounded-full bg-blue-500 outline outline-blue-400" : "",
             };
           }),
         );

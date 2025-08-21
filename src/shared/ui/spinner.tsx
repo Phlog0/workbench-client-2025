@@ -39,7 +39,13 @@ interface SpinnerContentProps
   children?: React.ReactNode;
 }
 
-export function Spinner({ size, animate, show, children, className }: SpinnerContentProps) {
+export function Spinner({
+  size,
+  animate = "spin",
+  show,
+  children,
+  className,
+}: SpinnerContentProps) {
   return (
     <span className={spinnerVariants({ show })}>
       <Loader2

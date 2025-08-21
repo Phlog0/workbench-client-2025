@@ -1,47 +1,38 @@
-import { Edge, OnNodesChange, OnEdgesChange, OnConnect, XYPosition, Viewport } from "@xyflow/react";
-import { PossibleEdge, PossibleNode, TCell10Kv } from "@/shared/types";
+import { PossibleEdge } from "@/shared/react-flow/edges";
+import { PossibleNode, ReactFlowNodeId } from "@/shared/react-flow/nodes";
+import { TCell04Kv } from "@/shared/react-flow/nodes/cell-04kv/types";
+import { TCell10Kv } from "@/shared/react-flow/nodes/cell-10kv/types";
+import { RFNodeTypesValues } from "@/shared/react-flow/nodes/rf-nodes-types";
+import { Edge, OnNodesChange, OnEdgesChange, OnConnect, Viewport } from "@xyflow/react";
 
-export type TNodePosition = XYPosition;
-
-// export type AllNodesPropertiesTypes = Omit<TCell10Kv | TSection10Kv, "type">
-
-export type ReactFlowNodeIdSection10kv = `section-10-kv-${string | number}`;
-export type ReactFlowNodeIdCell10Kv = `cell-10-kv-${string | number}`;
-export type ReactFlowNodeIdFixatorContainer = `fixator-container-${string | number}`;
-export type ReactFlowNodeIdFixator10Kv = `fixator-10-kv-${string | number}`;
-
-export type ReactFlowNodeId =
-  | ReactFlowNodeIdFixatorContainer
-  | ReactFlowNodeIdCell10Kv
-  | ReactFlowNodeIdSection10kv
-  | ReactFlowNodeIdFixator10Kv;
-
-// export type ProjectTheme = "light" | "dark";
 export type ReactFlowNodesStoreState = {
   // nodes: (Node | PossibleNode)[];
   nodes: PossibleNode[];
   edges: PossibleEdge[];
   selectedNodeIds: ReactFlowNodeId[];
+  selectedEdgeIds: ReactFlowNodeId[];
   viewport: Viewport;
   isSyncing: boolean;
   syncError: string | null;
+  folderType: "" | RFNodeTypesValues;
   // projectTheme: ProjectTheme;
   // changeProjectTheme: (newTheme: ProjectTheme) => void;
 };
 
 export type ReactFlowNodesBaseActions = {
   onNodesChange: OnNodesChange<PossibleNode>;
-  onEdgesChange: OnEdgesChange;
+  onEdgesChange: OnEdgesChange<PossibleEdge>;
   onConnect: OnConnect;
   setNodes: (payload: PossibleNode[] | ((nodes: PossibleNode[]) => PossibleNode[])) => void;
-  setEdges: (edges: Edge[]) => void;
+  setEdges: (payload: PossibleEdge[] | ((edges: PossibleEdge[]) => PossibleEdge[])) => void;
   setSelectedNodeId: (nodeIds: ReactFlowNodeId[]) => void;
+  setSelectedEdgeId: (edgeIds: ReactFlowNodeId[]) => void;
   addNode: (node: PossibleNode) => void;
   removeNode: (nodeIds: ReactFlowNodeId[]) => void;
+  removeEdge: (edgeIds: ReactFlowNodeId[]) => void;
   setViewportSync: (viewport: Viewport) => void;
   syncProjectScheme: () => void;
   setAfterFetch: (nodes: PossibleNode[], edges: PossibleEdge[], viewport: Viewport) => void;
-  resetState: () => void;
 };
 
 export type ReactFlowNodesPropertiesActions = {
@@ -52,33 +43,29 @@ export type ReactFlowNodesPropertiesActions = {
     value,
   }: {
     nodeId: ReactFlowNodeId;
-    key1: keyof TCell10Kv["data"];
-    value: TCell10Kv["data"][keyof TCell10Kv["data"]];
+    key1: string;
+    value: string | number;
   }) => void;
 
-  //todo Как работать с глубоковложенными объектами да так, чтобы всё можно было автоматизировать
-  changeInputPropertyTCell10Kv: <
-    K1 extends keyof TCell10Kv["data"],
-    K2 extends keyof TCell10Kv["data"][K1],
-  >({
+  changeInputPropertyTCell10Kv: ({
     nodeId,
     keyOne,
     keyTwo,
     value,
   }: {
     nodeId: ReactFlowNodeId;
-    keyOne: K1;
-    keyTwo: K2;
-    value: K2 extends null ? TCell10Kv["data"][K1] : TCell10Kv["data"][K1][K2];
+    keyOne: string;
+    keyTwo: string | null;
+    value: number | boolean | string;
   }) => void;
-  selectReadyMadeSolution: <K1 extends keyof TCell10Kv["data"]>({
+  selectReadyMadeSolution: ({
     nodeId,
     keyOne,
-    value,
+    values,
   }: {
     nodeId: ReactFlowNodeId;
-    keyOne: K1;
-    value: Record<string, string | number>;
+    keyOne: string;
+    values: Record<string, string | number>;
   }) => void;
   // changeInputPropertyTCell10Kv: ({ nodeId, keyOne, keyTwo, value }: { nodeId: string, keyOne: NestedPropsTCell10KvKeys, keyTwo: NestedPropsTCell10Kv, value: string | number | boolean }) => void
   setMultipleProps: ({
@@ -103,6 +90,8 @@ export type ReactFlowNodesPropertiesActions = {
     sectionId: ReactFlowNodeId;
     fixatorContainerId: ReactFlowNodeId;
   }) => void;
+  resetState: () => void;
+  setFolderType: (value: "" | RFNodeTypesValues) => void;
 };
 
 export type ReactFlowNodesSlice = ReactFlowNodesStoreState &

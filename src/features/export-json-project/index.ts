@@ -1,1 +1,1 @@
-export { ExportJsonProjectButton } from "./export-json-project-button";
+export { ExportJsonProjectButton } from "./ExportJsonProjectButton";

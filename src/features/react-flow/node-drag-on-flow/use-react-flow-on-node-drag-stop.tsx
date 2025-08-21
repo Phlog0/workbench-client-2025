@@ -1,10 +1,13 @@
-import { PossibleNode, TFixator10Kv } from "@/shared/types/react-flow-node-types";
 import { ReactMouseEvent } from "../types";
 import { useReactFlow } from "@xyflow/react";
 
 import { useCallback } from "react";
 import { useBoundStore } from "@/shared/appStore";
-
+import { PossibleNode, RF_NODE_TYPES } from "@/shared/react-flow/nodes";
+const cellFixatorPairs = [
+  { cellType: RF_NODE_TYPES.cell10Kv, fixatorType: RF_NODE_TYPES.fixator10Kv },
+  { cellType: RF_NODE_TYPES.cell04Kv, fixatorType: RF_NODE_TYPES.fixator04Kv },
+];
 export function useReactFlowOnNodeDragStop() {
   // const [fixatorIdState, setFixatorIdState] = useState<string | null | undefined>(null);
   const nodes = useBoundStore((state) => state.nodes);
@@ -17,35 +20,34 @@ export function useReactFlowOnNodeDragStop() {
     (_: ReactMouseEvent, node: PossibleNode) => {
       const intersec = getIntersectingNodes(node);
       if (!intersec.length) return;
-      if (node.type === "Cell10Kv") {
-        const fixatorId: TFixator10Kv["id"] = intersec?.find(
-          (item) => item.type === "Fixator10Kv",
-        )?.id;
-        if (fixatorId) {
-          console.log(fixatorId);
-          const childOfFixator = cells.find((item) => item.parentId === fixatorId);
+      for (const { cellType, fixatorType } of cellFixatorPairs) {
+        if (node.type === cellType) {
+          const fixatorId = intersec?.find((item) => item.type === fixatorType)?.id;
+          if (fixatorId) {
+            const childOfFixator = cells.find((item) => item.parentId === fixatorId);
 
-          if (childOfFixator !== undefined) return;
+            if (childOfFixator !== undefined) return;
 
-          setMultipleProps({
-            nodeId: node.id,
-            options: {
-              draggable: false,
-              // expandParent: true,
-              parentId: fixatorId,
-              position: {
-                x: -142,
-                y: 0,
+            setMultipleProps({
+              nodeId: node.id,
+              options: {
+                draggable: false,
+                // expandParent: true,
+                parentId: fixatorId,
+                position: {
+                  x: -142,
+                  y: 0,
+                },
               },
-            },
-          });
+            });
 
-          setNodes((ns) =>
-            ns.map((n) => ({
-              ...n,
-              className: "",
-            })),
-          );
+            setNodes((ns) =>
+              ns.map((n) => ({
+                ...n,
+                className: "",
+              })),
+            );
+          }
         }
       }
     },

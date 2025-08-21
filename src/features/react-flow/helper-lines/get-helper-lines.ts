@@ -1,4 +1,4 @@
-import { PossibleNode } from "@/shared/types/react-flow-node-types";
+import { PossibleNode } from "@/shared/react-flow/nodes";
 import { NodePositionChange, XYPosition } from "@xyflow/react";
 
 type GetHelperLinesResult = {

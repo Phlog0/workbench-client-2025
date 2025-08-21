@@ -1,9 +1,8 @@
-import { PossibleEdge, PossibleNode } from "@/shared/types";
+import { RFJsonObject } from "@/shared/react-flow/types";
 import { z } from "zod/v4";
-import { RFJsonObject } from "./react-flow-instance";
 
 export const ProjectInfoSchema = z.object({
-  id: z.union([z.number(), z.string()]),
+  id: z.string(),
   projectType: z.enum(["ТП", "КТП", "РП"]),
   title: z.string().nonempty().trim(),
   description: z.string().nonempty().trim(),

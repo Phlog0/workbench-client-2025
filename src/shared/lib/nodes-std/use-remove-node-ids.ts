@@ -1,5 +1,4 @@
-import { PossibleNode } from "@/shared/types/react-flow-node-types";
-import { ReactFlowNodeId } from "@/shared/appStore/slices/types/react-flow-nodes";
+import { PossibleNode, ReactFlowNodeId } from "@/shared/react-flow/nodes";
 import { useNodes } from "@xyflow/react";
 
 export function useRemoveNodeIds() {

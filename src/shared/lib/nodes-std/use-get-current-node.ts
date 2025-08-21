@@ -1,5 +1,5 @@
 import { useBoundStore } from "@/shared/appStore";
-import { PossibleNode } from "@/shared/types";
+import { PossibleNode } from "@/shared/react-flow/nodes";
 
 export function useGetCurrentNode(selectedNodeId: string) {
   const nodes = useBoundStore((state) => state.nodes);

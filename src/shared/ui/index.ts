@@ -3,6 +3,7 @@ export { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./
 export { Spinner } from "./spinner";
 
 export { Input } from "./input";
+export type { InputProps } from "./input";
 
 export { Label } from "./label";
 
@@ -21,7 +22,7 @@ export {
   DialogTitle,
   DialogTrigger,
 } from "./dialog/dialog";
-export { ModalComponent } from "./dialog/modal-component";
+export { ModalComponent } from "./dialog/ModalComponent";
 
 export {
   useFormField,
@@ -35,3 +36,5 @@ export {
 } from "./form";
 
 export { Toaster } from "./sonner";
+
+export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";

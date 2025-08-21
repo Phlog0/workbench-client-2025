@@ -1,1 +1,1 @@
-export { PropertiesCell10Kv } from "./properties-cell-10kv";
+export { PropertiesCell10Kv } from "./PropertiesCell10Kv";

@@ -1,8 +1,7 @@
 import { ReactFlowProvider } from "@xyflow/react";
 import { Flow } from "./Flow";
 
-import { SiderbarItems } from "@/widgets/siderbar-items";
-import { ProjectHeaderTools, SiderbarProperties } from "@/widgets/";
+import { ProjectHeaderTools, SidebarFigures, SiderbarProperties } from "@/widgets/";
 import { DnDProvider } from "@/app/DnDContext/DnDContext";
 
 import { getThemeSelector } from "@/shared/appStore/slices/selectors";
@@ -17,7 +16,7 @@ export const FlowLayout = () => {
         <div className="project-grid dark:text-white">
           <ProjectHeaderTools />
           <DnDProvider>
-            <SiderbarItems className="px-2" />
+            <SidebarFigures className="px-2" />
 
             <Flow />
           </DnDProvider>

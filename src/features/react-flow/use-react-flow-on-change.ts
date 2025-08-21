@@ -1,23 +1,50 @@
 //* нужен для быстрой смены SelectedNodeId
 
 import { useBoundStore } from "@/shared/appStore";
-import { PossibleEdge, PossibleNode } from "@/shared/types";
-import { Edge } from "@xyflow/react";
+import { PossibleEdge } from "@/shared/react-flow/edges";
+import { PossibleNode } from "@/shared/react-flow/nodes";
+
 import { useCallback } from "react";
-import { useShallow } from "zustand/shallow";
+
 export function useReactFlowOnChange() {
   // const [selectedNodes, setSelectedNodes] = useState<string[] | []>([]);
   const setSelectedNodeId = useBoundStore((state) => state.setSelectedNodeId);
-  const selectedNodeIds = useBoundStore(useShallow((state) => state.selectedNodeIds));
+  const setSelectedEdgeId = useBoundStore((state) => state.setSelectedEdgeId);
+  const setFolderType = useBoundStore((state) => state.setFolderType);
 
-  const onChange = useCallback(({ nodes }: { nodes: PossibleNode[]; edges: PossibleEdge[] }) => {
-    console.log("hi");
-    if (nodes.length === 0) {
-      setSelectedNodeId([]);
-      return;
-    }
-    console.log(nodes);
-    setSelectedNodeId(nodes.map((node) => node.id));
-  }, []);
-  return { onChange };
+  const onChange = useCallback(
+    ({ nodes, edges }: { nodes: PossibleNode[]; edges: PossibleEdge[] }) => {
+      setSelectedNodeId(nodes.map((node) => node.id));
+      setSelectedEdgeId(edges.map((edge) => edge.id));
+    },
+    //   {
+    //   if (nodes.length === 0) {
+    //     setSelectedNodeId([]);
+    //     setFolderType("");
+    //   }
+    //   if (edges.length === 0) {
+    //     setSelectedEdgeId([]);
+    //   }
+
+    //   setSelectedNodeId(
+    //     nodes
+    //       .filter(
+    //         (node) =>
+    //           node.type === "Cell04Kv" ||
+    //           node.type === "Cell10Kv" ||
+    //           node.type === "Section10Kv" ||
+    //           node.type === "Section04Kv" ||
+    //           node.type === "PowerTransformer1004Kv" ||
+    //           node.type === "Image",
+    //       )
+    //       .map((node) => node.id),
+    //   );
+    //   setSelectedEdgeId(edges.map((edge) => edge.id));
+    //   if (nodes[0]?.type && nodes.length === 1) {
+    //     setFolderType(nodes[0].type);
+    //   }
+    // }
+    [],
+  );
+  return onChange;
 }

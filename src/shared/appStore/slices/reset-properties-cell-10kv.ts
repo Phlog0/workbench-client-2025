@@ -1,5 +1,3 @@
-import type { TypeOfCellOptions_10KV } from "@/shared/constants/10kv";
-import { TCell10Kv } from "../../types/react-flow-node-types";
 //
 // isMeasuringCurrentTransformersDevice ?: string
 // typeOfSwitchingDevice ?: string
@@ -7,20 +5,20 @@ import { TCell10Kv } from "../../types/react-flow-node-types";
 // switchingDeviceVn ?: TSwitchingDeviceVN
 // switchingDeviceR ?: TSwitchingDeviceR
 // measuringCurrentTransformersDevice ?: TMeasuringCurrentTransformersDevice
-// isThereMicroprocessorDevice ?: "нет" | "есть"
+// typeOfMicroprocessorDevice ?: "нет" | "есть"
 // mpdaa ?: Tmpdaa
-// isThereOpnDevice ?: "нет" | "есть"
+// typeOfOpnDevice ?: "нет" | "есть"
 // opn: TOpn
 // tsn ?: TTsn
 // tn ?: TTn
 // ukrm ?: TUkrm
 //
 
+import { TCell10Kv } from "@/shared/react-flow/nodes/cell-10kv/types";
+import { TTypeOfCellCell10Kv } from "@/shared/react-flow/nodes/cell-10kv/types/cell-10-kv-data";
+
 // TODO из объекта TCell10Kv сделать тип [key1,key2]
-export const resetCell10Kv = (
-  typeOfCell: TypeOfCellOptions_10KV,
-  cell10KvData: TCell10Kv["data"],
-) => {
+export const resetCell10Kv = (typeOfCell: TTypeOfCellCell10Kv, cell10KvData: TCell10Kv["data"]) => {
   let properties: (keyof TCell10Kv["data"])[] = []; //массив ключей TCell10Kv
   switch (typeOfCell) {
     case "ТСН (Трансформатор собсвтенных нужд)":
@@ -28,15 +26,13 @@ export const resetCell10Kv = (
       break;
     case "Шинный мост":
       properties = [
-        "isMeasuringCurrentTransformersDevice",
+        "typeOfMeasuringCurrentTransformersDevice",
         "typeOfSwitchingDevice",
-        "switchingDeviceVv",
-        "switchingDeviceVn",
-        "switchingDeviceR",
+        "switchingDevice",
         "measuringCurrentTransformersDevice",
-        "isThereMicroprocessorDevice",
+        "typeOfMicroprocessorDevice",
         "mpdaa",
-        "isThereOpnDevice",
+        "typeOfOpnDevice",
         "opn",
         "tsn",
         "tn",
@@ -45,13 +41,13 @@ export const resetCell10Kv = (
       break;
     case "Не выбрано":
       properties = [
-        "isMeasuringCurrentTransformersDevice",
+        "typeOfMeasuringCurrentTransformersDevice",
         "typeOfSwitchingDevice",
         "switchingDevice",
         "measuringCurrentTransformersDevice",
-        "isThereMicroprocessorDevice",
+        "typeOfMicroprocessorDevice",
         "mpdaa",
-        "isThereOpnDevice",
+        "typeOfOpnDevice",
         "opn",
         "tsn",
         "tn",
@@ -63,14 +59,14 @@ export const resetCell10Kv = (
       break;
     case "СР (Секционный разъединитель)":
       properties = [
-        "isMeasuringCurrentTransformersDevice",
+        "typeOfMeasuringCurrentTransformersDevice",
         "typeOfSwitchingDevice",
 
         "switchingDevice",
         "measuringCurrentTransformersDevice",
-        "isThereMicroprocessorDevice",
+        "typeOfMicroprocessorDevice",
         "mpdaa",
-        "isThereOpnDevice",
+        "typeOfOpnDevice",
         "opn",
         "tsn",
         "tn",
@@ -88,13 +84,13 @@ export const resetCell10Kv = (
       break;
     case "Шинный переход":
       properties = [
-        "isMeasuringCurrentTransformersDevice",
+        "typeOfMeasuringCurrentTransformersDevice",
         "typeOfSwitchingDevice",
         "switchingDevice",
         "measuringCurrentTransformersDevice",
-        "isThereMicroprocessorDevice",
+        "typeOfMicroprocessorDevice",
         "mpdaa",
-        "isThereOpnDevice",
+        "typeOfOpnDevice",
         "opn",
         "tsn",
         "tn",

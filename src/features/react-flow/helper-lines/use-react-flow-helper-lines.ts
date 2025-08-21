@@ -1,4 +1,4 @@
-import { PossibleNode } from "@/shared/types/react-flow-node-types";
+import { PossibleNode } from "@/shared/react-flow/nodes";
 import { getHelperLines } from "./get-helper-lines";
 import { NodeChange } from "@xyflow/react";
 import { useCallback, useState } from "react";

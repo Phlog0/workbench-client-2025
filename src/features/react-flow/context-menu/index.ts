@@ -1,1 +1,2 @@
-export { ContextMenu } from "./context-menu";
+export { ContextMenu } from "./ContextMenu";
+export { useReactFlowContextMenu } from "./use-react-flow-context-menu";

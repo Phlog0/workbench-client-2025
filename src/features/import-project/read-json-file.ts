@@ -1,6 +1,6 @@
-import { RFinstance } from "@/shared/api/types";
+import { RFInstance, RFJsonObject } from "@/shared/react-flow/types";
 
-export function readJsonFile(file: File): Promise<RFinstance> {
+export function readJsonFile(file: File): Promise<RFJsonObject> {
   return new Promise((resolve, reject) => {
     if (!file.type.includes("json") && !file.name.endsWith(".json")) {
       reject(new Error("Файл должен быть формата JSON"));
@@ -20,7 +20,7 @@ export function readJsonFile(file: File): Promise<RFinstance> {
         ) {
           reject(new Error("Неверная структура JSON"));
         }
-        resolve(result as RFinstance);
+        resolve(result as RFJsonObject);
       } catch (error) {
         reject(new Error("Ошибка валидации JSON - файла"));
       }

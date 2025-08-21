@@ -1,1 +1,1 @@
-export { ChangeThemeButton } from "./ui/change-theme-button";
+export { ChangeThemeButton } from "./ChangeThemeButton";

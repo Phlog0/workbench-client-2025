@@ -1,4 +1,5 @@
-import { PossibleEdge, PossibleNode } from "../types";
+import { PossibleEdge } from "../react-flow/edges";
+import { PossibleNode } from "../react-flow/nodes";
 import { apiInstance } from "./api-instacne";
 import {
   ProjectInfo,
@@ -23,7 +24,7 @@ export const projectApi = {
     );
     return response.data;
   },
-  deleteProject: async (projectId: number) => {
+  deleteProject: async (projectId: ProjectId) => {
     const response = await apiInstance.delete<SuccessDeleteProjectResponse>(
       `/api/projects/${projectId}`,
     );

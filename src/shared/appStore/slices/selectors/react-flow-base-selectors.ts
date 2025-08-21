@@ -9,4 +9,5 @@ export const reactFlowBaseSelector = (state: ReactFlowNodesSlice) => ({
   setSelectedNodeId: state.setSelectedNodeId,
   addNode: state.addNode,
   setNodes: state.setNodes,
+  setEdges: state.setEdges,
 });

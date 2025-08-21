@@ -9,17 +9,19 @@ import {
   useOnSelectionChange,
   NodeChange,
   Panel,
+  Connection,
+  reconnectEdge,
+  SelectionMode,
 } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 import "@xyflow/react/dist/style.css";
-
-import { nodeTypesEntities } from "@/entities/react-flow-nodes";
+import { ConnectionLine, nodeTypesEntities, rfEdgeTypes } from "@/entities/react-flow-custom-nodes";
 
 import { reactFlowBaseSelector } from "@/shared/appStore/slices/selectors";
 
 import { cn } from "@/shared/lib";
 
-import { ContextMenu } from "@/features/react-flow/context-menu";
+import { ContextMenu, useReactFlowContextMenu } from "@/features/react-flow/context-menu";
 
 import { HelperLinesRenderer } from "@/features/react-flow/helper-lines";
 import {
@@ -27,20 +29,23 @@ import {
   useReactFlowOnNodeDragStop,
 } from "@/features/react-flow/node-drag-on-flow";
 import { useDragAndDropItems } from "@/features/react-flow/create-new-nodes-by-dnd";
-import { useReactFlowContextMenu, useReactFlowOnChange } from "@/features/react-flow";
+import { useReactFlowOnChange } from "@/features/react-flow";
 import { useReactFlowHelperLine } from "@/features/react-flow/helper-lines";
 import { useRemoveNodeIds } from "@/shared/lib/nodes-std";
 import { useBoundStore } from "@/shared/appStore";
 import { getThemeSelector } from "@/shared/appStore/slices/selectors";
 import { Spinner } from "@/shared/ui";
-import { PossibleNode } from "@/shared/types";
 import { useParams } from "react-router-dom";
-import { ImportProjectButton, useGetProjectScheme } from "@/features";
+import { useValidConnection, useGetProjectScheme } from "@/features";
 import { debounce } from "lodash";
 import { ExportJsonProjectButton } from "@/features/export-json-project";
-import { RFInstance } from "@/shared/api/types";
 import { CACHE_KEYS, queryClient } from "@/shared/api";
 import { SESSION_STORAGE_KEYS } from "@/shared/constants";
+import { PossibleNode } from "@/shared/react-flow/nodes";
+import { RFInstance } from "@/shared/react-flow/types";
+import { ImportProjectJsonButton } from "@/features/import-project";
+import { PossibleEdge } from "@/shared/react-flow/edges";
+import { UploadImageButton } from "@/features/upload-image";
 
 export const Flow = ({ className }: { className?: string }) => {
   const reactFlowWrapper = useRef(null);
@@ -48,14 +53,14 @@ export const Flow = ({ className }: { className?: string }) => {
   const { onReactFlowNodeDragStop } = useReactFlowOnNodeDragStop();
   const { onReactFlowNodeDrag } = useReactFlowOnNodeDrag();
   const { onDragOver, onReactFlowDrop } = useDragAndDropItems();
-  const { onChange } = useReactFlowOnChange();
+  const onChange = useReactFlowOnChange();
 
   const { helperLineHorizontal, helperLineVertical, updateHelperLines } = useReactFlowHelperLine();
 
   const extractIds = useRemoveNodeIds();
   const { menu, onNodeContextMenu, onPaneClick, reactFlowRef } = useReactFlowContextMenu();
 
-  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useBoundStore(
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect, setEdges } = useBoundStore(
     useShallow(reactFlowBaseSelector),
   );
 
@@ -67,11 +72,7 @@ export const Flow = ({ className }: { className?: string }) => {
 
   const { projectId } = useParams();
 
-  // const { isLoading } = useFetchProjectScheme();
-
-  // console.log(rfInstance);
-  const { data, isLoading, isError, error } = useGetProjectScheme(projectId);
-  // console.log({ data, projectdId, nodes });
+  const { isLoading } = useGetProjectScheme(projectId);
   const [rfInstance, setRfInstance] = useState<RFInstance | null>(null);
   useEffect(() => {
     if (!projectId) {
@@ -89,6 +90,7 @@ export const Flow = ({ className }: { className?: string }) => {
   }, [projectId]);
   const nodeTypes = useMemo(() => nodeTypesEntities, []); //Вынести в хук
 
+  const isValidConnection = useValidConnection();
   // const onReactFlowErrorHandler = (code: string, message: string) => {};
 
   // useEffect(() => {
@@ -100,11 +102,15 @@ export const Flow = ({ className }: { className?: string }) => {
   //     });
   //   }
   // }, [error]);
+  const selectedEdgeIds = useBoundStore(useShallow((state) => state.selectedEdgeIds));
+
+  const removeEdge = useBoundStore((state) => state.removeEdge);
 
   const handleDelete = () => {
     const idsToDelete = extractIds([...selectedNodeIds]);
 
     removeNode([...idsToDelete, ...selectedNodeIds]);
+    removeEdge(selectedEdgeIds);
   };
 
   const handleNodeChange = useCallback(
@@ -119,13 +125,28 @@ export const Flow = ({ className }: { className?: string }) => {
 
   // * -------------------------SELECTING -------------------------
   // * https://reactflow.dev/api-reference/hooks/use-on-selection-change
+
+  // !убрать (опять какие-то stack-overflow)
   useOnSelectionChange({
     onChange,
   });
 
   // * ------------------------------------------------------------
+  // const debouncedSetViewport = debounce(setViewportSync, 1000);
 
-  const debouncedSetViewport = debounce(setViewportSync, 1000);
+  const debouncedSetViewport = useMemo(() => debounce(setViewportSync, 1000), [setViewportSync]);
+
+  // Очистка при размонтировании
+  useEffect(() => {
+    return () => debouncedSetViewport.cancel();
+  }, [debouncedSetViewport]);
+
+  const onReconnect = useCallback(
+    (oldEdge: PossibleEdge, newConnection: Connection) =>
+      setEdges((els) => reconnectEdge(oldEdge, newConnection, els)),
+    [],
+  );
+
   return (
     <main className={cn("project-flow dark:bg-slate-800}", className)}>
       <div style={{ width: "100%", height: "100%" }} ref={reactFlowWrapper} className="relative">
@@ -151,6 +172,7 @@ export const Flow = ({ className }: { className?: string }) => {
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
+          edgeTypes={rfEdgeTypes}
           onNodesChange={handleNodeChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
@@ -160,12 +182,19 @@ export const Flow = ({ className }: { className?: string }) => {
           onNodeDrag={onReactFlowNodeDrag}
           onNodeDragStop={onReactFlowNodeDragStop}
           minZoom={0.05}
-          onNodesDelete={handleDelete}
+          onDelete={handleDelete}
           onNodeContextMenu={onNodeContextMenu}
           onPaneClick={onPaneClick}
           onInit={setRfInstance}
           defaultViewport={viewport}
           onViewportChange={(viewport) => debouncedSetViewport(viewport)}
+          connectionLineComponent={ConnectionLine}
+          isValidConnection={isValidConnection}
+          panOnScroll={true}
+          selectionOnDrag={true}
+          panOnDrag={false}
+          onReconnect={onReconnect}
+          selectionMode={SelectionMode.Partial}
         >
           <Controls />
           <MiniMap />
@@ -183,7 +212,11 @@ export const Flow = ({ className }: { className?: string }) => {
           </Panel>
           <Panel position="top-right" className="flex gap-3">
             <ExportJsonProjectButton rfInstance={rfInstance} projectId={projectId} />
-            <ImportProjectButton />
+            <ImportProjectJsonButton />
+            <UploadImageButton
+              reactFlowWidth={reactFlowRef.current?.offsetWidth}
+              reactFLowHeight={reactFlowRef.current?.offsetHeight}
+            />
           </Panel>
         </ReactFlow>
       </div>

@@ -1,4 +1,10 @@
 /* @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *)); */
-
+/* @import url("./xy-theme.css"); */
 /* @import "tailwindcss"; */
 @custom-variant dark (&:where(.dark, .dark *));
+.react_flow__handle.connectingto {
+  background-color: red;
+}
+.react_flow__handle.valid {
+  background-color: lawngreen;
+}

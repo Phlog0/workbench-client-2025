@@ -1,6 +1,6 @@
 export { FlowLayout } from "./FlowLayout";
-export { ProjectsMenu } from "./projects-menu";
+export { ProjectsMenu } from "./ProjectsMenu";
 
-export { SignUpPage } from "./sign-up-page";
-export { SignInPage } from "./sign-in-page";
-export { NotFoundPage } from "./not-found-page";
+export { SignUpPage } from "./SignUpPage";
+export { SignInPage } from "./SignInPage";
+export { NotFoundPage } from "./NotFoundPage";
