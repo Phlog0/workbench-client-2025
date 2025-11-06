@@ -24,7 +24,7 @@ export const useSignIn = () => {
       console.log(data);
     },
     onError: (error: AxiosError<HttpErrorResponse>) => {
-      toast.error("Неверный пароль", {
+      toast.error(`Неверный пароль: ${error} `, {
         closeButton: true,
       });
     },

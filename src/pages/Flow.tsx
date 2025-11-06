@@ -15,37 +15,38 @@ import {
 } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 import "@xyflow/react/dist/style.css";
-import { ConnectionLine, nodeTypesEntities, rfEdgeTypes } from "@/entities/react-flow-custom-nodes";
+import { nodeTypesEntities, rfEdgeTypes } from "@/entities/react-flow-custom-nodes";
 
 import { reactFlowBaseSelector } from "@/shared/appStore/slices/selectors";
 
 import { cn } from "@/shared/lib";
 
-import { ContextMenu, useReactFlowContextMenu } from "@/features/react-flow/context-menu";
+import { ContextMenu, useReactFlowContextMenu } from "@/features/(react-flow)/context-menu";
 
-import { HelperLinesRenderer } from "@/features/react-flow/helper-lines";
+import { HelperLinesRenderer } from "@/features/(react-flow)/helper-lines";
 import {
   useReactFlowOnNodeDrag,
   useReactFlowOnNodeDragStop,
-} from "@/features/react-flow/node-drag-on-flow";
-import { useDragAndDropItems } from "@/features/react-flow/create-new-nodes-by-dnd";
-import { useReactFlowOnChange } from "@/features/react-flow";
-import { useReactFlowHelperLine } from "@/features/react-flow/helper-lines";
+} from "@/features/(react-flow)/node-drag-on-flow";
+import { useDragAndDropItems } from "@/features/(react-flow)/create-new-nodes-by-dnd";
+import { useReactFlowOnChange } from "@/features/(react-flow)";
+import { useReactFlowHelperLine } from "@/features/(react-flow)/helper-lines";
 import { useRemoveNodeIds } from "@/shared/lib/nodes-std";
 import { useBoundStore } from "@/shared/appStore";
 import { getThemeSelector } from "@/shared/appStore/slices/selectors";
-import { Spinner } from "@/shared/ui";
+import { Spinner } from "@/shared/ui/spinners";
 import { useParams } from "react-router-dom";
 import { useValidConnection, useGetProjectScheme } from "@/features";
 import { debounce } from "lodash";
 import { ExportJsonProjectButton } from "@/features/export-json-project";
-import { CACHE_KEYS, queryClient } from "@/shared/api";
-import { SESSION_STORAGE_KEYS } from "@/shared/constants";
-import { PossibleNode } from "@/shared/react-flow/nodes";
+
+import { PossibleNode } from "@/shared/react-flow/nodes/shared";
 import { RFInstance } from "@/shared/react-flow/types";
 import { ImportProjectJsonButton } from "@/features/import-project";
 import { PossibleEdge } from "@/shared/react-flow/edges";
 import { UploadImageButton } from "@/features/upload-image";
+import { SaveSchemeButton } from "@/features/save-scheme";
+import { ConnectionLine } from "@/entities/react-flow-custom-nodes/connection-line";
 
 export const Flow = ({ className }: { className?: string }) => {
   const reactFlowWrapper = useRef(null);
@@ -69,7 +70,7 @@ export const Flow = ({ className }: { className?: string }) => {
   const viewport = useBoundStore((state) => state.viewport);
   const removeNode = useBoundStore((state) => state.removeNode);
   const projectTheme = useBoundStore(getThemeSelector);
-
+  const setProjectId = useBoundStore((state) => state.setProjectId);
   const { projectId } = useParams();
 
   const { isLoading } = useGetProjectScheme(projectId);
@@ -79,29 +80,13 @@ export const Flow = ({ className }: { className?: string }) => {
       console.error("Нет id проекта");
       return;
     }
-    sessionStorage.setItem(SESSION_STORAGE_KEYS.projectId, projectId);
-  }, [projectId]);
+    setProjectId(projectId);
+  }, [projectId, setProjectId]);
 
-  useEffect(() => {
-    return () => {
-      queryClient.resetQueries({ queryKey: [CACHE_KEYS.PROJECT_SCHEME, `${projectId}`] });
-      useBoundStore.getState().resetState(); // Сброс Zustand-стейта
-    };
-  }, [projectId]);
   const nodeTypes = useMemo(() => nodeTypesEntities, []); //Вынести в хук
 
   const isValidConnection = useValidConnection();
-  // const onReactFlowErrorHandler = (code: string, message: string) => {};
 
-  // useEffect(() => {
-  //   if (error) {
-  //     toast({
-  //       title: `${error.statusCode}`,
-  //       description: `${error.message}`,
-  //       action: <h1>Undo</h1>,
-  //     });
-  //   }
-  // }, [error]);
   const selectedEdgeIds = useBoundStore(useShallow((state) => state.selectedEdgeIds));
 
   const removeEdge = useBoundStore((state) => state.removeEdge);
@@ -126,7 +111,6 @@ export const Flow = ({ className }: { className?: string }) => {
   // * -------------------------SELECTING -------------------------
   // * https://reactflow.dev/api-reference/hooks/use-on-selection-change
 
-  // !убрать (опять какие-то stack-overflow)
   useOnSelectionChange({
     onChange,
   });
@@ -204,12 +188,12 @@ export const Flow = ({ className }: { className?: string }) => {
 
           {menu && <ContextMenu onClick={onPaneClick} contextMenuCoordinats={menu} />}
           <HelperLinesRenderer horizontal={helperLineHorizontal} vertical={helperLineVertical} />
-          <Panel position="top-left">
+          {/* <Panel position="top-left">
             <div className="metrics w-8">
               <p>Selected nodes: {selectedNodeIds.join(", ")}</p>
               {JSON.stringify(viewport)}
             </div>
-          </Panel>
+          </Panel> */}
           <Panel position="top-right" className="flex gap-3">
             <ExportJsonProjectButton rfInstance={rfInstance} projectId={projectId} />
             <ImportProjectJsonButton />
@@ -217,6 +201,7 @@ export const Flow = ({ className }: { className?: string }) => {
               reactFlowWidth={reactFlowRef.current?.offsetWidth}
               reactFLowHeight={reactFlowRef.current?.offsetHeight}
             />
+            <SaveSchemeButton />
           </Panel>
         </ReactFlow>
       </div>

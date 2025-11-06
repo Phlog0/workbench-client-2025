@@ -1,34 +1,32 @@
-import { Handle, NodeProps, Position, useConnection } from "@xyflow/react";
-import { cn } from "@/shared/lib/cn";
+import { NodeProps, Position, useNodeConnections } from "@xyflow/react";
 import { PowerTransformer1004Icon } from "@/shared/assets/electrical-entities-icons/power-transformer-10-04";
 import { TPowerTransformer1004Kv } from "@/shared/react-flow/nodes/power-transformer-10-04kv";
-import { memo } from "react";
-import { Terminal } from "../Terminal";
+import { memo, useMemo, useState } from "react";
+import { Terminal } from "../terminal/Terminal";
 
-import { TCell10Kv } from "@/shared/react-flow/nodes/cell-10kv/types";
+export const PowerTransformer1004KvNode = memo(({ id }: NodeProps<TPowerTransformer1004Kv>) => {
+  const connection = useNodeConnections({ id });
 
-export const PowerTransformer1004KvNode = memo(
-  ({ isConnectable, id }: NodeProps<TPowerTransformer1004Kv>) => {
-    const validNodeType: TCell10Kv["type"] = "Cell10Kv";
+  const [color, setColor] = useState<"black" | "yellow" | "red">("black");
+  useMemo(() => {
+    if (!connection.length) {
+      return setColor("yellow");
+    }
+    const source = connection.find((item) => item.source === id);
+    const target = connection.find((item) => item.target === id);
+    if (!source || !target) {
+      return setColor("yellow");
+    }
+    setColor("black");
+  }, [connection, id]);
 
-    return (
-      <div className="">
-        <Terminal
-          id={`${id}HandleTarget`}
-          validNodeType={validNodeType}
-          type="target"
-          position={Position.Top}
-        />
+  return (
+    <div className="">
+      <Terminal id={`${id}-handleTarget`} type="target" position={Position.Top} />
 
-        <PowerTransformer1004Icon />
+      <PowerTransformer1004Icon color={color} />
 
-        <Terminal
-          id={`${id}HandleSource`}
-          type="source"
-          validNodeType={validNodeType}
-          position={Position.Bottom}
-        />
-      </div>
-    );
-  },
-);
+      <Terminal id={`${id}-handleSource`} type="source" position={Position.Bottom} />
+    </div>
+  );
+});

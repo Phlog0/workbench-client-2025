@@ -1,7 +1,5 @@
-import { HTMLProps } from "react";
 import { ControllerRenderProps, FieldPath, FieldValues } from "react-hook-form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Label } from "@/shared/ui";
-type SelectProps = HTMLProps<HTMLSelectElement>;
 type AuthSelectProps<TFieldValues extends FieldValues, TName extends FieldPath<TFieldValues>> = {
   label?: string;
   options: readonly TFieldValues[TName][];

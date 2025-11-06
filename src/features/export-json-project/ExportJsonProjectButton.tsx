@@ -30,7 +30,7 @@ export function ExportJsonProjectButton({
         URL.revokeObjectURL(url); // Очистка
       }
     },
-    [rfInstance],
+    [],
   );
   return (
     <Button onClick={() => onSave(projectId, rfInstance)}>

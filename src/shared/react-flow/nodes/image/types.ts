@@ -1,6 +1,6 @@
-import { ReactFlowNode } from "../react-flow-node";
-import { ReactFlowNodeId } from "../react-flow-node-ids";
-import { RfNodeType } from "../rf-nodes-types";
+import { ReactFlowNode } from "../shared/react-flow-node";
+import { ReactFlowNodeId } from "../shared/react-flow-node-ids";
+import { RfNodeType } from "../shared/rf-nodes-types";
 
 export type ImageNodeData = {
   imageSrc?: string;

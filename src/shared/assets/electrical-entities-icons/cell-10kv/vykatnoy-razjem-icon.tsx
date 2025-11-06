@@ -2,7 +2,7 @@ import { DEFAULT_CELL_STROKE_WIDTH, ICON_HEIGHT } from "@/shared/react-flow/node
 
 export function VykatnoyRazjemIcon({
   className,
-  color,
+  color = "black",
   height = ICON_HEIGHT,
   strokeWidth = DEFAULT_CELL_STROKE_WIDTH,
 }: {
@@ -20,13 +20,13 @@ export function VykatnoyRazjemIcon({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_3_1767)">
-        <path d="M300 -4V600" stroke="black" strokeWidth={strokeWidth} />
+      <g clipPath="url(#clip0_3_1767)">
+        <path d="M300 -4V600" stroke={color} strokeWidth={strokeWidth} />
         <path
           fillRule="evenodd"
           clipRule="evenodd"
           d="M338.1 490H261.89L300 556L338.1 490ZM327.71 496H272.28L300 544L327.71 496Z"
-          fill="black"
+          fill={color}
         />
       </g>
       <defs>

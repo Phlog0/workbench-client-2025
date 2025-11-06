@@ -2,7 +2,7 @@ import { DEFAULT_CELL_STROKE_WIDTH, ICON_HEIGHT } from "@/shared/react-flow/node
 
 export function VerticalLineIcon({
   className,
-  color,
+  color = "black",
   height = ICON_HEIGHT,
   strokeWidth = DEFAULT_CELL_STROKE_WIDTH,
 }: {
@@ -21,7 +21,7 @@ export function VerticalLineIcon({
       className={className}
     >
       <g clipPath="url(#clip0_3_3)">
-        <path d="M300 -1V600" stroke="black" strokeWidth={strokeWidth} />
+        <path d="M300 -1V600" stroke={color} strokeWidth={strokeWidth} />
       </g>
       <defs>
         <clipPath id="clip0_3_3">

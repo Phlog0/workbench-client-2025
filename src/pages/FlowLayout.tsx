@@ -2,7 +2,7 @@ import { ReactFlowProvider } from "@xyflow/react";
 import { Flow } from "./Flow";
 
 import { ProjectHeaderTools, SidebarFigures, SiderbarProperties } from "@/widgets/";
-import { DnDProvider } from "@/app/DnDContext/DnDContext";
+import { DnDProvider } from "@/app/DnDContext";
 
 import { getThemeSelector } from "@/shared/appStore/slices/selectors";
 import { cn } from "@/shared/lib";

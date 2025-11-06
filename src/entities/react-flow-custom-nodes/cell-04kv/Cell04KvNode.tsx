@@ -1,4 +1,4 @@
-import { Handle, Position } from "@xyflow/react";
+import { Position } from "@xyflow/react";
 import { cn } from "@/shared/lib";
 
 import { NodeProps } from "@xyflow/react";
@@ -8,11 +8,12 @@ import { CellHeaderIcon } from "@/shared/assets/electrical-entities-icons/cell-0
 import { memo } from "react";
 import { Tooltip, TooltipTrigger } from "@/shared/ui";
 import { TooltipContent } from "@radix-ui/react-tooltip";
-import { TCell04Kv } from "@/shared/react-flow/nodes/cell-04kv/types";
-import { INITIAL_CELL_04KV_METRICS } from "@/shared/react-flow/nodes/cell-04kv/measures";
+import { TCell04Kv } from "@/shared/react-flow/nodes/cells/cell-04kv/types";
+import { INITIAL_CELL_04KV_METRICS } from "@/shared/react-flow/nodes/cells/cell-04kv/measures";
+import { Terminal } from "../terminal";
 
 export const Cell04KvNode = memo((props: NodeProps<TCell04Kv>) => {
-  const { data, selected, type, id } = props;
+  const { selected, id } = props;
 
   return (
     <Tooltip>
@@ -29,10 +30,8 @@ export const Cell04KvNode = memo((props: NodeProps<TCell04Kv>) => {
             height: INITIAL_CELL_04KV_METRICS.height,
           }}
         >
-          <Handle type="target" position={Position.Top} />
+          <Terminal id={`${id}Target`} type="target" position={Position.Top} />
           <CellHeaderIcon className="bg-blue-500" />
-
-          <Handle type="source" position={Position.Bottom} />
         </div>
       </TooltipTrigger>
       <TooltipContent className="bg-primary text-white p-4">

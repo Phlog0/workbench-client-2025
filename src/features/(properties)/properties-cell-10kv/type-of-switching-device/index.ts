@@ -1,0 +1,1 @@
+export { TypeOfSwitchingDevice } from "./TypeOfSwitchingDevice";

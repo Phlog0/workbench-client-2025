@@ -3,7 +3,7 @@ import {
   TSwitchingDeviceRCell10Kv,
   TSwitchingDeviceVNCell10kv,
   TSwitchingDeviceVVCell10Kv,
-} from "../react-flow/nodes/cell-10kv/types";
+} from "../react-flow/nodes/cells/cell-10kv/types";
 
 export const isVV = (device?: TSwitchingDeviceCell10Kv): device is TSwitchingDeviceVVCell10Kv => {
   if (device && device.typeOfDevice === "VV") {

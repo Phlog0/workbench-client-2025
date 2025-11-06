@@ -1,5 +1,5 @@
 import { AuthFormField } from "@/entities/auth";
-import { Button, Form, Spinner } from "@/shared/ui";
+import { Button, Form } from "@/shared/ui";
 import { EyeClosedIcon } from "@radix-ui/react-icons";
 import { Eye } from "lucide-react";
 import { useState } from "react";
@@ -9,6 +9,7 @@ import { useSignUp } from "../api/use-sign-up";
 
 import { SignUp, SignUpSchema } from "@/shared/api/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Spinner } from "@/shared/ui/spinners";
 export function SignUpForm() {
   const signUpMutation = useSignUp();
   const form = useForm({

@@ -1,5 +1,5 @@
 import { PossibleEdge } from "../react-flow/edges";
-import { PossibleNode } from "../react-flow/nodes";
+import { PossibleNode } from "../react-flow/nodes/shared";
 import { apiInstance } from "./api-instacne";
 import {
   ProjectInfo,

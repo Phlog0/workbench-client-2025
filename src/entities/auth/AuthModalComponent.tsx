@@ -11,12 +11,7 @@ import {
   DialogTrigger,
 } from "shared/ui";
 import { ProjectTheme } from "@/shared/appStore/slices/types";
-const modalVariantsSize = {
-  full: {
-    dialogContent: "h-screen max-w-screen",
-    dialogDescription: "h-[87vh]",
-  },
-};
+
 export const AuthModalComponent = ({
   content,
 

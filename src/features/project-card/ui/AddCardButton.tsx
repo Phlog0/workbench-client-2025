@@ -35,7 +35,6 @@ export function AddCardButton({ className }: { className?: string }) {
       setOpen={setModalOpen}
       content={
         <Form {...form}>
-          <h1>a</h1>
           <form onSubmit={form.handleSubmit(onSubmit)} className="p-8 max-w-5xl mx-auto">
             <Controller
               control={form.control}

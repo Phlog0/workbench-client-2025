@@ -1,5 +1,5 @@
-import { HALF_CELL_10KV_WIDTH } from "../../cell-10kv/measures";
-import { INITIAL_SECTION_10KV_METRICS } from "../../section-10kv/measures";
+import { HALF_CELL_10KV_WIDTH } from "../../cells/cell-10kv/measures";
+import { INITIAL_SECTION_10KV_METRICS } from "../../sections/section-10kv/measures";
 
 export const INITIAL_FIXATOR_CONTAINER_METRICS = {
   width:

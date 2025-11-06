@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { apiInstance, CACHE_KEYS } from "@/shared/api";
-import { RF_NODE_TYPES } from "@/shared/react-flow/nodes";
-import { RfNodeType, RFNodeTypesValues } from "@/shared/react-flow/nodes/rf-nodes-types";
+import { RFNodeTypesValues } from "@/shared/react-flow/nodes/shared/rf-nodes-types";
 type ApiError = {
   status: number;
   error: string;
@@ -20,7 +19,6 @@ type SuccessGetProjectResponse = {
   };
 };
 
-const dataKey = [CACHE_KEYS.DICTIONARY] as unknown[];
 export function useGetDictionaryData({
   query,
   dictionaryFolder,
@@ -33,7 +31,11 @@ export function useGetDictionaryData({
     queryFn: async () => {
       try {
         if (!dictionaryFolder)
-          throw new Error(`Ошибка с выбором папки (04, 10...), ${dictionaryFolder}`);
+          throw new Error(
+            `Ошибка с выбором типом каталога (папки (04, 10...)), #${
+              dictionaryFolder ? dictionaryFolder : "ТИП"
+            }`,
+          );
         const response = await apiInstance.get<SuccessGetProjectResponse>(
           `api/${dictionaryFolder}/${query}`,
         );

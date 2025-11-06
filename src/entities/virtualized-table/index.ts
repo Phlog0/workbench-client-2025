@@ -1,1 +1,1 @@
-export { VirtualizedTable } from "./ui/VirtualizedTable";
+export { VirtualizedTable } from "./VirtualizedTable";

@@ -8,7 +8,7 @@ export function readImageFile(file: File): Promise<string> {
     reader.onload = (event) => {
       try {
         resolve(event.target?.result as string);
-      } catch (error) {
+      } catch {
         reject(new Error("Ошибка валидации изображения"));
       }
     };

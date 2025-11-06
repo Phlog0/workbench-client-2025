@@ -1,21 +1,28 @@
-import { useDnD } from "@/app/DnDContext/DnDContext";
-
+import { useDnD } from "@/app/DnDContext";
 import { cn } from "@/shared/lib/cn";
 
-import { RF_NODE_TYPES, RFNodeTypesValues } from "@/shared/react-flow/nodes";
+import { RF_NODE_TYPES, RFNodeTypesValues } from "@/shared/react-flow/nodes/shared";
 import { Button } from "shared/ui";
 
 const items = [
   {
-    title: "Секция 10 кВ",
+    title: "Секция 35 кВ",
+    type: RF_NODE_TYPES.section35Kv,
+  },
+  {
+    title: "Ячейка 35 кВ",
+    type: RF_NODE_TYPES.cell35Kv,
+  },
+  {
+    title: "Секция 10 (6) кВ",
     type: RF_NODE_TYPES.section10Kv,
   },
   {
-    title: "Ячейка 10 кВ",
+    title: "Ячейка 10 (6) кВ",
     type: RF_NODE_TYPES.cell10Kv,
   },
   {
-    title: "Силовой трансформатор 10(6)/04",
+    title: "Силовой трансформатор 10(6) / 04",
     type: RF_NODE_TYPES.powerTransformer1004Kv,
   },
   {
@@ -26,18 +33,10 @@ const items = [
     title: "Ячейка 04 кВ",
     type: RF_NODE_TYPES.cell04Kv,
   },
-  // {
-  //   title: "Секция 04 кВ",
-  //   type: RF_NODE_TYPES.,
-  // },
-  // {
-  //   title: "Ячейка 04 кВ",
-  //   type: RF_NODE_TYPES.,
-  // },
 ];
 
 export const SidebarFigures = ({ className }: { className?: string }) => {
-  const [_, setType] = useDnD();
+  const { setType } = useDnD();
   const onDragStart = (event: React.DragEvent, nodeType: RFNodeTypesValues) => {
     setType(nodeType);
     event.dataTransfer.effectAllowed = "move";

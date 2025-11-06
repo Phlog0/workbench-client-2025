@@ -1,0 +1,45 @@
+import { useCallback, useRef, useState } from "react";
+import { ReactMouseEvent } from "../types";
+
+import { useBoundStore } from "@/shared/appStore";
+import { PossibleNode, ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
+
+type MenuType = {
+  id: ReactFlowNodeId;
+  top?: number;
+  left?: number;
+  right?: number;
+  bottom?: number;
+};
+export function useReactFlowContextMenu() {
+  const setSelectedNodeId = useBoundStore((state) => state.setSelectedNodeId);
+  const [menu, setMenu] = useState<MenuType | null>();
+  const reactFlowRef = useRef<null | HTMLDivElement>(null);
+
+  const onNodeContextMenu = useCallback(
+    (event: ReactMouseEvent, node: PossibleNode) => {
+      if (node.type !== "Cell10Kv") return;
+      event.preventDefault();
+
+      // Calculate position of the context menu. We want to make sure it
+      // doesn't get positioned off-screen.
+      const pane = reactFlowRef.current?.getBoundingClientRect();
+      if (pane)
+        setMenu({
+          id: node.id,
+          top: event.clientY < pane.height - 200 ? event.clientY : undefined,
+          left: event.clientX < pane.width - 200 ? event.clientX : undefined,
+          right: event.clientX >= pane.width - 200 ? pane.width - event.clientX : undefined,
+          bottom: event.clientY >= pane.height - 200 ? pane.height - event.clientY : undefined,
+        });
+      setSelectedNodeId([node.id]);
+    },
+    [setMenu, setSelectedNodeId],
+  );
+  const onPaneClick = useCallback(() => {
+    setMenu(null);
+    setSelectedNodeId([]);
+  }, [setMenu, setSelectedNodeId]);
+
+  return { menu, reactFlowRef, onNodeContextMenu, onPaneClick };
+}

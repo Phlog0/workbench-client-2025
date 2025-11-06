@@ -1,4 +1,4 @@
-import { RFInstance, RFJsonObject } from "@/shared/react-flow/types";
+import { RFJsonObject } from "@/shared/react-flow/types";
 
 export function readJsonFile(file: File): Promise<RFJsonObject> {
   return new Promise((resolve, reject) => {
@@ -21,7 +21,7 @@ export function readJsonFile(file: File): Promise<RFJsonObject> {
           reject(new Error("Неверная структура JSON"));
         }
         resolve(result as RFJsonObject);
-      } catch (error) {
+      } catch {
         reject(new Error("Ошибка валидации JSON - файла"));
       }
     };

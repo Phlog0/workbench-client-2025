@@ -1,10 +1,10 @@
 import { PossibleEdge } from "./edges";
-import { PossibleNode } from "./nodes";
-import { HALF_CELL_10KV_WIDTH } from "./nodes/cell-10kv/measures";
-import { TCell10Kv } from "./nodes/cell-10kv/types";
-import { TFixator10Kv } from "./nodes/fixator-10kv/types";
+import { PossibleNode } from "./nodes/shared";
+import { HALF_CELL_10KV_WIDTH } from "./nodes/cells/cell-10kv/measures";
+import { TCell10Kv } from "./nodes/cells/cell-10kv/types";
+import { TFixator10Kv } from "./nodes/fixators/fixator-10kv/types";
 import { TFixatorContainer } from "./nodes/fixator-container/types";
-import { INITIAL_SECTION_10KV_METRICS } from "./nodes/section-10kv/measures";
+import { INITIAL_SECTION_10KV_METRICS } from "./nodes/sections/section-10kv/measures";
 
 const fixators: TFixator10Kv[] = new Array(4).fill("").map((_, index) => ({
   id: `fixator-10-kv-${index}`,

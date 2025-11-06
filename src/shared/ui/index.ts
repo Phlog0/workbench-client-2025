@@ -1,7 +1,5 @@
 export { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./accordion";
 
-export { Spinner } from "./spinner";
-
 export { Input } from "./input";
 export type { InputProps } from "./input";
 

@@ -11,14 +11,7 @@ import {
   DialogTrigger,
 } from "shared/ui";
 import type { ProjectTheme } from "@/shared/appStore/slices/types";
-import { cva } from "class-variance-authority";
 
-const modalVariantsSize = {
-  full: {
-    dialogContent: "h-screen max-w-screen",
-    dialogDescription: "h-[87vh]",
-  },
-};
 export const ModalComponent = ({
   content,
 
@@ -36,19 +29,6 @@ export const ModalComponent = ({
   projectTheme?: ProjectTheme;
   openProp?: boolean;
 }) => {
-  const modalComponentVariants = cva({
-    variants: {
-      size: {
-        default: "",
-        full: "",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  });
-
   // console.log({ openProp });
   const [open, setOpen] = useState(false);
   return (
