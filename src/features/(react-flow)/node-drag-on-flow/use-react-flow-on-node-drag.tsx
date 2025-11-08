@@ -11,7 +11,9 @@ export function useReactFlowOnNodeDrag() {
   const onReactFlowNodeDrag = useCallback(
     (_: ReactMouseEvent, node: PossibleNode) => {
       const intersections = getIntersectingNodes(node);
-
+      if (intersections.length === 0) {
+        return;
+      }
       for (const { cellType, fixatorType } of cellFixatorPairs) {
         if (node.type === cellType) {
           const fixatorId = intersections?.find((item) => item.type === fixatorType)?.id;
@@ -19,44 +21,24 @@ export function useReactFlowOnNodeDrag() {
             ns.map((n) => {
               return {
                 ...n,
-
-                className:
-                  n.id === fixatorId ? "rounded-full bg-blue-500 outline outline-blue-400" : "",
+                data: {
+                  ...n.data,
+                  intersectionClassname:
+                    n.id === fixatorId
+                      ? "rounded-full bg-blue-500 outline-solid outline-blue-400"
+                      : "",
+                },
+                // className:
+                //   n.id === fixatorId
+                //     ? "rounded-full bg-blue-500 outline-solid outline-blue-400"
+                //     : "",
               };
             }),
           );
         }
       }
-      // if (node.type === "Cell10Kv") {
-      //   const fixatorId = intersections?.find((item) => item.type === "Fixator10Kv")?.id;
-      //   // setNodes((prev) => prev.map((item) => item));
-      //   setNodes((ns) =>
-      //     ns.map((n) => {
-      //       return {
-      //         ...n,
-
-      //         className:
-      //           n.id === fixatorId ? "rounded-full bg-blue-500 outline outline-blue-400" : "",
-      //       };
-      //     }),
-      //   );
-      // }
-      // if (node.type === "Cell04Kv") {
-      //   const fixatorId = intersections?.find((item) => item.type === "Fixator04Kv")?.id;
-      //   // setNodes((prev) => prev.map((item) => item));
-      //   setNodes((ns) =>
-      //     ns.map((n) => {
-      //       return {
-      //         ...n,
-
-      //         className:
-      //           n.id === fixatorId ? "rounded-full bg-blue-500 outline outline-blue-400" : "",
-      //       };
-      //     }),
-      //   );
-      // }
     },
-    [getIntersectingNodes, setNodes],
+    [getIntersectingNodes],
   );
   return { onReactFlowNodeDrag };
 }

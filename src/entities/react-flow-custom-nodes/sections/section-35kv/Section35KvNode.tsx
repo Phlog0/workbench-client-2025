@@ -25,7 +25,7 @@ export const Section35KvNode = memo(function Section35KvNode(props: NodeProps<TS
         zIndex: 10,
       }}
     >
-      {/* <div className="absolute text-black top-[-6rem]">
+      {/* <div className="absolute text-black -top-24">
         section35kv:
         {`measured: ${nodeInfo.measured?.width}`}
       </div> */}
@@ -35,7 +35,7 @@ export const Section35KvNode = memo(function Section35KvNode(props: NodeProps<TS
           sectionVoltage="35"
           sectionWidth={props.data.width}
           sectionId={props.id}
-          className="absolute top-[-3rem]"
+          className="absolute -top-12"
         />
       )}
       <Handle type="source" position={Position.Bottom} id={`${props.id}Source`} />

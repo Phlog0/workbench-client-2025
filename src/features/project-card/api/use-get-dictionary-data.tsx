@@ -10,12 +10,12 @@ type ApiError = {
 type CustomError = Error & {
   apiError: ApiError;
 };
-type TableHeaders = Record<string, string>;
-type TableBody = Record<string, string | number>[];
+export type TableColumnsApi = Record<string, string>;
+export type TableBodyApi = Record<string, string | number>;
 type SuccessGetProjectResponse = {
   data: {
-    tableHeaders: TableHeaders;
-    tableBody: TableBody;
+    tableColumns: TableColumnsApi;
+    tableBody: TableBodyApi[];
   };
 };
 
@@ -40,7 +40,9 @@ export function useGetDictionaryData({
           `api/${dictionaryFolder}/${query}`,
         );
         // console.log(response);
-        return response.data.data;
+        const data = response.data.data;
+
+        return data;
       } catch (error) {
         if (axios.isAxiosError(error)) {
           if (error.response && error.response.data && typeof error.response.data === "object") {

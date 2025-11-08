@@ -3,9 +3,10 @@ import { BookOpen } from "lucide-react";
 import { ProjectPropertyInput } from "@/entities/project-property";
 
 // ! нарушение FSD
-import { VirtualizedTable } from "@/entities/virtualized-table";
+import { VirtualizedTableNEW } from "@/entities/virtualized-table";
 import { ModalComponent } from "@/shared/ui";
 import { ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
+import { useState } from "react";
 
 type FirstInputProps = {
   KEY_1: string;
@@ -29,6 +30,7 @@ export function ProjectModalInput({
   selectedNodeId,
   param,
 }: FirstInputProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div className="flex">
       <div className="flex-1">
@@ -36,7 +38,15 @@ export function ProjectModalInput({
       </div>
 
       <ModalComponent
-        content={<VirtualizedTable key_1={KEY_1} param={param || KEY_1} />}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        content={
+          <VirtualizedTableNEW
+            key_1={KEY_1}
+            param={param || KEY_1}
+            setIsModalOpen={setIsModalOpen}
+          />
+        }
         dialogTitle={LABEL}
         triggerTitle={<BookOpen className="" />}
       />

@@ -42,7 +42,7 @@ export const AppRouter = () => {
   );
 
   return (
-    <div className="font-cascadiaMono">
+    <div className="font-cascadia-mono">
       <RouterProvider router={router} future={{ v7_startTransition: true }} />
       <Toaster />
     </div>

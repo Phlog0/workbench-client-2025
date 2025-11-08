@@ -12,7 +12,7 @@ export function OpenModalPropertiesButton() {
     // <Button className="hidden max-xl:inline-flex" onClick={handleClick}>
     <ModalComponent
       isOverflowContainerEnabled={true}
-      content={<SiderbarProperties headerMode={true} />}
+      content={<SiderbarProperties />}
       dialogTitle="Свойства"
       triggerTitle={
         <div className="flex items-center">

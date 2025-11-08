@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import {
   Button,
   Dialog,
@@ -18,6 +18,8 @@ export const ModalComponent = ({
   dialogTitle,
   triggerTitle,
   dialogDescription,
+  setIsModalOpen,
+  isModalOpen,
 }: {
   className?: string;
   content: ReactNode;
@@ -27,50 +29,31 @@ export const ModalComponent = ({
 
   isOverflowContainerEnabled?: boolean;
   projectTheme?: ProjectTheme;
-  openProp?: boolean;
+  isModalOpen?: boolean;
+  setIsModalOpen?: (value: boolean) => void;
 }) => {
-  // console.log({ openProp });
-  const [open, setOpen] = useState(false);
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      {/* <DialogTrigger
-        asChild
-        className={cn(
-          "flex items-center justify-center",
-
-          className,
-        )}
-      > */}
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger asChild>
         <Button>{triggerTitle}</Button>
       </DialogTrigger>
 
-      <DialogContent className="overflow-hidden max-w-screen max-h-screen overflow-y-scroll">
-        {/* <DialogContent
-        className={cn("h-screen max-w-screen overflow-hidden", {
-          "": projectTheme === "light",
-          "bg-slate-800": projectTheme === "dark",
-        })}
-      > */}
-        <DialogHeader className="">
+      <DialogContent className="overflow-hidden max-w-screen h-screen  flex flex-col">
+        <DialogHeader className="mt-1">
           <DialogTitle>{dialogTitle}</DialogTitle>
           {dialogDescription && <DialogDescription>{dialogDescription}</DialogDescription>}
         </DialogHeader>
-        {/* <div
-          className={cn("h-[87vh] container-save-scroll", {
-            "overflow-auto": isOverflowContainerEnabled,
-          })}
-        ></div> */}
-        <div className=" max-h-full grow">{content}</div>
-        <DialogFooter className="sticky bottom-0 bg-slate-500 pb-4">
+
+        <div className="flex-1 flex flex-col min-h-0">
+          <div className="flex-1 flex flex-col border rounded-lg overflow-hidden">{content}</div>
+        </div>
+        <DialogFooter className="sticky bottom-0 bg-slate-500 pb-4 shrink-0">
           <DialogClose asChild>
             <Button>Отмена</Button>
           </DialogClose>
         </DialogFooter>
         {/* <DialogClose /> */}
       </DialogContent>
-
-      {/* <DialogFooter>aaa</DialogFooter> */}
     </Dialog>
   );
 };

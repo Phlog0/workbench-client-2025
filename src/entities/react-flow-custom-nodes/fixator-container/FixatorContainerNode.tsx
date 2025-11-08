@@ -15,7 +15,7 @@ export const FixatorContainerNode = memo((props: NodeProps<TFixatorContainer>) =
         display: "none",
       }}
     >
-      {/* <div className="absolute text-black top-[-3rem]">
+      {/* <div className="absolute text-black -top-12">
         fixator-container: {`measured: ${props.data.width}`}
       </div> */}
     </div>

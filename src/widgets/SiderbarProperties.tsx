@@ -9,13 +9,7 @@ import { PropertiesCell35Kv } from "@/features/(properties)/properties-cell-35kv
 import { PropertiesSection04Kv } from "@/features/(properties)/properties-section-04kv";
 import { PropertiesSection35Kv } from "@/features/(properties)/properties-section-35kv";
 
-export const SiderbarProperties = ({
-  className,
-  headerMode = false,
-}: {
-  className?: string;
-  headerMode?: boolean;
-}) => {
+export const SiderbarProperties = ({ className }: { className?: string }) => {
   const selectedNodeIds = useBoundStore((state) => state.selectedNodeIds);
   // console.log(selectedNodeIds)
   const selectedNodeId = selectedNodeIds && selectedNodeIds[0];
@@ -24,11 +18,8 @@ export const SiderbarProperties = ({
   return (
     <aside
       className={cn(
-        {
-          "container-save-scroll overflow-auto project-properties outline-1 outline-double dark:bg-slate-800":
-            headerMode === false,
-          "p-6": headerMode === true,
-        },
+        "container-save-scroll overflow-auto project-properties outline-1 outline-double  dark:bg-slate-800",
+
         className,
       )}
     >
