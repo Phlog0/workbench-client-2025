@@ -14,6 +14,10 @@ const items = [
     type: RF_NODE_TYPES.cell35Kv,
   },
   {
+    title: "Силовой трансформатор 35 / 10 кВ",
+    type: RF_NODE_TYPES.powerTransformer3510Kv,
+  },
+  {
     title: "Секция 10 (6) кВ",
     type: RF_NODE_TYPES.section10Kv,
   },

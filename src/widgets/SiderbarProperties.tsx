@@ -8,6 +8,7 @@ import { PropertiesPt1004Kv } from "@/features/(properties)/properties-pt-1004kv
 import { PropertiesCell35Kv } from "@/features/(properties)/properties-cell-35kv";
 import { PropertiesSection04Kv } from "@/features/(properties)/properties-section-04kv";
 import { PropertiesSection35Kv } from "@/features/(properties)/properties-section-35kv";
+import { PropertiesPt3510Kv } from "@/features/(properties)/properties-pt-3510kv";
 
 export const SiderbarProperties = ({ className }: { className?: string }) => {
   const selectedNodeIds = useBoundStore((state) => state.selectedNodeIds);
@@ -40,8 +41,9 @@ export const SiderbarProperties = ({ className }: { className?: string }) => {
         <PropertiesPt1004Kv />
       )}
       {selectedNodeIds?.length === 1 && currentNode?.type === "Cell35Kv" && <PropertiesCell35Kv />}
-
-      {/* <ModalButton /> */}
+      {selectedNodeIds?.length === 1 && currentNode?.type === "PowerTransformer3510Kv" && (
+        <PropertiesPt3510Kv />
+      )}
     </aside>
   );
 };

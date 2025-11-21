@@ -8,6 +8,7 @@ import { PossibleNode } from "@/shared/react-flow/nodes/shared";
 import { createPowerTransformer1004kv } from "./create-initial-power-transformer1004kv-node";
 import { createCell } from "./create-initial-cell-node";
 import { useDnD } from "@/app/DnDContext";
+import { createPowerTransformer3510kv } from "./create-initial-power-transformer3510kv-node";
 
 export function useDragAndDropItems() {
   const addNode = useBoundStore((state) => state.addNode);
@@ -42,6 +43,10 @@ export function useDragAndDropItems() {
           break;
         case "PowerTransformer1004Kv":
           newNode = createPowerTransformer1004kv({ event, screenToFlowPosition });
+          addNode(newNode);
+          break;
+        case "PowerTransformer3510Kv":
+          newNode = createPowerTransformer3510kv({ event, screenToFlowPosition });
           addNode(newNode);
           break;
         case "Cell04Kv":

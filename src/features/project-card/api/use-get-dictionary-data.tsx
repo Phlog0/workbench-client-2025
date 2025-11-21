@@ -11,11 +11,11 @@ type CustomError = Error & {
   apiError: ApiError;
 };
 export type TableColumnsApi = Record<string, string>;
-export type TableBodyApi = Record<string, string | number>;
+export type TableModelApi = Record<string, string | number>;
 type SuccessGetProjectResponse = {
   data: {
     tableColumns: TableColumnsApi;
-    tableBody: TableBodyApi[];
+    tableBody: TableModelApi[];
   };
 };
 

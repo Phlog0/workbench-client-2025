@@ -13,6 +13,7 @@ import { ImageNode } from "./image-node/ImageNode";
 import { Cell35KvNode } from "./cell-35kv";
 import { Section35KvNode } from "./sections/section-35kv";
 import { Fixator35KvNode } from "./fixators/fixator-35kv";
+import { PowerTransformer3510KvNode } from "./power-transformer-35-10kv";
 
 export const nodeTypesEntities: NodeTypes = {
   [RF_NODE_TYPES.cell10Kv]: Cell10KvNode,
@@ -20,6 +21,7 @@ export const nodeTypesEntities: NodeTypes = {
   [RF_NODE_TYPES.fixatorContainer]: FixatorContainerNode,
   [RF_NODE_TYPES.fixator10Kv]: Fixator10KvNode,
   [RF_NODE_TYPES.powerTransformer1004Kv]: PowerTransformer1004KvNode,
+  [RF_NODE_TYPES.powerTransformer3510Kv]: PowerTransformer3510KvNode,
   [RF_NODE_TYPES.cell04Kv]: Cell04KvNode,
   [RF_NODE_TYPES.section04Kv]: Section04KvNode,
   [RF_NODE_TYPES.fixator04Kv]: Fixator04KvNode,

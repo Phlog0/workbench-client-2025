@@ -12,6 +12,9 @@ export function wrappedSortNodes(state: WritableDraft<SharedSlice>) {
   const powerTransformers1004Kv = state.nodes.filter(
     (item) => item.type === "PowerTransformer1004Kv",
   );
+  const powerTransformers3510Kv = state.nodes.filter(
+    (item) => item.type === "PowerTransformer3510Kv",
+  );
   const sections04Kv = state.nodes.filter((item) => item.type === "Section04Kv");
   const fixators04Kv = state.nodes.filter((item) => item.type === "Fixator04Kv");
   const cells04Kv = state.nodes.filter((item) => item.type === "Cell04Kv");
@@ -20,6 +23,7 @@ export function wrappedSortNodes(state: WritableDraft<SharedSlice>) {
   const cells35Kv = state.nodes.filter((item) => item.type === "Cell35Kv");
   state.nodes = [
     ...images,
+    ...powerTransformers3510Kv,
     ...powerTransformers1004Kv,
     ...sections35Kv,
     ...sections10Kv,

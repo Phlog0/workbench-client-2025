@@ -14,6 +14,7 @@ export const RF_NODE_TYPES = {
   cell35Kv: "Cell35Kv",
 
   powerTransformer1004Kv: "PowerTransformer1004Kv",
+  powerTransformer3510Kv: "PowerTransformer3510Kv",
 
   image: "Image",
 } as const;

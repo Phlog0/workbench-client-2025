@@ -16,6 +16,7 @@ import {
 import { TCell35Kv } from "../cells/cell-35kv/types";
 import { TSection35Kv } from "../sections/section-35kv/types";
 import { TFixator35Kv } from "../fixators/fixator-35kv/types";
+import { TPowerTransformer3510Kv } from "../power-transformer-35-10kv";
 
 export type PossibleNode =
   | TCell04Kv
@@ -29,6 +30,7 @@ export type PossibleNode =
   | TFixator35Kv
   | TFixatorContainer
   | TPowerTransformer1004Kv
+  | TPowerTransformer3510Kv
   | TImageNode;
 
 type PossibleNodeData = PossibleNode["data"];

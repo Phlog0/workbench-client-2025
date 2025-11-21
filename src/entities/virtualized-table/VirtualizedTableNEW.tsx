@@ -1,24 +1,22 @@
 import { Spinner } from "shared/ui/spinners";
 
-import { TableBodyApi, useGetDictionaryData } from "@/features/project-card/api";
+import { TableModelApi, useGetDictionaryData } from "@/features/project-card/api";
 
 import { useBoundStore } from "@/shared/appStore";
-import { useShallow } from "zustand/shallow";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui";
+
 import {
   CellContext,
   ColumnFiltersState,
-  flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
-  Row,
   RowSelectionState,
   useReactTable,
 } from "@tanstack/react-table";
+
 import { useMemo, useState } from "react";
-import { cn } from "@/shared/lib";
-import { ColumnFilter } from "./Filters";
+
+import { VirtualizedTableContainer } from "./VirtualizedTableContainer";
 
 type VirtualizedTableProps = {
   param?: string;
@@ -28,11 +26,6 @@ type VirtualizedTableProps = {
   setIsModalOpen: (value: boolean) => void;
 };
 export const VirtualizedTableNEW = ({ param, key_1, setIsModalOpen }: VirtualizedTableProps) => {
-  const selectReadyMadeSolution = useBoundStore((state) => state.selectReadyMadeSolution);
-
-  const selectedNodeIds = useBoundStore(useShallow((state) => state.selectedNodeIds));
-  const selectedNodeId = selectedNodeIds[0];
-
   const folderType = useBoundStore((state) => state.folderType);
   const { isLoading, isError, error, data } = useGetDictionaryData({
     query: param,
@@ -43,26 +36,29 @@ export const VirtualizedTableNEW = ({ param, key_1, setIsModalOpen }: Virtualize
     const viewportWidth = document.documentElement.clientWidth;
     if (data?.tableColumns) {
       const columnCount = Object.entries(data?.tableColumns).length;
-      console.log(viewportWidth / columnCount);
+
       return Object.entries(data?.tableColumns).map((colConfig) => ({
         accessorKey: colConfig[0],
         header: colConfig[1],
         size: Math.max(viewportWidth / columnCount, 160),
         enableColumnFilter: true,
-        cell: (info: CellContext<Record<string, string | number>, string>) => info.getValue(),
+        cell: (info: CellContext<TableModelApi, string>) => info.getValue(),
+        minSize: 120,
       }));
     }
+
     return [];
   }, [data?.tableColumns]);
 
-  console.log({ data });
+  // const tableBody = useMemo(() => data?.tableBody, [data?.tableBody]);
+  // console.log({ data });
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   // const [globalFilter, setGlobalFilter] = useState("");
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-
-  // https://tanstack.com/table/latest/docs/framework/react/examples/filters?panel=sandbox
+  console.log(data);
   const table = useReactTable({
     data: data?.tableBody ?? [],
+    // data: data?.tableBody ?? [],
     columns: columns ?? [],
     getCoreRowModel: getCoreRowModel(),
 
@@ -78,7 +74,6 @@ export const VirtualizedTableNEW = ({ param, key_1, setIsModalOpen }: Virtualize
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
-
   if (isLoading)
     return (
       <div className="absolute z-10 top-1/2 left-1/2 translate-x-1/2 translate-y-1/2">
@@ -92,103 +87,109 @@ export const VirtualizedTableNEW = ({ param, key_1, setIsModalOpen }: Virtualize
 
     return (
       <span>
-        {error.message}: {error.apiError.status}
+        {error.message}: {error.apiError.status}, {error.apiError.details}
       </span>
     );
   }
-  // </TableHead>
-  const handleClick = (row: Row<TableBodyApi>) => {
-    row.getToggleSelectedHandler();
-    const currnetRowData = table.getRow(row.id).original;
-    selectReadyMadeSolution({
-      nodeId: selectedNodeId,
-      keyOne: key_1, // ТАКОЙ, ЧТО ЯВЛЯЕТСЯ КЛЮЧОМ ДЛЯ ОБЪЕКТОВ switching-device, opn, ...
-      values: currnetRowData,
-    });
-    setIsModalOpen(false);
-  };
 
-  return (
-    <>
-      {data?.tableBody && data.tableColumns && (
-        <Table
-          className="border relative"
-          style={{
-            width: table.getCenterTotalSize(),
-          }}
-        >
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableHeader key={headerGroup.id} className="sticky top-0 overflow-y-scroll ">
-              <tr className="border-4 shadow-2xs bg-slate-100">
-                {headerGroup.headers.map((header) => (
-                  <TableHead
-                    key={header.id}
-                    style={{ width: header.getSize() }}
-                    className={cn(
-                      "relative select-none ",
-
-                      {
-                        "cursor-pointer select-none grow": header.column.getCanSort(),
-                      },
-                    )}
-                    onClick={header.column.getToggleSortingHandler()}
-                  >
-                    {header.column.getCanFilter() ? (
-                      <div className="h-[49%] w-full">
-                        <ColumnFilter column={header.column} />
-                      </div>
-                    ) : null}
-                    <div className=" min-h-8 h-[50%] overflow-y-auto w-full">
-                      {flexRender(header.column.columnDef.header, header.getContext())}
-                      {{
-                        asc: " 🔼",
-                        desc: " 🔽",
-                      }[header.column.getIsSorted() as string] ?? null}
-                    </div>
-                    <div
-                      className={cn(
-                        "absolute top-0 right-0 h-full bg-blue-500 w-4 cursor-e-resize z-100",
-                        {
-                          "bg-blue-800": header.column.getIsResizing(),
-                        },
-                      )}
-                      onMouseDown={(e) => {
-                        e.stopPropagation();
-                        header.getResizeHandler()(e);
-                      }}
-                      onClick={(e) => e.stopPropagation()}
-                      onTouchStart={(e) => {
-                        e.stopPropagation();
-                        header.getResizeHandler()(e);
-                      }}
-                    />
-                  </TableHead>
-                ))}
-              </tr>
-            </TableHeader>
-          ))}
-          <TableBody className="flex-1">
-            {table.getRowModel().rows.map((row) => (
-              <TableRow
-                style={{ minHeight: "500px" }}
-                key={row.id}
-                className={cn(
-                  "cursor-pointer h-[100px]",
-                  `${row.getIsSelected() ? "bg-blue-400" : null}`,
-                  "hover:bg-blue-200",
-                )}
-                onClick={() => handleClick(row)}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell className="h-[100px]" key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      )}
-    </>
-  );
+  return <VirtualizedTableContainer setIsModalOpen={setIsModalOpen} keyOne={key_1} table={table} />;
 };
+
+// const { rows } = table.getRowModel();
+//   const parentRef = useRef<HTMLDivElement>(null);
+//   const virtualizer = useVirtualizer({
+//     count: rows.length,
+//     getScrollElement: () => parentRef.current,
+//     estimateSize: () => 100,
+//     overscan: 10,
+//   });
+
+//  {data?.tableBody && data.tableColumns && (
+//         <div ref={parentRef} className="overflow-auto bg-blue-900">
+//           <div style={{ height: `${virtualizer.getTotalSize()}px` }} className="relative">
+//             <Table
+//               className="border bg-red-300 "
+//               style={{
+//                 width: table.getCenterTotalSize(),
+//               }}
+//             >
+//               {table.getHeaderGroups().map((headerGroup) => (
+//                 <TableHeader key={headerGroup.id} className="sticky top-15 z-10 overflow-y-scroll">
+//                   <tr className="border-4 shadow-2xs bg-slate-100">
+//                     {headerGroup.headers.map((header) => (
+//                       <TableHead
+//                         key={header.id}
+//                         style={{ width: header.getSize() }}
+//                         className={cn(
+//                           "relative select-none ",
+
+//                           {
+//                             "cursor-pointer select-none grow": header.column.getCanSort(),
+//                           },
+//                         )}
+//                         onClick={header.column.getToggleSortingHandler()}
+//                       >
+//                         {header.column.getCanFilter() ? (
+//                           <div className="h-[49%] w-full">
+//                             <ColumnFilter column={header.column} />
+//                           </div>
+//                         ) : null}
+//                         <div className=" min-h-8 h-[50%] overflow-y-auto w-full">
+//                           {flexRender(header.column.columnDef.header, header.getContext())}
+//                           {{
+//                             asc: " 🔼",
+//                             desc: " 🔽",
+//                           }[header.column.getIsSorted() as string] ?? null}
+//                         </div>
+//                         <div
+//                           className={cn(
+//                             "absolute top-0 right-0 h-full bg-blue-500 w-4 cursor-e-resize z-100",
+//                             {
+//                               "bg-blue-800": header.column.getIsResizing(),
+//                             },
+//                           )}
+//                           onMouseDown={(e) => {
+//                             e.stopPropagation();
+//                             header.getResizeHandler()(e);
+//                           }}
+//                           onClick={(e) => e.stopPropagation()}
+//                           onTouchStart={(e) => {
+//                             e.stopPropagation();
+//                             header.getResizeHandler()(e);
+//                           }}
+//                         />
+//                       </TableHead>
+//                     ))}
+//                   </tr>
+//                 </TableHeader>
+//               ))}
+//               <TableBody className="flex-1">
+//                 {virtualizer.getVirtualItems().map((virtualRow, index) => {
+//                   const row = rows[virtualRow.index];
+//                   return (
+//                     <TableRow
+//                       key={row.id}
+//                       className={cn(
+//                         "cursor-pointer",
+//                         `${row.getIsSelected() ? "bg-blue-400" : null}`,
+//                         "hover:bg-blue-200",
+//                       )}
+//                       style={{
+//                         height: `${virtualRow.size}px`,
+//                         transform: `translateY(${virtualRow.start - index * virtualRow.size}px)`,
+//                       }}
+//                       onClick={() => handleClick(row)}
+//                     >
+//                       {row.getVisibleCells().map((cell) => (
+//                         <TableCell className="" key={cell.id}>
+//                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
+//                         </TableCell>
+//                       ))}
+//                     </TableRow>
+//                   );
+//                 })}
+//               </TableBody>{" "}
+//             </Table>
+//           </div>
+//         </div>
+//       )}

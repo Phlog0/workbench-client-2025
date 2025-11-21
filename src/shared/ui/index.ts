@@ -38,12 +38,12 @@ export { Toaster } from "./sonner";
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
 export {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
+  Table as TableUi,
+  TableBody as TableBodyUi,
+  TableCaption as TableCaptionUi,
+  TableCell as TableCellUi,
+  TableFooter as TableFooterUi,
+  TableHead as TableHeadUi,
+  TableHeader as TableHeaderUi,
+  TableRow as TableRowUi,
 } from "./table";

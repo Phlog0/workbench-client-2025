@@ -1,5 +1,5 @@
 export const POWER_TRANSFORMER_1004KV_KEY_1 = "parameters";
-export const POWER_TRANSFORMER_1004KV_LABEL = "Параметры трансформатора нарпжения 10 \\ 04 кВ";
+export const POWER_TRANSFORMER_1004KV_LABEL = "Параметры трансформатора нарпжения 10 (6) \\ 04 кВ";
 export const POWER_TRANSFORMER_1004KV_INPUT_RENDER_DATA = [
   {
     inputType: "text",
