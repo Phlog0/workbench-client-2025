@@ -7,6 +7,14 @@ import { useCallback } from "react";
 
 const validConnectionsNodeTypes = [
   {
+    from: RF_NODE_TYPES.cell35Kv,
+    to: RF_NODE_TYPES.powerTransformer3510Kv,
+  },
+  {
+    from: RF_NODE_TYPES.powerTransformer3510Kv,
+    to: RF_NODE_TYPES.cell10Kv,
+  },
+  {
     from: RF_NODE_TYPES.cell10Kv,
     to: RF_NODE_TYPES.powerTransformer1004Kv,
   },

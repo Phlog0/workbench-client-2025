@@ -10,10 +10,12 @@ import { Tooltip, TooltipTrigger } from "@/shared/ui";
 import { TooltipContent } from "@radix-ui/react-tooltip";
 import { TCell04Kv } from "@/shared/react-flow/nodes/cells/cell-04kv/types";
 import { INITIAL_CELL_04KV_METRICS } from "@/shared/react-flow/nodes/cells/cell-04kv/measures";
-import { Terminal } from "../terminal";
+import { Terminal } from "../../terminal";
+import { MeasuringCurrentTransformers10KvIcon, Vykl10KvIcon } from "../shared";
+import { VerticalLineIcon } from "@/shared/assets/electrical-entities-icons";
 
 export const Cell04KvNode = memo((props: NodeProps<TCell04Kv>) => {
-  const { selected, id } = props;
+  const { selected, id, data } = props;
 
   return (
     <Tooltip>
@@ -30,8 +32,17 @@ export const Cell04KvNode = memo((props: NodeProps<TCell04Kv>) => {
             height: INITIAL_CELL_04KV_METRICS.height,
           }}
         >
-          <Terminal id={`${id}Target`} type="target" position={Position.Top} />
-          <CellHeaderIcon className="bg-blue-500" />
+          <CellHeaderIcon />
+          {/* по какой-то причине в cell04Kv я решил делать только рубильники ("Р (Разъединители)") */}
+          <Vykl10KvIcon value={"Р (Разъединители)"} switchingDevice={data?.switch} />
+          <MeasuringCurrentTransformers10KvIcon
+            value={data?.typeOfMeasuringCurrentTransformersDevice}
+            transformersData={data?.measuringCurrentTransformersDevice}
+          />
+
+          <VerticalLineIcon />
+
+          <Terminal id={`${id}Target`} type="target" position={Position.Bottom} />
         </div>
       </TooltipTrigger>
       <TooltipContent className="bg-primary text-white p-4">

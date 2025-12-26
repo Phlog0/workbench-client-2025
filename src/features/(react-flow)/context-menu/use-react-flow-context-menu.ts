@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ReactMouseEvent } from "../types";
 
 import { useBoundStore } from "@/shared/appStore";
@@ -15,7 +15,28 @@ export function useReactFlowContextMenu() {
   const setSelectedNodeId = useBoundStore((state) => state.setSelectedNodeId);
   const [menu, setMenu] = useState<MenuType | null>();
   const reactFlowRef = useRef<null | HTMLDivElement>(null);
+  const [reactFlowDimensions, setReactFlowDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
 
+  useEffect(() => {
+    if (!reactFlowRef.current) return;
+
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      setReactFlowDimensions({
+        width: entry.contentRect.width,
+        height: entry.contentRect.height,
+      });
+    });
+
+    observer.observe(reactFlowRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
   const onNodeContextMenu = useCallback(
     (event: ReactMouseEvent, node: PossibleNode) => {
       if (node.type !== "Cell10Kv") return;
@@ -41,5 +62,5 @@ export function useReactFlowContextMenu() {
     setSelectedNodeId([]);
   }, [setMenu, setSelectedNodeId]);
 
-  return { menu, reactFlowRef, onNodeContextMenu, onPaneClick };
+  return { menu, reactFlowRef, onNodeContextMenu, onPaneClick, reactFlowDimensions };
 }

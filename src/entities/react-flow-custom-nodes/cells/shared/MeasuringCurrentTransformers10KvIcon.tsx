@@ -13,6 +13,10 @@ import {
   TTypeOfMeasuringCurrentTransformersDeviceOptionsCell10Kv,
 } from "@/shared/react-flow/nodes/cells/cell-10kv/types";
 import { VerticalLineIcon } from "@/shared/assets/electrical-entities-icons";
+import {
+  TMeasuringCurrentTransformersDeviceCell04Kv,
+  TTypeOfMeasuringCurrentTransformersDeviceCell04Kv,
+} from "@/shared/react-flow/nodes/cells/cell-04kv/types";
 
 export const MeasuringCurrentTransformers10KvIcon = memo(
   function MeasuringCurrentTransformers10KvIcon({
@@ -21,8 +25,12 @@ export const MeasuringCurrentTransformers10KvIcon = memo(
     transformersData,
   }: {
     className?: string;
-    value?: TTypeOfMeasuringCurrentTransformersDeviceOptionsCell10Kv;
-    transformersData?: TMeasuringCurrentTransformersDeviceCell10Kv;
+    value?:
+      | TTypeOfMeasuringCurrentTransformersDeviceOptionsCell10Kv
+      | TTypeOfMeasuringCurrentTransformersDeviceCell04Kv;
+    transformersData?:
+      | TMeasuringCurrentTransformersDeviceCell10Kv
+      | TMeasuringCurrentTransformersDeviceCell04Kv;
   }) {
     // console.log(value);
 

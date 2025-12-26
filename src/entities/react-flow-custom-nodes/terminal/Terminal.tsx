@@ -13,10 +13,19 @@ export const Terminal = memo(({ id, type, position }: HandleProps) => {
       id={id}
       type={type}
       position={position}
-      className={cn("w-4 h-4 border-black bg-white", {
-        "bg-green-500": connectionToHandleId === id && connection.isValid === true,
-        "bg-red-500": connectionToHandleId === id && connection.isValid === false,
-      })}
-    />
+      style={{
+        backgroundColor: "none",
+        border: "none",
+        width: "16px",
+        height: "16px",
+      }}
+    >
+      <div
+        className={cn("w-4 h-4 border-black border-2 bg-white rounded-full top-0 left-0 absolute", {
+          "bg-green-500": connectionToHandleId === id && connection.isValid === true,
+          "bg-red-500": connectionToHandleId === id && connection.isValid === false,
+        })}
+      />
+    </Handle>
   );
 });

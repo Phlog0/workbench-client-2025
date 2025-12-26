@@ -10,7 +10,7 @@ import { Tooltip, TooltipTrigger } from "@/shared/ui";
 import { TooltipContent } from "@radix-ui/react-tooltip";
 import { TCell35Kv } from "@/shared/react-flow/nodes/cells/cell-35kv/types";
 import { INITIAL_CELL_35KV_METRICS } from "@/shared/react-flow/nodes/cells/cell-35kv/measures";
-import { Terminal } from "../terminal";
+import { Terminal } from "../../terminal";
 
 export const Cell35KvNode = memo((props: NodeProps<TCell35Kv>) => {
   const { selected, id, type } = props;

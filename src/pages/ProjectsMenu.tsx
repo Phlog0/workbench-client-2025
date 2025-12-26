@@ -6,6 +6,7 @@ import { AddCardButton, ProjectCard } from "@/features/project-card/ui";
 import { motion } from "motion/react";
 
 import { useGetProjectsList } from "@/features/project-card/api";
+import { SponsorIcon } from "@/shared/assets/ui";
 export const ProjectsMenu = () => {
   const { isPending, error, data } = useGetProjectsList();
 
@@ -23,6 +24,7 @@ export const ProjectsMenu = () => {
         </div>
       </div>
       <AddCardButton className="fixed bottom-3 right-3" />
+      <SponsorIcon className="fixed bottom-3 right-16" />
     </motion.section>
   );
 };

@@ -5,19 +5,21 @@ import { NodeProps } from "@xyflow/react";
 import { TCell10Kv } from "@/shared/react-flow/nodes/cells/cell-10kv/types";
 import { INITIAL_CELL_10KV_METRICS } from "@/shared/react-flow/nodes/cells/cell-10kv/measures";
 
-import { Vykl10KvIcon } from "./Vykl10KvIcon";
-import { MeasuringCurrentTransformers10KvIcon } from "./MeasuringCurrentTransformers10KvIcon";
-import { Opn10KvIcon } from "./Opn10KvIcon";
-import { CellHeaderIcon } from "@/shared/assets/electrical-entities-icons/cell-10kv";
+import {
+  Vykl10KvIcon,
+  MeasuringCurrentTransformers10KvIcon,
+  Opn10KvIcon,
+  Tn10KvIcon,
+} from "../shared";
 
-import { Tn10KvIcon } from "./Tn10KvIcon";
 import { memo, useEffect } from "react";
 import { VerticalLineIcon } from "@/shared/assets/electrical-entities-icons";
-import { Tooltip, TooltipTrigger } from "@/shared/ui";
-import { Terminal } from "../terminal";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui";
+import { Terminal } from "../../terminal";
 import { useGetCurrentNode } from "@/shared/lib/nodes-std";
 import { TPowerTransformer1004Kv } from "@/shared/react-flow/nodes/power-transformer-10-04kv";
 import { useBoundStore } from "@/shared/appStore";
+import { CellHeaderIcon } from "@/shared/assets/electrical-entities-icons/cell-10kv";
 
 export const Cell10KvNode = memo((props: NodeProps<TCell10Kv>) => {
   const { data, selected, id } = props;
@@ -82,12 +84,12 @@ export const Cell10KvNode = memo((props: NodeProps<TCell10Kv>) => {
           <Terminal id={`${id}Source`} type="source" position={Position.Bottom} />
         </div>
       </TooltipTrigger>
-      {/* <TooltipContent className="bg-primary text-white p-4">
+      <TooltipContent className="bg-primary text-white p-4">
         <ul>
           <li>Тип: Ячейка 10 кВ</li>
           <li>id:{id}</li>
         </ul>
-      </TooltipContent> */}
+      </TooltipContent>
     </Tooltip>
   );
 });

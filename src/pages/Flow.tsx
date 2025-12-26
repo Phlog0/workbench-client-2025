@@ -23,14 +23,21 @@ import { cn } from "@/shared/lib";
 
 import { ContextMenu, useReactFlowContextMenu } from "@/features/(react-flow)/context-menu";
 
-import { HelperLinesRenderer } from "@/features/(react-flow)/helper-lines";
+// import { HelperLinesRenderer } from "@/features/(react-flow)/helper-lines";
+// import { useReactFlowHelperLine } from "@/features/(react-flow)/helper-lines";
+// const { helperLineHorizontal, helperLineVertical, updateHelperLines } = useReactFlowHelperLine();
+
+// import { HelperLinesRenderer, useHelperLines } from "@/features/(react-flow)/helper-lines/new";
+
+// const { rebuildIndex, updateHelperLines, helperLineVertical, helperLineHorizontal } =
+//   useHelperLines();
 import {
   useReactFlowOnNodeDrag,
   useReactFlowOnNodeDragStop,
 } from "@/features/(react-flow)/node-drag-on-flow";
 import { useDragAndDropItems } from "@/features/(react-flow)/create-new-nodes-by-dnd";
 import { useReactFlowOnChange } from "@/features/(react-flow)";
-import { useReactFlowHelperLine } from "@/features/(react-flow)/helper-lines";
+
 import { useRemoveNodeIds } from "@/shared/lib/nodes-std";
 import { useBoundStore } from "@/shared/appStore";
 import { getThemeSelector } from "@/shared/appStore/slices/selectors";
@@ -56,10 +63,9 @@ export const Flow = ({ className }: { className?: string }) => {
   const { onDragOver, onReactFlowDrop } = useDragAndDropItems();
   const onChange = useReactFlowOnChange();
 
-  const { helperLineHorizontal, helperLineVertical, updateHelperLines } = useReactFlowHelperLine();
-
   const extractIds = useRemoveNodeIds();
-  const { menu, onNodeContextMenu, onPaneClick, reactFlowRef } = useReactFlowContextMenu();
+  const { menu, onNodeContextMenu, onPaneClick, reactFlowRef, reactFlowDimensions } =
+    useReactFlowContextMenu();
 
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, setEdges } = useBoundStore(
     useShallow(reactFlowBaseSelector),
@@ -74,6 +80,7 @@ export const Flow = ({ className }: { className?: string }) => {
   const { projectId } = useParams();
 
   const { isLoading } = useGetProjectScheme(projectId);
+
   const [rfInstance, setRfInstance] = useState<RFInstance | null>(null);
   useEffect(() => {
     if (!projectId) {
@@ -100,12 +107,16 @@ export const Flow = ({ className }: { className?: string }) => {
 
   const handleNodeChange = useCallback(
     (changes: NodeChange<PossibleNode>[]) => {
-      const sections = nodes.filter((item) => item.type === "Section10Kv");
-      const updatedChanges = updateHelperLines(changes, sections);
+      // const sections = nodes.filter(
+      //   (item) =>
+      //     item.type === "Section10Kv" || item.type === "Section04Kv" || item.type === "Section35Kv",
+      // );
+      // const updatedChanges = updateHelperLines(changes, sections);
 
-      onNodesChange(updatedChanges);
+      // onNodesChange(updatedChanges);
+      onNodesChange(changes);
     },
-    [updateHelperLines, nodes, onNodesChange],
+    [onNodesChange],
   );
 
   // * -------------------------SELECTING -------------------------
@@ -125,11 +136,16 @@ export const Flow = ({ className }: { className?: string }) => {
     return () => debouncedSetViewport.cancel();
   }, [debouncedSetViewport]);
 
-  const onReconnect = useCallback(
-    (oldEdge: PossibleEdge, newConnection: Connection) =>
-      setEdges((els) => reconnectEdge(oldEdge, newConnection, els)),
-    [],
-  );
+  // edge отсоединять и переподсоединять на другие ячейки и тд...
+  const onReconnect = (oldEdge: PossibleEdge, newConnection: Connection) =>
+    setEdges((els) => reconnectEdge(oldEdge, newConnection, els));
+
+  // // edge отсоединять и переподсоединять на другие ячейки и тд...
+  // const onReconnect = useCallback(
+  //   (oldEdge: PossibleEdge, newConnection: Connection) =>
+  //     setEdges((els) => reconnectEdge(oldEdge, newConnection, els)),
+  //   [],
+  // );
 
   return (
     <main className={cn("project-flow dark:bg-slate-800}", className)}>
@@ -187,19 +203,14 @@ export const Flow = ({ className }: { className?: string }) => {
           <Background id="2" gap={100} color="#ccc" variant={BackgroundVariant.Lines} />
 
           {menu && <ContextMenu onClick={onPaneClick} contextMenuCoordinats={menu} />}
-          <HelperLinesRenderer horizontal={helperLineHorizontal} vertical={helperLineVertical} />
-          {/* <Panel position="top-left">
-            <div className="metrics w-8">
-              <p>Selected nodes: {selectedNodeIds.join(", ")}</p>
-              {JSON.stringify(viewport)}
-            </div>
-          </Panel> */}
+          {/* <HelperLinesRenderer horizontal={helperLineHorizontal} vertical={helperLineVertical} /> */}
+
           <Panel position="top-right" className="flex gap-3">
             <ExportJsonProjectButton rfInstance={rfInstance} projectId={projectId} />
             <ImportProjectJsonButton />
             <UploadImageButton
-              reactFlowWidth={reactFlowRef.current?.offsetWidth}
-              reactFLowHeight={reactFlowRef.current?.offsetHeight}
+              reactFlowWidth={reactFlowDimensions.width}
+              reactFLowHeight={reactFlowDimensions.height}
             />
             <SaveSchemeButton />
           </Panel>

@@ -13,6 +13,7 @@ import {
 } from "@/shared/react-flow/nodes/cells/cell-10kv/types";
 import { TriangleAlert } from "lucide-react";
 import { IsThereDevice } from "@/shared/react-flow/nodes/shared";
+import { TSwitchCell04Kv } from "@/shared/react-flow/nodes/cells/cell-04kv/types";
 export const Vykl10KvIcon = memo(function Vykl10KvIcon({
   className,
   value = "Нет",
@@ -23,7 +24,7 @@ export const Vykl10KvIcon = memo(function Vykl10KvIcon({
   className?: string;
   value?: TTypeOfSwitchingDeviceCell10Kv;
   mpdaa?: TmpdaaCell10Kv;
-  switchingDevice?: TSwitchingDeviceCell10Kv;
+  switchingDevice?: TSwitchingDeviceCell10Kv | TSwitchCell04Kv;
   typeOfMicroprocessorDevice?: IsThereDevice; //TODO Сделать аллиасы для IsThereDevice на каждое свойство, которое его использует
 }) {
   const hasEmptyFields = useMemo(() => {

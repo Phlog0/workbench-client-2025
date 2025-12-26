@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 400 400" xml:space="preserve">
+  
+  <defs>
+    <!-- Градиент для сияния -->
+    <linearGradient id="shineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFA0" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#F7CF52" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#FFA500" stop-opacity="0.9"/>
+    </linearGradient>
+    
+    <!-- Фильтр свечения -->
+    <filter id="glowFilter" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
+      <feFlood flood-color="#FFFF00" flood-opacity="0.8" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Маска для эффекта рисования -->
+    <mask id="drawingMask">
+      <rect width="400" height="400" fill="white">
+        <animate attributeName="height"
+                 from="0" to="400"
+                 dur="1.5s"
+                 begin="0s"
+                 fill="freeze"/>
+      </rect>
+    </mask>
+  </defs>
+  
+  <!-- Статичная фоновая молния -->
+  <polygon id="bgLightning" style="fill:#F7CF52; opacity:0.3;" points="157.055,0 90.798,196.319 164.417,196.319 88.344,400 289.571,159.509 218.405,159.509 311.656,0"/>
+  
+  <!-- Анимированная молния -->
+  <g mask="url(#drawingMask)">
+    <!-- Слой 1: Основная анимация рисования -->
+    <polygon id="drawingPath" style="fill:#F7CF52; stroke:#FFA500; stroke-width:2;" points="157.055,0 90.798,196.319 164.417,196.319 88.344,400 289.571,159.509 218.405,159.509 311.656,0">
+      <!-- Анимация появления штриха -->
+      <animate attributeName="stroke-dasharray"
+               from="0, 1000"
+               to="1000, 0"
+               dur="1.5s"
+               begin="0s"
+               fill="freeze"/>
+    </polygon>
+    
+    <!-- Слой 2: Сияющий эффект -->
+    <polygon id="shiningLightning" style="fill:url(#shineGrad);" points="157.055,0 90.798,196.319 164.417,196.319 88.344,400 289.571,159.509 218.405,159.509 311.656,0" opacity="0">
+      <!-- Задержка перед началом сияния -->
+      <animate attributeName="opacity"
+               values="0;1;0.8;1;0"
+               keyTimes="0;0.5;0.7;0.9;1"
+               dur="2s"
+               begin="1.5s"
+               repeatCount="indefinite"/>
+      
+      <!-- Анимация масштаба для пульсации -->
+      <animateTransform attributeName="transform"
+                        type="scale"
+                        values="1;1.02;1;1.02;1"
+                        keyTimes="0;0.25;0.5;0.75;1"
+                        dur="2s"
+                        begin="1.5s"
+                        repeatCount="indefinite"/>
+    </polygon>
+  </g>
+  
+  <!-- Яркие вспышки в точках изгиба -->
+  <g id="sparkles" opacity="0">
+    <animate attributeName="opacity"
+             values="0;1;0"
+             keyTimes="0;0.5;1"
+             dur="0.8s"
+             begin="2s"
+             repeatCount="indefinite"/>
+    
+    <!-- Точки вспышек в вершинах молнии -->
+    <circle cx="157.055" cy="0" r="5" fill="#FFFFFF">
+      <animate attributeName="r" values="3;8;3" dur="0.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="90.798" cy="196.319" r="4" fill="#FFFF80">
+      <animate attributeName="r" values="2;7;2" dur="0.8s" repeatCount="indefinite" begin="0.1s"/>
+    </circle>
+    <circle cx="164.417" cy="196.319" r="4" fill="#FFFF80">
+      <animate attributeName="r" values="2;7;2" dur="0.8s" repeatCount="indefinite" begin="0.2s"/>
+    </circle>
+    <circle cx="88.344" cy="400" r="5" fill="#FFFFFF">
+      <animate attributeName="r" values="3;8;3" dur="0.8s" repeatCount="indefinite" begin="0.3s"/>
+    </circle>
+    <circle cx="289.571" cy="159.509" r="4" fill="#FFFF80">
+      <animate attributeName="r" values="2;7;2" dur="0.8s" repeatCount="indefinite" begin="0.4s"/>
+    </circle>
+    <circle cx="218.405" cy="159.509" r="4" fill="#FFFF80">
+      <animate attributeName="r" values="2;7;2" dur="0.8s" repeatCount="indefinite" begin="0.5s"/>
+    </circle>
+    <circle cx="311.656" cy="0" r="5" fill="#FFFFFF">
+      <animate attributeName="r" values="3;8;3" dur="0.8s" repeatCount="indefinite" begin="0.6s"/>
+    </circle>
+  </g>
+</svg>
