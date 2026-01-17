@@ -1,37 +1,49 @@
 //! в shared
 import { Toaster } from "shared/ui";
-import { FlowLayout, NotFoundPage, ProjectsMenu, SignInPage, SignUpPage } from "@/pages";
+import {
+  FlowLayout,
+  LoginPage,
+  NotFoundPage,
+  ProjectsMenu,
+  RegistrationPage,
+  RequireAuth,
+} from "@/pages";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ROUTES } from "@/shared/constants";
+import { APP_ROUTES } from "@/shared/constants";
 import { Spinner } from "@/shared/ui/spinners";
 
 export const AppRouter = () => {
   const router = createBrowserRouter(
     [
       {
-        path: ROUTES.PROJECTS_LIST,
-        element: <ProjectsMenu />,
+        path: APP_ROUTES.REGISTRATION,
+        element: <RegistrationPage />,
         loader: Spinner,
       },
       {
-        path: ROUTES.CURRENT_PROJECT,
-        element: <FlowLayout />,
+        path: APP_ROUTES.LOGIN,
+        element: <LoginPage />,
         loader: Spinner,
       },
       {
-        path: ROUTES.SIGN_UP,
-        element: <SignUpPage />,
-        loader: Spinner,
-      },
-      {
-        path: ROUTES.SIGN_IN,
-        element: <SignInPage />,
-        loader: Spinner,
-      },
-      {
-        path: ROUTES.OTHER_PAGES,
+        path: APP_ROUTES.OTHER_PAGES,
         element: <NotFoundPage />,
         loader: Spinner,
+      },
+      {
+        element: <RequireAuth />,
+        children: [
+          {
+            path: APP_ROUTES.PROJECTS_LIST,
+            element: <ProjectsMenu />,
+            loader: Spinner,
+          },
+          {
+            path: APP_ROUTES.CURRENT_PROJECT,
+            element: <FlowLayout />,
+            loader: Spinner,
+          },
+        ],
       },
     ],
     {
@@ -43,8 +55,7 @@ export const AppRouter = () => {
 
   return (
     <div className="font-cascadia-mono">
-      <RouterProvider router={router} future={{ v7_startTransition: true }} />
-      <Toaster />
+      <RouterProvider router={router} />
     </div>
   );
 };

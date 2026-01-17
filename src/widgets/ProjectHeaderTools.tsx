@@ -4,7 +4,7 @@ import { RemoveReactFlowNodeButton, OpenModalPropertiesButton } from "@/features
 import { useBoundStore } from "@/shared/appStore";
 import { Button } from "@/shared/ui";
 import { useNavigate, useParams } from "react-router-dom";
-import { ROUTES } from "@/shared/constants";
+import { APP_ROUTES } from "@/shared/constants";
 import { CACHE_KEYS, queryClient } from "@/shared/api";
 import { useState } from "react";
 import { Spinner, WidgetSpinner } from "@/shared/ui/spinners";
@@ -28,7 +28,7 @@ export function ProjectHeaderTools({ className }: { className?: string }) {
     });
 
     queryClient.resetQueries({ queryKey: [CACHE_KEYS.PROJECT_SCHEME, `${projectId}`] });
-    navigate(ROUTES.PROJECTS_LIST);
+    navigate(APP_ROUTES.PROJECTS_LIST);
     resetState();
     setIsExiting(false);
   };

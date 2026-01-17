@@ -3,6 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Label } 
 import { useBoundStore } from "@/shared/appStore";
 import { ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
 import { cn } from "@/shared/lib";
+import { memo } from "react";
 
 type ProjectPropertySelectProps = {
   label?: string;
@@ -15,17 +16,16 @@ type ProjectPropertySelectProps = {
   className?: string;
 };
 
-export const ProjectPropertySelect = ({
+export const ProjectPropertySelect = memo(function ({
   label,
   valueFromProp,
   options,
   key1,
   selectedNodeId,
   className,
-}: ProjectPropertySelectProps) => {
+}: ProjectPropertySelectProps) {
   const changeSelectPropery = useBoundStore((state) => state.changeSelectPropery);
   const handleChange = (value: string) => {
-    console.log(key1, value);
     const parsedValue = Number(value) ? Number(value) : value;
     changeSelectPropery({ nodeId: selectedNodeId, key1, value: parsedValue });
   };
@@ -59,4 +59,4 @@ export const ProjectPropertySelect = ({
       </Select>
     </div>
   );
-};
+});

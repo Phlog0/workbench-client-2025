@@ -81,7 +81,7 @@ export const Cell10KvNode = memo((props: NodeProps<TCell10Kv>) => {
           )}
           <Opn10KvIcon value={data?.typeOfOpnDevice} className="bg-amber-300" />
 
-          <Terminal id={`${id}Source`} type="source" position={Position.Bottom} />
+          <Terminal id={`${id}-source`} type="source" position={Position.Bottom} />
         </div>
       </TooltipTrigger>
       <TooltipContent className="bg-primary text-white p-4">

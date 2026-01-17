@@ -2,19 +2,18 @@ import { addEdge, applyNodeChanges, applyEdgeChanges, MarkerType } from "@xyflow
 import { v4 as uuidv4 } from "uuid";
 
 import { ReactFlowNodesSlice } from "../types/react-flow-nodes";
-import { resetCell10Kv } from "./reset-properties-cell-10kv";
-import { TYPE_OF_SWITCHING_DEVICE_CELL_10KV_OPTIONS } from "@/shared/react-flow/nodes/cells/cell-10kv/options";
+
 import { ImmerStateCreator } from "../types";
 import { throttle } from "lodash";
-import { projectApi } from "@/shared/api";
+
 import { RFJsonObject } from "@/shared/react-flow/types";
-import { TTypeOfCellCell10Kv } from "@/shared/react-flow/nodes/cells/cell-10kv/types";
 import { PossibleEdge } from "@/shared/react-flow/edges";
 import { wrappedSortNodes } from "./wrapped-sort-nodes";
 import { decreaseSectionWidth } from "./decrease-section-width";
 import { increaseSectionWidth } from "./increase-section-width";
 import { wrappedSetMultipleProps } from "./wrapped-set-multiple-props";
 import { wrappedChangeSelectProperty } from "./wrapped-change-select-property";
+import { $api } from "@/shared/api/services";
 
 // const syncProjectScheme = debounce(async (rFInstance: RFinstance) => {
 //   const projectId = Number(sessionStorage.getItem(SESSION_STORAGE_KEYS.projectId));
@@ -31,7 +30,7 @@ export const createReactFlowNodesSlice: ImmerStateCreator<ReactFlowNodesSlice> =
   edges: [],
   selectedNodeIds: [],
   selectedEdgeIds: [],
-  viewport: { x: 0, y: 0, zoom: 1 },
+  viewport: { x: 0, y: 0, zoom: 0.5 },
   isSyncing: false,
   syncError: null,
   folderType: "",
@@ -273,8 +272,10 @@ export const createReactFlowNodesSlice: ImmerStateCreator<ReactFlowNodesSlice> =
         edges: edges.map((edge) => ({ ...edge, selected: false })),
         viewport: viewport,
       };
-      await projectApi.syncProjectScheme(projectId, projectScheme);
+      await $api.projects.syncProjectScheme(projectId, projectScheme);
     } catch (error: unknown) {
+      // if (axios.isAxiosError<BadAuthResponse>(error)) {
+      // }
       set({ syncError: error instanceof Error ? error.message : "Sync failed" });
     } finally {
       set({ isSyncing: false });

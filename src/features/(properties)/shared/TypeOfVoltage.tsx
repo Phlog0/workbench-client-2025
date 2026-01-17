@@ -6,8 +6,9 @@ import {
   TYPE_OF_VOLTAGE_06KV_10KV_LABEL,
   TYPE_OF_VOLTAGE_06KV_10KV_OPTIONS,
 } from "@/shared/react-flow/nodes/shared/type-of-voltage";
+import { memo } from "react";
 
-export function TypeOfVoltage({
+export const TypeOfVoltage = memo(function ({
   className,
   selectedNodeId,
   typeOfVoltageValue,
@@ -26,4 +27,4 @@ export function TypeOfVoltage({
       selectedNodeId={selectedNodeId}
     ></GenericInputsWithSelect>
   );
-}
+});

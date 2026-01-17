@@ -45,10 +45,23 @@ export function useReactFlowOnNodeDragStop() {
             });
 
             setNodes((ns) =>
-              ns.map((n) => ({
-                ...n,
-                className: "",
-              })),
+              ns.map((n) => {
+                if (
+                  n.type === "Fixator04Kv" ||
+                  n.type === "Fixator10Kv" ||
+                  n.type === "Fixator35Kv"
+                ) {
+                  return {
+                    ...n,
+                    data: {
+                      ...n.data,
+                      intersectionClassname: "",
+                    },
+                  };
+                } else {
+                  return n;
+                }
+              }),
             );
           }
         }
@@ -57,6 +70,5 @@ export function useReactFlowOnNodeDragStop() {
 
     [getIntersectingNodes, setMultipleProps, setNodes, nodes],
   );
-  // FIXME Возвращать может не объект а просто функцию
-  return { onReactFlowNodeDragStop };
+  return onReactFlowNodeDragStop;
 }

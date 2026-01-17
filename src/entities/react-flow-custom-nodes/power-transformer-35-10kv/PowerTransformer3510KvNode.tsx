@@ -5,6 +5,7 @@ import { memo, useMemo } from "react";
 import { Terminal } from "../terminal/Terminal";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui";
 import { cn } from "@/shared/lib";
+import { useGetCurrentNode } from "@/shared/lib/nodes-std";
 
 export const PowerTransformer3510KvNode = memo(
   ({ id, selected }: NodeProps<TPowerTransformer3510Kv>) => {
@@ -21,16 +22,16 @@ export const PowerTransformer3510KvNode = memo(
       }
       return "black";
     }, [connection, id]);
-
+    const node = useGetCurrentNode(id);
+    console.log({ node });
     return (
       <Tooltip>
         <TooltipTrigger>
           <div className={cn({ "bg-blue-100/20 outline-dashed outline-indigo-600": selected })}>
-            <Terminal id={`${id}-handleTarget`} type="target" position={Position.Top} />
+            <Terminal id={`${id}-target`} type="target" position={Position.Top} />
 
             <PowerTransformer1004Icon color={color} />
-
-            <Terminal id={`${id}-handleSource`} type="source" position={Position.Bottom} />
+            <Terminal id={`${id}-source`} type="source" position={Position.Bottom} />
           </div>
         </TooltipTrigger>
         <TooltipContent className="bg-primary text-white p-4">

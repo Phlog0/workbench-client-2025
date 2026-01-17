@@ -22,17 +22,6 @@ export {
 } from "./dialog/dialog";
 export { ModalComponent } from "./dialog/ModalComponent";
 
-export {
-  useFormField,
-  Form,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-  FormField,
-} from "./form";
-
 export { Toaster } from "./sonner";
 
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
@@ -47,3 +36,16 @@ export {
   TableHeader as TableHeaderUi,
   TableRow as TableRowUi,
 } from "./table";
+
+export {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+  FieldTitle,
+} from "./field";

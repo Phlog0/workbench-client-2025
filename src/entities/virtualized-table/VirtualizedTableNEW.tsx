@@ -81,14 +81,11 @@ export const VirtualizedTableNEW = ({ param, key_1, setIsModalOpen }: Virtualize
       </div>
     );
   if (isError) {
-    if (error?.apiError?.status === 404) {
-      return <span>Error: {error?.apiError?.details}</span>;
-    }
-
     return (
-      <span>
-        {error.message}: {error.apiError.status}, {error.apiError.details}
-      </span>
+      <div>
+        <h2>{error.statusCode}</h2>
+        <p>{error.message.toString()}</p>
+      </div>
     );
   }
 

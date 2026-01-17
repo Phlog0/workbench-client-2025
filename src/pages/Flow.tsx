@@ -12,6 +12,8 @@ import {
   Connection,
   reconnectEdge,
   SelectionMode,
+  useReactFlow,
+  ConnectionMode,
 } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 import "@xyflow/react/dist/style.css";
@@ -54,12 +56,13 @@ import { PossibleEdge } from "@/shared/react-flow/edges";
 import { UploadImageButton } from "@/features/upload-image";
 import { SaveSchemeButton } from "@/features/save-scheme";
 import { ConnectionLine } from "@/entities/react-flow-custom-nodes/connection-line";
+import { toast } from "sonner";
 
 export const Flow = ({ className }: { className?: string }) => {
   const reactFlowWrapper = useRef(null);
 
-  const { onReactFlowNodeDragStop } = useReactFlowOnNodeDragStop();
-  const { onReactFlowNodeDrag } = useReactFlowOnNodeDrag();
+  const onReactFlowNodeDragStop = useReactFlowOnNodeDragStop();
+  const onReactFlowNodeDrag = useReactFlowOnNodeDrag();
   const { onDragOver, onReactFlowDrop } = useDragAndDropItems();
   const onChange = useReactFlowOnChange();
 
@@ -72,15 +75,26 @@ export const Flow = ({ className }: { className?: string }) => {
   );
 
   const setViewportSync = useBoundStore((state) => state.setViewportSync);
-  const selectedNodeIds = useBoundStore((state) => state.selectedNodeIds);
+  const selectedNodeIds = useBoundStore(useShallow((state) => state.selectedNodeIds));
   const viewport = useBoundStore((state) => state.viewport);
   const removeNode = useBoundStore((state) => state.removeNode);
   const projectTheme = useBoundStore(getThemeSelector);
   const setProjectId = useBoundStore((state) => state.setProjectId);
   const { projectId } = useParams();
 
-  const { isLoading } = useGetProjectScheme(projectId);
-
+  const { isLoading, data, isError, error } = useGetProjectScheme(projectId);
+  const setAfterFetch = useBoundStore((state) => state.setAfterFetch);
+  const { setViewport } = useReactFlow();
+  useEffect(() => {
+    if (data && "projectScheme" in data && data.projectScheme) {
+      setViewport(data.projectScheme.viewport);
+      setAfterFetch(
+        data.projectScheme.nodes,
+        data.projectScheme.edges,
+        data.projectScheme.viewport,
+      );
+    }
+  }, [data, setViewport, setAfterFetch]);
   const [rfInstance, setRfInstance] = useState<RFInstance | null>(null);
   useEffect(() => {
     if (!projectId) {
@@ -89,6 +103,16 @@ export const Flow = ({ className }: { className?: string }) => {
     }
     setProjectId(projectId);
   }, [projectId, setProjectId]);
+
+  useEffect(() => {
+    if (isError && error) {
+      toast.error(
+        `Ошибка. Не смогли загрузить проект из хранилища. Ваши действия не синхронизированы... ${
+          error.response?.data.message || "Ошибка"
+        }`,
+      );
+    }
+  }, [isError, error]);
 
   const nodeTypes = useMemo(() => nodeTypesEntities, []); //Вынести в хук
 
@@ -195,6 +219,7 @@ export const Flow = ({ className }: { className?: string }) => {
           panOnDrag={false}
           onReconnect={onReconnect}
           selectionMode={SelectionMode.Partial}
+          connectionMode={ConnectionMode.Loose}
         >
           <Controls />
           <MiniMap />

@@ -6,8 +6,9 @@ import {
 import { GenericInputs } from "@/entities/project-property";
 import { ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
 import { TTsnCell10Kv } from "@/shared/react-flow/nodes/cells/cell-10kv/types";
+import { memo } from "react";
 
-export function TsnDevice({
+export const TsnDevice = memo(function ({
   className,
   selectedNodeId,
   tsn,
@@ -26,4 +27,4 @@ export function TsnDevice({
       inputProperties={tsn}
     />
   );
-}
+});

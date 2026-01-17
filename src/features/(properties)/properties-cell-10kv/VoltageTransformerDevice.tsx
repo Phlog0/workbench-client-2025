@@ -6,8 +6,9 @@ import {
 import { GenericInputs } from "@/entities/project-property";
 import { ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
 import { TTnCell10Kv } from "@/shared/react-flow/nodes/cells/cell-10kv/types";
+import { memo } from "react";
 
-export function VoltageTransformerDevice({
+export const VoltageTransformerDevice = memo(function ({
   className,
   selectedNodeId,
   voltageTransformer,
@@ -26,4 +27,4 @@ export function VoltageTransformerDevice({
       inputProperties={voltageTransformer}
     />
   );
-}
+});

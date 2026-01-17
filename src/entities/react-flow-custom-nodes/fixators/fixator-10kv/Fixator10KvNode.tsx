@@ -15,12 +15,7 @@ export const Fixator10KvNode = memo((props: NodeProps<TFixator10Kv>) => {
   return (
     <div
       style={{ width: fixator_10kv_width, height: fixator_10kv_height }}
-      className={cn(" rounded-full bg-black", intersectionClassname)}
-    >
-      {/* <div className="absolute -top-8">
-        {nodeInfo.position.x}
-        {nodeInfo.position.y}
-      </div> */}
-    </div>
+      className={cn("rounded-full bg-black", intersectionClassname)}
+    ></div>
   );
 });

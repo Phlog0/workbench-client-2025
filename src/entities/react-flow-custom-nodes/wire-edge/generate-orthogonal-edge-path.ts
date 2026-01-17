@@ -1,17 +1,27 @@
-export function generateOrthogonalEdgePath(
-  startX: number,
-  startY: number,
-  endX: number,
-  endY: number,
-  padding: number = 0,
-  Hoffset: number = 0,
+export function createOrthogonalEdgePath(
+  points: {
+    x: number;
+    y: number;
+  }[],
 ) {
-  // Calculate horizontal and vertical distances
-  const dx = endX - startX;
-  const dy = endY - startY;
-  let path = `M ${startX} ${startY}` + " ";
-  path += `V ${startY + dy / 2 - Hoffset}` + " ";
-  path += `H ${dx - padding}` + " ";
-  path += `V ${endY}`;
+  let path = `M ${points[0].x} ${points[0].y}`;
+
+  for (let i = 1; i < points.length; i++) {
+    // Определяем направление движения
+    const prev = points[i - 1];
+    const curr = points[i];
+
+    if (prev.x === curr.x) {
+      // Вертикальное движение
+      path += ` V ${curr.y}`;
+    } else if (prev.y === curr.y) {
+      // Горизонтальное движение
+      path += ` H ${curr.x}`;
+    } else {
+      // Если не ортогонально, создаем два сегмента
+      path += ` V ${curr.y} H ${curr.x}`;
+    }
+  }
+
   return path;
 }

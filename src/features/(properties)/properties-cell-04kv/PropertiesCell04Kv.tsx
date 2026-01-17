@@ -2,8 +2,9 @@ import { cn } from "@/shared/lib";
 import { TypeOfCell } from "./TypeOfCell";
 import { useBoundStore } from "@/shared/appStore";
 import { ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
+import { memo } from "react";
 
-export function PropertiesCell04Kv({ className }: { className?: string }) {
+export const PropertiesCell04Kv = memo(function ({ className }: { className?: string }) {
   const selectedNodeIds = useBoundStore((state) => state.selectedNodeIds);
   const selectedNodeId = selectedNodeIds[0] as ReactFlowNodeId;
   return (
@@ -14,4 +15,4 @@ export function PropertiesCell04Kv({ className }: { className?: string }) {
       {/* <TypeOfSwitchingDevice selectedNodeId={selectedNodeId} /> */}
     </div>
   );
-}
+});

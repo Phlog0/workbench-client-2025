@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 
 import { GenericInputs, GenericInputsWithSelect } from "@/entities/project-property";
 import { ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
@@ -16,7 +16,7 @@ import {
 } from "@/shared/react-flow/nodes/cells/cell-10kv/types";
 
 export type TMeasuringCurrentTransformersDeviceAccuracyClass = 1 | 2 | 3 | 4;
-export function TypeOfMeasuringCurrentTransformersDevice({
+export const TypeOfMeasuringCurrentTransformersDevice = memo(function ({
   className,
   selectedNodeId,
   measuringCurrentTransformersDevice,
@@ -81,4 +81,4 @@ export function TypeOfMeasuringCurrentTransformersDevice({
       />
     </GenericInputsWithSelect>
   );
-}
+});

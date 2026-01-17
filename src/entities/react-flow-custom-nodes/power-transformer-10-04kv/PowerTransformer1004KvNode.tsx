@@ -30,11 +30,11 @@ export const PowerTransformer1004KvNode = memo(
       <Tooltip>
         <TooltipTrigger>
           <div className={cn({ "bg-blue-100/20 outline-dashed outline-indigo-600": selected })}>
-            <Terminal id={`${id}-handleTarget`} type="target" position={Position.Top} />
+            <Terminal id={`${id}-target`} type="target" position={Position.Top} />
 
             <PowerTransformer1004Icon color={color} />
 
-            <Terminal id={`${id}-handleSource`} type="source" position={Position.Bottom} />
+            <Terminal id={`${id}-source`} type="source" position={Position.Bottom} />
           </div>
         </TooltipTrigger>
         <TooltipContent className="bg-primary text-white p-4">

@@ -9,8 +9,9 @@ import {
   TYPE_OF_OPN_DEVICE_CELL_10KV_OPTIONS,
 } from "@/shared/react-flow/nodes/cells/cell-10kv/options";
 import { TOpnCell10Kv } from "@/shared/react-flow/nodes/cells/cell-10kv/types";
+import { memo } from "react";
 
-export function TypeOfOpnDevice({
+export const TypeOfOpnDevice = memo(function ({
   className,
   selectedNodeId,
   typeOfOpnDevice,
@@ -39,4 +40,4 @@ export function TypeOfOpnDevice({
       />
     </GenericInputsWithSelect>
   );
-}
+});

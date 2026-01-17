@@ -1,6 +1,4 @@
-export { AuthSelect } from "./AuthSelect";
-export { AuthFormField } from "./AuthFormField";
+export { FormSelect } from "./FormSelect";
 
-export type { SignInInputs, SignUpInputs } from "./AuthFormField";
-
-export { AuthModalComponent } from "./AuthModalComponent";
+export { FormModalComponent } from "./FormModalComponent";
+export { FormInput } from "./FormInput";

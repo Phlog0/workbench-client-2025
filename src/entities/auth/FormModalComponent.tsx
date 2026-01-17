@@ -12,7 +12,7 @@ import {
 } from "shared/ui";
 import { ProjectTheme } from "@/shared/appStore/slices/types";
 
-export const AuthModalComponent = ({
+export const FormModalComponent = ({
   content,
 
   dialogTitle,

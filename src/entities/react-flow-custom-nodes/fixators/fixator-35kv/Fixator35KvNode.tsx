@@ -1,7 +1,6 @@
 import { cn } from "@/shared/lib";
 import { memo } from "react";
 import { NodeProps } from "@xyflow/react";
-import { useGetCurrentNode } from "@/shared/lib/nodes-std";
 import { TFixator35Kv } from "@/shared/react-flow/nodes/fixators/fixator-35kv/types";
 import {
   fixator_35kv_height,

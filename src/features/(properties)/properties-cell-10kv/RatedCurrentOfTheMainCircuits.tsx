@@ -6,8 +6,9 @@ import {
   RATED_CURRENT_OF_THE_MAIN_CIRCUITS_OPTIONS,
 } from "@/shared/react-flow/nodes/cells/cell-10kv/options";
 import { TRatedCurrentOfTheMainCircuitsOptions } from "@/shared/react-flow/nodes/cells/cell-10kv/types";
+import { memo } from "react";
 
-export function RatedCurrentOfTheMainCircuits({
+export const RatedCurrentOfTheMainCircuits = memo(function ({
   className,
   selectedNodeId,
   value,
@@ -26,4 +27,4 @@ export function RatedCurrentOfTheMainCircuits({
       valueFromProp={value || RATED_CURRENT_OF_THE_MAIN_CIRCUITS_OPTIONS[0]}
     />
   );
-}
+});

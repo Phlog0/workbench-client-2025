@@ -4,7 +4,6 @@ export function SponsorIcon({ className }: { className?: string }) {
     max = Math.floor(max);
 
     const result = Math.floor(Math.random() * (max - min)) + min;
-    console.log({ result });
     return result;
   };
 
@@ -106,7 +105,7 @@ export function SponsorIcon({ className }: { className?: string }) {
       </defs>
       {/* <!-- Маленькие сердечки (скрыты по умолчанию) --> */}
       {new Array(5).fill("").map((item, index) => (
-        <g transform={`translate(${randomInit(0, 75)}, ${randomInit(0, 75)})`}>
+        <g key={index} transform={`translate(${randomInit(0, 75)}, ${randomInit(0, 75)})`}>
           <path
             className="mini-heart fill-pink-300 opacity-0 scale-0 origin-center duration-300 ease-out group-hover:opacity-100 group-hover:scale-100 delay-75"
             d="M30,20 C25,15 15,18 15,25 C15,32 25,38 30,42 C35,38 45,32 45,25 C45,18 35,15 30,20 Z"

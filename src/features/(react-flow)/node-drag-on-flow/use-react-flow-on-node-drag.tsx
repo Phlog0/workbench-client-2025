@@ -9,6 +9,7 @@ export function useReactFlowOnNodeDrag() {
   const { getIntersectingNodes } = useReactFlow();
   const setNodes = useBoundStore((state) => state.setNodes);
   const onReactFlowNodeDrag = useCallback(
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     (_: ReactMouseEvent, node: PossibleNode) => {
       const intersections = getIntersectingNodes(node);
       if (intersections.length === 0) {
@@ -19,26 +20,30 @@ export function useReactFlowOnNodeDrag() {
           const fixatorId = intersections?.find((item) => item.type === fixatorType)?.id;
           setNodes((ns) =>
             ns.map((n) => {
-              return {
-                ...n,
-                data: {
-                  ...n.data,
-                  intersectionClassname:
-                    n.id === fixatorId
-                      ? "rounded-full bg-blue-500 outline-solid outline-blue-400"
-                      : "",
-                },
-                // className:
-                //   n.id === fixatorId
-                //     ? "rounded-full bg-blue-500 outline-solid outline-blue-400"
-                //     : "",
-              };
+              if (
+                n.type === "Fixator04Kv" ||
+                n.type === "Fixator10Kv" ||
+                n.type === "Fixator35Kv"
+              ) {
+                return {
+                  ...n,
+                  data: {
+                    ...n.data,
+                    intersectionClassname:
+                      n.id === fixatorId
+                        ? "rounded-full bg-blue-500 outline-solid outline-blue-400"
+                        : "",
+                  },
+                };
+              } else {
+                return n;
+              }
             }),
           );
         }
       }
     },
-    [getIntersectingNodes],
+    [getIntersectingNodes, setNodes],
   );
-  return { onReactFlowNodeDrag };
+  return onReactFlowNodeDrag;
 }

@@ -1,23 +1,11 @@
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { apiInstance, CACHE_KEYS } from "@/shared/api";
+import { CACHE_KEYS } from "@/shared/api";
 import { RFNodeTypesValues } from "@/shared/react-flow/nodes/shared/rf-nodes-types";
-type ApiError = {
-  status: number;
-  error: string;
-  details?: string;
-};
-type CustomError = Error & {
-  apiError: ApiError;
-};
+import { BadAuthResponse } from "@/shared/api/types";
+import { $api, SuccessGetProjectResponse } from "@/shared/api/services";
+
 export type TableColumnsApi = Record<string, string>;
 export type TableModelApi = Record<string, string | number>;
-type SuccessGetProjectResponse = {
-  data: {
-    tableColumns: TableColumnsApi;
-    tableBody: TableModelApi[];
-  };
-};
 
 export function useGetDictionaryData({
   query,
@@ -26,36 +14,20 @@ export function useGetDictionaryData({
   query?: string;
   dictionaryFolder: RFNodeTypesValues | "";
 }) {
-  return useQuery<SuccessGetProjectResponse["data"], CustomError>({
+  return useQuery<SuccessGetProjectResponse["dictionaryData"], BadAuthResponse>({
     queryKey: [CACHE_KEYS.DICTIONARY, query],
+    enabled: !!query && !!dictionaryFolder,
     queryFn: async () => {
-      try {
-        if (!dictionaryFolder)
-          throw new Error(
-            `Ошибка с выбором типом каталога (папки (04, 10...)), #${
-              dictionaryFolder ? dictionaryFolder : "ТИП"
-            }`,
-          );
-        const response = await apiInstance.get<SuccessGetProjectResponse>(
-          `api/${dictionaryFolder}/${query}`,
+      if (!dictionaryFolder || !query)
+        throw new Error(
+          `Ошибка с выбором типом каталога (папки (04, 10...)), #${
+            dictionaryFolder ? dictionaryFolder : "ТИП"
+          }`,
         );
-        // console.log(response);
-        const data = response.data.data;
+      const data = $api.projects.getReadySolutionsList(query, dictionaryFolder);
+      // console.log(response);
 
-        return data;
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          if (error.response && error.response.data && typeof error.response.data === "object") {
-            const apiError: ApiError = error.response.data;
-            const customError = new Error(apiError.error || "API Error") as CustomError;
-            customError.apiError = apiError;
-            throw customError;
-          }
-          throw new Error(error.message || "Network Error");
-          // return error;
-        }
-        throw error;
-      }
+      return data;
     },
   });
 }

@@ -12,9 +12,9 @@ import {
   TTypeOfMeasuringCurrentTransformersDeviceCell04Kv,
 } from "@/shared/react-flow/nodes/cells/cell-04kv/types";
 import { ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 
-export function MeasuringCurrentTransformersDevice({
+export const MeasuringCurrentTransformersDevice = memo(function ({
   typeOfMeasuringCurrentTransformersDevice,
   selectedNodeId,
   measuringCurrentTransformersDevice,
@@ -43,4 +43,4 @@ export function MeasuringCurrentTransformersDevice({
       />
     </GenericInputsWithSelect>
   );
-}
+});

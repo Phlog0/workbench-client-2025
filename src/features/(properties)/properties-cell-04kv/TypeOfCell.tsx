@@ -13,8 +13,9 @@ import { GenericInputs } from "@/entities/project-property";
 import { TCell04Kv } from "@/shared/react-flow/nodes/cells/cell-04kv/types";
 
 import { MeasuringCurrentTransformersDevice } from "./MeasuringCurrentTransformersDevice";
+import { memo } from "react";
 
-export function TypeOfCell({
+export const TypeOfCell = memo(function ({
   className,
   selectedNodeId,
 }: {
@@ -51,4 +52,4 @@ export function TypeOfCell({
       />
     </div>
   );
-}
+});

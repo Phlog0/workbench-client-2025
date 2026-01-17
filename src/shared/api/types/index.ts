@@ -7,10 +7,17 @@ export type {
   SuccessDeleteProjectResponse,
   SuccessUpdateProjectResponse,
   SuccessSyncProjectScheme,
-} from "./project";
+  SuccessGetProjectScheme,
+} from "./project.schema";
 
-export { ProjectInfoSchema } from "./project";
+export { ProjectInfoSchema } from "./project.schema";
 
-export type { SuccessSignUpResponse, SignUp, SignIn, SuccessSignInResponse } from "./auth";
+export type {
+  // RegistrationSuccessResponse,
+  TLoginForm,
+  // LoginSuccessResponse,
+  TRegistrationForm,
+} from "./auth.schema";
 
-export { SignUpSchema, SignInSchema } from "./auth";
+export { RegistrationSchema, LoginSchema } from "./auth.schema";
+export type { UserDto, SuccessAuthResponse, BadAuthResponse } from "./auth-response";

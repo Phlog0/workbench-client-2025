@@ -30,8 +30,8 @@ export const Cell35KvNode = memo((props: NodeProps<TCell35Kv>) => {
             height: INITIAL_CELL_35KV_METRICS.height,
           }}
         >
-          <Terminal id={`${id}Target`} type="target" position={Position.Top} />
           <CellHeaderIcon className="bg-blue-500" />
+          <Terminal id={`${id}-source`} type="source" position={Position.Bottom} />
         </div>
       </TooltipTrigger>
       <TooltipContent className="bg-primary text-white p-4">

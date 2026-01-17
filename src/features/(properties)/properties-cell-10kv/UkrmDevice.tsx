@@ -6,8 +6,9 @@ import {
 import { GenericInputs } from "@/entities/project-property";
 import { ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
 import { TUkrmCell10Kv } from "@/shared/react-flow/nodes/cells/cell-10kv/types";
+import { memo } from "react";
 
-export function UkrmDevice({
+export const UkrmDevice = memo(function ({
   className,
   selectedNodeId,
   ukrm,
@@ -26,4 +27,4 @@ export function UkrmDevice({
       inputProperties={ukrm}
     />
   );
-}
+});

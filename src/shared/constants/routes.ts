@@ -1,7 +1,7 @@
-export const ROUTES = {
+export const APP_ROUTES = {
   PROJECTS_LIST: "/projects-list",
   CURRENT_PROJECT: "/projects/:projectId",
-  SIGN_UP: "/sign-up",
-  SIGN_IN: "/sign-in",
+  REGISTRATION: "/registration",
+  LOGIN: "/login",
   OTHER_PAGES: "*",
 } as const;

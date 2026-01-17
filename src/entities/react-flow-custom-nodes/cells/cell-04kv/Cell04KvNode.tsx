@@ -42,7 +42,7 @@ export const Cell04KvNode = memo((props: NodeProps<TCell04Kv>) => {
 
           <VerticalLineIcon />
 
-          <Terminal id={`${id}Target`} type="target" position={Position.Bottom} />
+          <Terminal id={`${id}-source`} type="source" position={Position.Bottom} />
         </div>
       </TooltipTrigger>
       <TooltipContent className="bg-primary text-white p-4">

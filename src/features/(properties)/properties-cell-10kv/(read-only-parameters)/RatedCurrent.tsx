@@ -4,8 +4,9 @@ import {
   RATED_CURRENT_CELL_10KV_KEY_1,
   RATED_CURRENT_CELL_10KV_LABEL,
 } from "@/shared/react-flow/nodes/cells/cell-10kv/options";
+import { memo } from "react";
 
-export function RatedCurrent({
+export const RatedCurrent = memo(function ({
   selectedNodeId,
   ratedCurrentValue,
 }: {
@@ -25,4 +26,4 @@ export function RatedCurrent({
       />
     </div>
   );
-}
+});

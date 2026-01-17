@@ -2,7 +2,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 import { ProjectModalInput, ProjectPropertyInput } from "@/entities/project-property";
 
-import { GenericInputsProps } from "./ui/GenericInputsProps";
+import { GenericInputsProps } from "./GenericInputsProps";
 
 export function GenericInputs({
   className,

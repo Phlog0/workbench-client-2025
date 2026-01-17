@@ -1,20 +1,22 @@
 import { Pencil } from "lucide-react";
-import { Button, Form } from "@/shared/ui";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { Button } from "@/shared/ui";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ProjectId, ProjectInfoTextData } from "@/shared/api/types";
-import { AuthFormField, AuthModalComponent, AuthSelect } from "@/entities/auth";
+
 import { useUpdateProject } from "../api";
 import { useState } from "react";
 import { ProjectInfoFormSchema } from "../model";
+import { FormInput, FormModalComponent, FormSelect } from "@/entities/auth";
 
 export function EditCardButton({
   id,
   description,
   projectType,
   title,
-}: ProjectInfoTextData & { id: ProjectId }) {
+  className,
+}: ProjectInfoTextData & { id: ProjectId; className?: string }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const form = useForm({
@@ -33,34 +35,22 @@ export function EditCardButton({
     setModalOpen(false);
   };
   return (
-    <AuthModalComponent
+    <FormModalComponent
+      className={className}
       open={modalOpen}
       setOpen={setModalOpen}
       content={
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="p-8 max-w-5xl mx-auto">
-            <Controller
-              control={form.control}
-              name="projectType"
-              render={({ field }) => (
-                <AuthSelect label={"Тип проекта"} field={field} options={["КТП", "ТП", "РП"]} />
-              )}
-            ></Controller>
-            <AuthFormField
-              control={form.control}
-              formLabel={"Название проекта"}
-              name="title"
-              inputType="text"
-            />
-            <AuthFormField
-              control={form.control}
-              formLabel={"Описание проекта"}
-              name="description"
-              inputType="text"
-            />
-            <Button type="submit">Сохранить изменения</Button>
+        <FormProvider {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <FormSelect options={["КТП", "РП", "ТП"]} />
+            <FormInput label="Название проекта" name="title" />
+            <FormInput label="Описание проекта" name="description" />
+
+            <Button type="submit">
+              {updateProjectMutation.isPending ? "Обновление..." : "Обновить данные о проекте"}
+            </Button>
           </form>
-        </Form>
+        </FormProvider>
       }
       dialogTitle={"Редактирование проекта"}
       triggerTitle={<Pencil />}

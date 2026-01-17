@@ -4,8 +4,9 @@ import {
   S_POWER_CELL_10KV_KEY_1,
   S_POWER_CELL_10KV_LABEL,
 } from "@/shared/react-flow/nodes/cells/cell-10kv/options";
+import { memo } from "react";
 
-export function SPower({
+export const SPower = memo(function ({
   selectedNodeId,
   sPowerValue,
 }: {
@@ -25,4 +26,4 @@ export function SPower({
       />
     </div>
   );
-}
+});

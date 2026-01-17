@@ -12,12 +12,10 @@ export const Fixator04KvNode = memo((props: NodeProps<TFixator04Kv>) => {
   const {
     data: { intersectionClassname },
   } = props;
-  // const fixator = useGetCurrentNode(props.id);
-  console.log("fixator-04kv-render");
   return (
     <div
       style={{ width: fixator_04kv_width, height: fixator_04kv_height }}
-      className={cn(" rounded-full bg-black", intersectionClassname)}
+      className={cn("rounded-full bg-black", intersectionClassname)}
     ></div>
   );
 });

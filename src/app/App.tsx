@@ -1,17 +1,17 @@
 import "./App.css";
 import { Toaster, TooltipProvider } from "shared/ui";
 import { AppRouter } from "./AppRouter";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "@/shared/api";
 
 function App() {
   return (
-    <div>
-      {/* <div className="w-40"> */}
+    <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <AppRouter />
-
         <Toaster />
       </TooltipProvider>
-    </div>
+    </QueryClientProvider>
   );
 }
 

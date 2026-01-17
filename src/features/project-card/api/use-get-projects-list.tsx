@@ -1,9 +1,10 @@
-import { CACHE_KEYS, projectApi } from "@/shared/api";
+import { CACHE_KEYS } from "@/shared/api";
+import { $api } from "@/shared/api/services";
 import { useQuery } from "@tanstack/react-query";
 
 export function useGetProjectsList() {
   return useQuery({
     queryKey: [CACHE_KEYS.PROJECTS],
-    queryFn: projectApi.getProjectsList,
+    queryFn: $api.projects.getAllProjects,
   });
 }

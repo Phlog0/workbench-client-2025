@@ -23,6 +23,5 @@ export type SuccessSyncProjectScheme = {
   message: string;
 };
 export type SuccessGetProjectScheme = {
-  message: string;
   projectScheme: RFJsonObject | null;
 };
