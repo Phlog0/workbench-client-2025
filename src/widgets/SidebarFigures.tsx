@@ -2,6 +2,9 @@ import { useDnD } from "@/app/DnDContext";
 import { cn } from "@/shared/lib/cn";
 
 import { RF_NODE_TYPES, RFNodeTypesValues } from "@/shared/react-flow/nodes/shared";
+import { drag } from "d3-drag";
+import { select } from "d3-selection";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "shared/ui";
 
 const items = [
@@ -39,21 +42,98 @@ const items = [
   },
 ];
 
-export const SidebarFigures = ({ className }: { className?: string }) => {
+export const SidebarFigures = ({
+  className,
+  isModalOpen,
+}: {
+  className?: string;
+  isModalOpen?: boolean;
+}) => {
   const { setType } = useDnD();
   const onDragStart = (event: React.DragEvent, nodeType: RFNodeTypesValues) => {
     setType(nodeType);
     event.dataTransfer.effectAllowed = "move";
   };
+  const leftDragRef = useRef<HTMLDivElement>(null);
+  const [leftWidth, setLeftWidth] = useState(10);
+  const [isLeftDragging, setIsLeftDragging] = useState(false);
+  const leftWidthRef = useRef(leftWidth);
+
+  useEffect(() => {
+    leftWidthRef.current = leftWidth;
+  }, [leftWidth]);
+
+  useEffect(() => {
+    const element = leftDragRef.current;
+    if (!element) {
+      return;
+    }
+
+    const handler = drag<HTMLDivElement, unknown>()
+      .on("start", () => {
+        setIsLeftDragging(true);
+      })
+      .on("drag", (event) => {
+        const deltaVw = (event.dx / window.innerWidth) * 100;
+        const newWidth = Math.max(0, Math.min(45, leftWidthRef.current + deltaVw));
+        setLeftWidth(newWidth);
+        leftWidthRef.current = newWidth;
+      })
+      .on("end", () => {
+        setIsLeftDragging(false);
+      });
+
+    select<HTMLDivElement, unknown>(element).call(handler);
+    return () => {
+      select<HTMLDivElement, unknown>(element).on(".drag", null);
+    };
+  }, []);
+
   return (
-    <aside className={cn("project-items outline-1 outline-double dark:bg-slate-800", className)}>
-      <div className="flex flex-col gap-4 p-2">
-        {items.map((item) => (
-          <Button key={item.type} onDragStart={(event) => onDragStart(event, item.type)} draggable>
-            {item.title}
-          </Button>
-        ))}
-      </div>
-    </aside>
+    <>
+      <aside
+        className={cn("project-items", className)}
+        // style={{ left: 0, width: leftWidth + "vw" }}
+        style={{
+          position: isModalOpen ? "static" : "absolute",
+          left: 0,
+          width: isModalOpen ? "auto" : leftWidth + "vw",
+        }}
+      >
+        <div className="flex flex-col">
+          {items.map((item) => (
+            <Button
+              className="rounded-none border-b border-slate-300"
+              key={item.type}
+              onDragStart={(event) => onDragStart(event, item.type)}
+              draggable
+            >
+              {item.title}
+            </Button>
+          ))}
+        </div>
+      </aside>
+      <div
+        className={cn(
+          "bg-slate-500 hover:bg-blue-400 transition-colors",
+          {
+            "bg-blue-400": isLeftDragging,
+          },
+          "block max-lg:hidden",
+          { hidden: isModalOpen },
+        )}
+        ref={leftDragRef}
+        style={{
+          position: "absolute",
+          top: "15dvh",
+          bottom: 0,
+          left: `${leftWidth}vw`,
+          width: "8px",
+          cursor: "col-resize",
+          pointerEvents: "auto",
+          zIndex: 2,
+        }}
+      />
+    </>
   );
 };

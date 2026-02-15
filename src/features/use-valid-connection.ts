@@ -48,7 +48,6 @@ export function useValidConnection() {
 
       const sourceNode = nodes.find((node) => node.id === connection.source);
       const targetNode = nodes.find((node) => node.id === connection.target);
-      console.log({ sourceNode: sourceNode?.handles });
 
       for (const validConnectionsNodeType of validConnectionsNodeTypes) {
         if (

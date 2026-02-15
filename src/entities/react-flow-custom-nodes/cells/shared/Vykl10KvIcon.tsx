@@ -14,16 +14,22 @@ import {
 import { TriangleAlert } from "lucide-react";
 import { IsThereDevice } from "@/shared/react-flow/nodes/shared";
 import { TSwitchCell04Kv } from "@/shared/react-flow/nodes/cells/cell-04kv/types";
+import {
+  TmpdaaCell35Kv,
+  TTypeOfSwitchingDeviceCell35Kv,
+} from "@/shared/react-flow/nodes/cells/cell-35kv/types";
 export const Vykl10KvIcon = memo(function Vykl10KvIcon({
   className,
   value = "Нет",
   mpdaa,
   switchingDevice,
   typeOfMicroprocessorDevice,
+  color,
 }: {
   className?: string;
-  value?: TTypeOfSwitchingDeviceCell10Kv;
-  mpdaa?: TmpdaaCell10Kv;
+  color?: string;
+  value?: TTypeOfSwitchingDeviceCell10Kv | TTypeOfSwitchingDeviceCell35Kv;
+  mpdaa?: TmpdaaCell10Kv | TmpdaaCell35Kv;
   switchingDevice?: TSwitchingDeviceCell10Kv | TSwitchCell04Kv;
   typeOfMicroprocessorDevice?: IsThereDevice; //TODO Сделать аллиасы для IsThereDevice на каждое свойство, которое его использует
 }) {
@@ -43,11 +49,13 @@ export const Vykl10KvIcon = memo(function Vykl10KvIcon({
     return Object.values(mpdaa).every((item) => item === "" || item === undefined || item === null);
   }, [mpdaa, typeOfMicroprocessorDevice, value]);
 
-  const iconColor = hasEmptyFields ? "yellow" : "black";
+  const iconColor = hasEmptyFields ? "yellow" : color;
   return (
     <>
       <div className={className}>
-        {value === TYPE_OF_SWITCHING_DEVICE_CELL_10KV_OPTIONS.no && <VerticalLineIcon />}
+        {value === TYPE_OF_SWITCHING_DEVICE_CELL_10KV_OPTIONS.no && (
+          <VerticalLineIcon color={color} />
+        )}
         <div className="relative">
           {value === TYPE_OF_SWITCHING_DEVICE_CELL_10KV_OPTIONS.vv && (
             <SwitcherVvIcon color={iconColor} />

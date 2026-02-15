@@ -1,0 +1,42 @@
+/* @layer utilities {
+  .theme-bg {
+    @apply bg-slate-50 dark:bg-slate-800;
+    @apply transition-colors duration-1000;
+  }
+  .theme-text {
+    @apply text-slate-800 dark:text-slate-50;
+    @apply transition-colors duration-1000;
+  }
+  .theme-border {
+    @apply border-slate-700 dark:border-slate-400;
+    @apply transition-colors duration-1000;
+  }
+
+  .theme-primary {
+    @apply bg-blue-500 dark:bg-blue-400;
+  }
+  .theme-secondary {
+    @apply bg-purple-500 dark:bg-purple-400;
+  }
+} */
+@layer utilities {
+  /* Базовые стили для светлой темы */
+  .theme-bg {
+    @apply bg-slate-50;
+  }
+
+  .theme-text {
+    @apply text-slate-800;
+  }
+
+  /* Темная тема через класс */
+  .dark .theme-bg {
+    @apply bg-slate-800;
+    /* @apply transition-colors duration-500; */
+  }
+
+  .dark .theme-text {
+    @apply text-slate-50;
+    /* @apply transition-colors duration-500; */
+  }
+}

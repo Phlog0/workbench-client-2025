@@ -1,9 +1,13 @@
 import { ReactFlowNode } from "../../../shared/react-flow-node";
 import { ReactFlowNodeId } from "../../../shared/react-flow-node-ids";
 import { RfNodeType } from "../../../shared/rf-nodes-types";
-import { TCell35KvData } from "./cell-35-kv-data";
+import { TCell10KvData } from "../../cell-10kv/types";
+// import { TCell35KvData } from "./cell-35-kv-data";
 
-export type TCell35Kv = ReactFlowNode<TCell35KvData, RfNodeType["cell35Kv"]> & {
+export type TCell35Kv = ReactFlowNode<
+  Omit<TCell10KvData, "typeOfVoltage">,
+  RfNodeType["cell35Kv"]
+> & {
   id: ReactFlowNodeId;
   parentId?: ReactFlowNodeId;
 };

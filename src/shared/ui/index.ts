@@ -49,3 +49,7 @@ export {
   FieldSet,
   FieldTitle,
 } from "./field";
+
+export { DrawerUI } from "./drawer/DrawerUI";
+
+export { Textarea } from "./textarea";

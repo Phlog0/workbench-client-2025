@@ -11,7 +11,6 @@ export const Fixator35KvNode = memo((props: NodeProps<TFixator35Kv>) => {
   const {
     data: { intersectionClassname },
   } = props;
-  console.log("fixator-35kv-render");
   return (
     <div
       style={{ width: fixator_35kv_width, height: fixator_35kv_height }}

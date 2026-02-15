@@ -164,11 +164,25 @@ export const createReactFlowNodesSlice: ImmerStateCreator<ReactFlowNodesSlice> =
   setSelectedNodeId: (nodeIds) => {
     set((state) => {
       state.selectedNodeIds = nodeIds;
+      state.nodes = get().nodes.map((item) => {
+        if (nodeIds.includes(item.id)) {
+          return { ...item, selected: true };
+        } else {
+          return item;
+        }
+      });
     });
   },
   setSelectedEdgeId: (edgeIds) => {
     set((state) => {
       state.selectedEdgeIds = edgeIds;
+      state.edges = get().edges.map((item) => {
+        if (edgeIds.includes(item.id)) {
+          return { ...item, selected: true };
+        } else {
+          return item;
+        }
+      });
     });
   },
 
@@ -210,13 +224,7 @@ export const createReactFlowNodesSlice: ImmerStateCreator<ReactFlowNodesSlice> =
     set((state) => {
       state.isSyncing = true;
       const node = state.nodes.find((item) => item.id === nodeId);
-      // if (node) {
-      //   if (!node.data) {
-      //     node.data = {};
-      //   }
-      //   if (!node.data[keyOne]) {
-      //   }
-      // }
+
       if (node) {
         if (!node.data[keyOne]) {
           node.data[keyOne] = {};

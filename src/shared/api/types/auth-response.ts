@@ -1,6 +1,6 @@
 export interface UserDto {
   email: string;
-  activated: Date;
+  activated?: Date;
   id: number;
 }
 export interface SuccessAuthResponse {

@@ -12,14 +12,12 @@ export function RemoveReactFlowNodeButton({ className }: { className?: string })
   const extractIds = useRemoveNodeIds();
   const handleClick = () => {
     const idsToDelete = extractIds(selectedNodeIds);
-    // console.log({ selectedNodeIds, idsToDelete });
     removeNode([...idsToDelete, ...selectedNodeIds]);
     removeEdge(selectedEdgeIds);
   };
-  // console.log(selectedNodeIds);
   return (
     <Button
-      disabled={selectedNodeIds.length === 0 ? false : false}
+      disabled={selectedNodeIds.length === 0 && selectedEdgeIds.length === 0 ? true : false}
       onClick={handleClick}
       className={cn(className)}
     >

@@ -16,7 +16,7 @@ export const ProjectCard = ({
 }: ProjectInfo) => {
   return (
     <div>
-      <Link to={`/projects/${id}`} className="bg-slate-300 rounded-xl block p-5">
+      <Link to={`/projects/${id}`} className="bg-slate-300 dark:bg-slate-600 rounded-xl block p-5">
         <h2 className="ellipsed-text">{projectType}</h2>
         <h2 className="ellipsed-text">{title}</h2>
         <p className="overflow-hidden text-ellipsis whitespace-nowrap max-w-52 h-16 ellipsed-text">

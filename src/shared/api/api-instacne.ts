@@ -7,10 +7,6 @@ export const API_URL = "http://localhost:3000/api";
 export const apiInstance = axios.create({
   baseURL: import.meta.env.SERVER_URL || API_URL,
   withCredentials: true,
-  // headers: {
-  //   "Content-type": "application/json",
-  //   "Access-Control-Allow-Origin": "http://localhost:3000",
-  // },
 });
 
 apiInstance.interceptors.request.use((config) => {

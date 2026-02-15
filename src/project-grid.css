@@ -1,0 +1,49 @@
+.project-grid {
+  height: 100dvh;
+  width: 100dvw;
+  display: grid;
+  grid-template-columns: 10dvw 70dvw 20dvw;
+  grid-template-rows: 15dvh 85dvh;
+  grid-template-areas:
+    "header header header"
+    "flow flow flow";
+  position: relative;
+}
+
+.project-header {
+  grid-area: header;
+}
+
+.properties-button {
+  display: none;
+}
+.project-items,
+.project-properties {
+  position: absolute;
+  height: 85dvh;
+  bottom: 0;
+
+  z-index: 10;
+}
+.project-items {
+  grid-area: items;
+}
+.project-flow {
+  grid-area: flow;
+}
+.project-properties {
+  grid-area: properties;
+}
+
+@media (max-width: 64rem) {
+  .project-grid {
+    grid-template-areas:
+      "header header header"
+      /* "items flow properties"; */
+      "flow flow flow";
+  }
+
+  .properties-button {
+    display: block;
+  }
+}

@@ -4,15 +4,17 @@ import { memo } from "react";
 export const Opn10KvIcon = memo(function Opn10KvIcon({
   value = "Нет",
   className,
+  color,
 }: {
   className?: string;
   value?: IsThereDevice;
+  color?: string;
 }) {
   return (
     <div className={className}>
       {/* <img src={VERTICAL_LINE} alt="" /> */}
 
-      {value === "Есть" ? <OpnIcon /> : <VykatnoyRazjemIcon />}
+      {value === "Есть" ? <OpnIcon color={color} /> : <VykatnoyRazjemIcon color={color} />}
     </div>
   );
 });

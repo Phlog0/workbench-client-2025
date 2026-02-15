@@ -39,7 +39,6 @@ export const TypeOfSwitchingDevice = memo(
       return Object.values(TYPE_OF_SWITCHING_DEVICE_CELL_10KV_OPTIONS);
     }, []);
 
-    console.log({ typeOfSwitchingDevice, switchingDevice });
     return (
       <div className={className}>
         <ProjectPropertySelect

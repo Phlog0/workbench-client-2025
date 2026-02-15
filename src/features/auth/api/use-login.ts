@@ -23,10 +23,23 @@ export const useLogin = () => {
       navigate(APP_ROUTES.PROJECTS_LIST);
     },
     onError: (error) => {
-      toast.error(`Ошибка: ${error.response?.data.message.toString()} `, {
-        closeButton: true,
-        id: "use-login-error",
-      });
+      if (error.response) {
+        toast.error(`Ошибка: ${error.response?.data.message.toString()} `, {
+          closeButton: true,
+          id: "use-login-error",
+        });
+      } else if (error.request) {
+        toast.error(`Сервер временно недоступен. Проверьте подключение к интернету`, {
+          closeButton: true,
+          id: "use-login-error",
+        });
+      } else {
+        console.error(error);
+        toast.error(`Произошла неизвестная ошибка`, {
+          closeButton: true,
+          id: "use-login-error",
+        });
+      }
     },
   });
 };

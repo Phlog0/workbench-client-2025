@@ -28,7 +28,7 @@ export const createAuthSlice: ImmerStateCreator<AuthSlice> = (set) => ({
   },
   async registration(values) {
     try {
-      const data = await $api.auth.registration(values);
+      const data = await $api.auth.register(values);
       localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, data.accessToken);
       set({ isAuth: true, user: data.user });
     } catch (error) {
@@ -46,7 +46,6 @@ export const createAuthSlice: ImmerStateCreator<AuthSlice> = (set) => ({
   async checkAuth() {
     try {
       const response = await $api.auth.checkAuth();
-      console.log({ checkAuth: response });
       localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, response.data.accessToken);
       set({ isAuth: true, user: response.data.user });
     } catch (error) {

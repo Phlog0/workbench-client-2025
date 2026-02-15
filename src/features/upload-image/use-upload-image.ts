@@ -18,7 +18,6 @@ export const useUploadImageHandle = (reactFlowWidth?: number, reactFLowHeight?: 
       if (file) {
         const compressedBlob = await compressImage(file);
         const compressedFile = new File([compressedBlob], filename);
-        console.log({ compressedSize: compressedFile.size / 2 ** 20 });
         const result = await readImageFile(compressedFile);
 
         let positionX = viewport.x;

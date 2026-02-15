@@ -38,21 +38,26 @@ export const ModalComponent = ({
         <Button>{triggerTitle}</Button>
       </DialogTrigger>
 
-      <DialogContent className="overflow-hidden max-w-screen h-screen  flex flex-col">
-        <DialogHeader className="mt-1">
+      <DialogContent className="overflow-hidden max-w-screen min-h-screen flex flex-col theme-bg theme-text">
+        <DialogHeader className="mt-1 theme-bg theme-text">
           <DialogTitle>{dialogTitle}</DialogTitle>
           {dialogDescription && <DialogDescription>{dialogDescription}</DialogDescription>}
         </DialogHeader>
 
-        <div className="flex-1 flex flex-col min-h-0">
-          <div className="flex-1 flex flex-col border rounded-lg overflow-hidden">{content}</div>
+        {/* <div className="flex-1 overflow-hidden outline-red-600 outline-2">
+          <div className="flex-1 flex-col border rounded-lg">{content}</div>
+        </div> */}
+        <div
+          id="tableContainer"
+          className="outline-slate-600 outline-2 flex-1 border rounded-lg overflow-hidden"
+        >
+          {content}
         </div>
-        <DialogFooter className="sticky bottom-0 bg-slate-500 pb-4 shrink-0">
+        <DialogFooter>
           <DialogClose asChild>
             <Button>Отмена</Button>
           </DialogClose>
         </DialogFooter>
-        {/* <DialogClose /> */}
       </DialogContent>
     </Dialog>
   );

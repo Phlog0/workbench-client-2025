@@ -7,7 +7,7 @@ import { motion } from "motion/react";
 
 import { useGetProjectsList } from "@/features/project-card/api";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useBoundStore } from "@/shared/appStore";
 import { toast } from "sonner";
 import { LogoutButton } from "@/features/auth";
@@ -33,7 +33,7 @@ export const ProjectsMenu = () => {
 
   const testHandle = async () => {
     const data = await $api.projects.getAllProjects();
-    console.log(data);
+    console.log("TEST HANDLE", data);
   };
   if (isPending) return <Spinner />;
 

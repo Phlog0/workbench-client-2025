@@ -5,7 +5,6 @@ import { memo, useMemo } from "react";
 import { Terminal } from "../terminal/Terminal";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui";
 import { cn } from "@/shared/lib";
-import { useGetCurrentNode } from "@/shared/lib/nodes-std";
 
 export const PowerTransformer3510KvNode = memo(
   ({ id, selected }: NodeProps<TPowerTransformer3510Kv>) => {
@@ -22,8 +21,7 @@ export const PowerTransformer3510KvNode = memo(
       }
       return "black";
     }, [connection, id]);
-    const node = useGetCurrentNode(id);
-    console.log({ node });
+
     return (
       <Tooltip>
         <TooltipTrigger>

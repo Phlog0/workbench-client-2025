@@ -3,11 +3,10 @@ import { Column } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 
-export function ColumnFilter({ column }: { column: Column<any, unknown> }) {
+export function ColumnFilter({ column }: { column: Column<unknown, unknown> }) {
   const columnFilterValue = column.getFilterValue();
   //   const { filterVariant } = column.columnDef.meta ?? {};
   //   https://tanstack.com/table/latest/docs/framework/react/examples/filters?panel=code
-  console.log(column);
   const [localText, setLocalText] = useState(columnFilterValue ?? "");
   useEffect(() => {
     setLocalText(columnFilterValue ?? "");

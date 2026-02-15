@@ -1,30 +1,15 @@
 import { EdgeLabelRenderer, useReactFlow } from "@xyflow/react";
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { D3DragEvent, drag } from "d3-drag";
 import { select } from "d3-selection";
 import { dragEdge } from "./drag-edge";
+import { Point, PointHandler, SectionType } from "./types";
 type LabelPointProps = {
-  setPoints: Dispatch<
-    SetStateAction<
-      {
-        id: number;
-        x: number;
-        y: number;
-      }[]
-    >
-  >;
-  points: { x: number; y: number; id: number }[];
-  setTempPoints: Dispatch<
-    SetStateAction<
-      {
-        id: number;
-        x: number;
-        y: number;
-      }[]
-    >
-  >;
-  tempPoints: { x: number; y: number; id: number }[];
-  type: "vertical" | "horizontal";
+  setPoints: PointHandler;
+  points: Point[];
+  setTempPoints: PointHandler;
+  tempPoints: Point[];
+  type: SectionType;
   sourceY: number;
   sourceX: number;
 };

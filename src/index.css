@@ -1,6 +1,9 @@
 @import "./fonts.css" layer(base);
 @import "tailwindcss";
-
+@import "./custom-themes.css";
+@import "./app.css";
+@import "./xy-theme.css";
+@import "./project-grid.css";
 @plugin 'tailwindcss-animate';
 
 @custom-variant dark (&:is(.dark *));
@@ -283,60 +286,6 @@
   }
 }
 
-.project-grid {
-  height: 100dvh;
-  /* width: 100%; */
-  display: grid;
-  grid-template-columns: 10% 70% 20%;
-  grid-template-rows: 15% 85%;
-  grid-template-areas:
-    "header header header"
-    "items flow properties";
-  /* overflow: hidden; */
-}
-.properties-button {
-  display: none;
-}
-.project-header {
-  grid-area: header;
-}
-.project-items {
-  grid-area: items;
-}
-.project-flow {
-  grid-area: flow;
-}
-.project-properties {
-  grid-area: properties;
-}
-
-.ReactVirtualized__Table__headerRow {
-  font-weight: 700;
-  text-transform: uppercase;
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  flex-direction: row;
-  -webkit-box-align: center;
-  align-items: center;
-}
-
-.ReactVirtualized__Table__headerColumn {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  flex-direction: row;
-  justify-content: center;
-  padding: 0;
-  overflow: hidden;
-}
-
-.ReactVirtualized__Table__rowColumn {
-  display: flex;
-  justify-content: start;
-}
-
 .custom-flex-grow {
   flex-grow: 2;
 }
@@ -349,29 +298,6 @@
 } */
 
 @media (max-width: 80rem) {
-  .project-grid {
-    display: grid;
-    grid-template-areas:
-      "header header header"
-      "items flow flow";
-  }
-
-  .properties-button {
-    display: block;
-  }
-
-  .project-header {
-    grid-area: header;
-  }
-  .project-items {
-    grid-area: items;
-  }
-  .project-flow {
-    grid-area: flow;
-  }
-  .project-properties {
-    grid-area: properties;
-  }
 }
 
 .rotatable-node__handle {
@@ -443,10 +369,10 @@
 *::-webkit-scrollbar-thumb:active {
   background-color: var(--color-blue-700);
 }
-.react-flow__canvas {
+/* .react-flow__canvas {
   width: 100%;
   height: 100%;
   position: absolute;
   z-index: 10;
   pointer-events: none;
-}
+} */

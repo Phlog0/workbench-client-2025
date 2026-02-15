@@ -17,6 +17,7 @@ import { INITIAL_CELL_35KV_METRICS } from "@/shared/react-flow/nodes/cells/cell-
 import { TSection35Kv } from "@/shared/react-flow/nodes/sections/section-35kv/types";
 import { TFixator35Kv } from "@/shared/react-flow/nodes/fixators/fixator-35kv/types";
 import { INITIAL_SECTION_35KV_METRICS } from "@/shared/react-flow/nodes/sections/section-35kv/measures";
+
 const sectionAndCellSizes = {
   cell04: INITIAL_CELL_04KV_METRICS,
   cell10: INITIAL_CELL_10KV_METRICS,
@@ -37,10 +38,8 @@ export const createSection = ({
     x: event.clientX - sectionMetrics.width / 8,
     y: event.clientY - sectionMetrics.height / 8,
   });
-  const newSectionId:
-    | TSection10Kv["id"]
-    | TSection35Kv["id"]
-    | TSection04Kv["id"] = `section-${sectionVoltage}-kv-${uuidv4()}`;
+  const newSectionId: TSection10Kv["id"] | TSection35Kv["id"] | TSection04Kv["id"] =
+    `section-${sectionVoltage}-kv-${uuidv4()}`;
 
   let section: TSection10Kv | TSection04Kv | TSection35Kv;
 
@@ -76,13 +75,11 @@ export const createSection = ({
   };
 
   const fixators = new Array(4).fill("").map((_, index) => {
-    const newFixatorId:
-      | TFixator10Kv["id"]
-      | TFixator35Kv["id"]
-      | TFixator04Kv["id"] = `fixator-${sectionVoltage}-kv-${uuidv4()}`;
+    const newFixatorId: TFixator10Kv["id"] | TFixator35Kv["id"] | TFixator04Kv["id"] =
+      `fixator-${sectionVoltage}-kv-${uuidv4()}`;
     const newItem: TFixator04Kv | TFixator10Kv | TFixator35Kv = {
       id: newFixatorId,
-      data: { id: newFixatorId },
+      data: {},
       parentId: newFixatorContainerId,
       position: { y: 0, x: ((index * cellMetrics.width) / 2) * 2 - 8 },
       type: `Fixator${sectionVoltage}Kv`,

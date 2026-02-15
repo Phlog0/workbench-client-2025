@@ -1,19 +1,10 @@
-import { D3DragEvent } from "d3-drag";
-import { Dispatch, SetStateAction } from "react";
+import { Point, PointDragEvent, PointHandler, SectionType } from "./types";
 type DragEdgeProps = {
-  type: "horizontal" | "vertical";
-  setPoints: Dispatch<
-    SetStateAction<
-      {
-        id: number;
-        x: number;
-        y: number;
-      }[]
-    >
-  >;
-  event: D3DragEvent<HTMLDivElement, unknown, unknown>;
+  type: SectionType;
+  setPoints: PointHandler;
+  event: PointDragEvent;
   zoom: number;
-  points: { x: number; y: number; id: number }[];
+  points: Point[];
   sourceY: number;
   sourceX: number;
 };
@@ -26,7 +17,6 @@ export function dragEdge({
   sourceY,
   sourceX,
 }: DragEdgeProps) {
-  console.log(event);
   const isFirstPair = points[0].id === 0;
   if (isFirstPair) {
     setPoints((prev) => {
@@ -47,7 +37,6 @@ export function dragEdge({
   setPoints((prev) => {
     return prev?.map((item) => {
       if (points[0].id === item.id || points[1].id === item.id) {
-        console.log(item.id);
         if (type === "horizontal") {
           return {
             ...item,

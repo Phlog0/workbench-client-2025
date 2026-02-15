@@ -2,7 +2,7 @@ import { LoginForm } from "@/features/auth";
 import { useBoundStore } from "@/shared/appStore";
 import { LOCAL_STORAGE_KEYS } from "@/shared/constants";
 import { useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 
 export function LoginPage() {
@@ -31,7 +31,7 @@ export function LoginPage() {
   }, [checkAuth, searchParams, setSearchParams]);
 
   return (
-    <div>
+    <div className="w-full min-h-screen ">
       <h1>{isAuth ? "Авторизован!" : "Нет!"}</h1>
       <LoginForm />
     </div>

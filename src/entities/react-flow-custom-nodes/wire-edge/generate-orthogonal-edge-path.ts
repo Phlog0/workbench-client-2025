@@ -1,9 +1,6 @@
-export function createOrthogonalEdgePath(
-  points: {
-    x: number;
-    y: number;
-  }[],
-) {
+import { Point } from "./types";
+
+export function createOrthogonalEdgePath(points: Point[]) {
   let path = `M ${points[0].x} ${points[0].y}`;
 
   for (let i = 1; i < points.length; i++) {

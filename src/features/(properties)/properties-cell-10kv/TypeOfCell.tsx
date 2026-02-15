@@ -17,30 +17,36 @@ import {
 import { TypeOfOpnDevice } from "./TypeOfOpnDevice";
 import { TypeOfVoltage } from "../shared/TypeOfVoltage";
 import { RatedCurrentOfTheMainCircuits } from "./RatedCurrentOfTheMainCircuits";
-import { RatedCurrent, SPower } from "./(read-only-parameters)";
+import { ReadOnlyParameters } from "./(read-only-parameters)";
+import { TCell04Kv } from "@/shared/react-flow/nodes/cells/cell-04kv/types";
+import { TCell35Kv } from "@/shared/react-flow/nodes/cells/cell-35kv/types";
 
-export function TypeOfCell({
+export function TypeOfCell_FROM_10KV({
   selectedNodeId,
 }: {
   className?: string;
   selectedNodeId: ReactFlowNodeId;
 }) {
-  const cell10kv = useGetCurrentNode(selectedNodeId) as TCell10Kv;
+  const cell = useGetCurrentNode(selectedNodeId) as TCell10Kv | TCell04Kv | TCell35Kv;
 
-  const typeOfCell = cell10kv?.data?.[TYPE_OF_CELL_10KV_KEY_1];
+  const typeOfCell = cell?.data?.[TYPE_OF_CELL_10KV_KEY_1];
   return (
     <div className="flex flex-col gap-4">
-      <TypeOfVoltage
-        selectedNodeId={selectedNodeId}
-        typeOfVoltageValue={cell10kv?.data?.typeOfVoltage}
-      />
-      <div>
-        <RatedCurrent
+      {cell.type === "Cell10Kv" && (
+        <TypeOfVoltage
           selectedNodeId={selectedNodeId}
-          ratedCurrentValue={cell10kv.data?.ratedCurrent || ""}
+          typeOfVoltageValue={cell?.data?.typeOfVoltage}
         />
-        <SPower selectedNodeId={selectedNodeId} sPowerValue={cell10kv.data?.sPower || ""} />
-      </div>
+      )}
+
+      {/* READ-ONLY-STUFF HERE */}
+      {cell.type === "Cell10Kv" && (
+        <ReadOnlyParameters
+          selectedNodeId={selectedNodeId}
+          ratedCurrent={cell.data?.ratedCurrent}
+          sPower={cell.data?.sPower}
+        />
+      )}
       <ProjectPropertySelect
         key1={TYPE_OF_CELL_10KV_KEY_1}
         label={TYPE_OF_CELL_10KV_LABEL}
@@ -52,7 +58,7 @@ export function TypeOfCell({
       {typeOfCell === TYPE_OF_CELL_CELL_10KV_OPTIONS.v && (
         <RatedCurrentOfTheMainCircuits
           selectedNodeId={selectedNodeId}
-          value={cell10kv?.data?.ratedCurrentOfTheMainCircuits}
+          value={cell?.data?.ratedCurrentOfTheMainCircuits}
         />
       )}
       {(typeOfCell === TYPE_OF_CELL_CELL_10KV_OPTIONS.tsn ||
@@ -63,16 +69,16 @@ export function TypeOfCell({
         typeOfCell === TYPE_OF_CELL_CELL_10KV_OPTIONS.ukrm ||
         typeOfCell === TYPE_OF_CELL_CELL_10KV_OPTIONS.tn) && (
         <TypeOfSwitchingDevice
-          typeOfSwitchingDevice={cell10kv.data?.typeOfSwitchingDevice}
-          switchingDevice={cell10kv.data?.switchingDevice}
-          typeOfMicroproc={cell10kv.data.typeOfMicroprocessorDevice}
-          microProc={cell10kv.data.mpdaa}
+          typeOfSwitchingDevice={cell.data?.typeOfSwitchingDevice}
+          switchingDevice={cell.data?.switchingDevice}
+          typeOfMicroproc={cell.data.typeOfMicroprocessorDevice}
+          microProc={cell.data.mpdaa}
           selectedNodeId={selectedNodeId}
         />
       )}
       {typeOfCell === TYPE_OF_CELL_CELL_10KV_OPTIONS.tn && (
         <VoltageTransformerDevice
-          voltageTransformer={cell10kv.data.tn}
+          voltageTransformer={cell.data.tn}
           selectedNodeId={selectedNodeId}
         />
       )}
@@ -86,26 +92,26 @@ export function TypeOfCell({
         <TypeOfMeasuringCurrentTransformersDevice
           selectedNodeId={selectedNodeId}
           typeOfMeasuringCurrentTransformersDevice={
-            cell10kv.data.typeOfMeasuringCurrentTransformersDevice
+            cell.data.typeOfMeasuringCurrentTransformersDevice
           }
-          measuringCurrentTransformersDevice={cell10kv.data.measuringCurrentTransformersDevice}
+          measuringCurrentTransformersDevice={cell.data.measuringCurrentTransformersDevice}
         />
       )}
       {(typeOfCell === TYPE_OF_CELL_CELL_10KV_OPTIONS.tsn ||
         typeOfCell === TYPE_OF_CELL_CELL_10KV_OPTIONS.v ||
         typeOfCell === TYPE_OF_CELL_CELL_10KV_OPTIONS.ol) && (
         <TypeOfOpnDevice
-          opn={cell10kv.data.opn}
-          typeOfOpnDevice={cell10kv.data.typeOfOpnDevice}
+          opn={cell.data.opn}
+          typeOfOpnDevice={cell.data.typeOfOpnDevice}
           selectedNodeId={selectedNodeId}
         />
       )}
 
       {typeOfCell === TYPE_OF_CELL_CELL_10KV_OPTIONS.tsn && (
-        <TsnDevice selectedNodeId={selectedNodeId} tsn={cell10kv?.data.tsn} />
+        <TsnDevice selectedNodeId={selectedNodeId} tsn={cell?.data.tsn} />
       )}
       {typeOfCell === TYPE_OF_CELL_CELL_10KV_OPTIONS.ukrm && (
-        <UkrmDevice ukrm={cell10kv.data.ukrm} selectedNodeId={selectedNodeId} />
+        <UkrmDevice ukrm={cell.data.ukrm} selectedNodeId={selectedNodeId} />
       )}
     </div>
   );

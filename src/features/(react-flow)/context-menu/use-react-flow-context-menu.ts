@@ -3,6 +3,7 @@ import { ReactMouseEvent } from "../types";
 
 import { useBoundStore } from "@/shared/appStore";
 import { PossibleNode, ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
+import { ExternalReactFlowDimensions, SetExternalReactFlowDimensions } from "@/pages/FlowLayout";
 
 type MenuType = {
   id: ReactFlowNodeId;
@@ -11,21 +12,26 @@ type MenuType = {
   right?: number;
   bottom?: number;
 };
-export function useReactFlowContextMenu() {
+export function useReactFlowContextMenu(
+  externalReactFlowDimensions: ExternalReactFlowDimensions,
+  setExternalReactFlowDimensions: SetExternalReactFlowDimensions,
+) {
   const setSelectedNodeId = useBoundStore((state) => state.setSelectedNodeId);
+
   const [menu, setMenu] = useState<MenuType | null>();
+
   const reactFlowRef = useRef<null | HTMLDivElement>(null);
-  const [reactFlowDimensions, setReactFlowDimensions] = useState({
-    width: 0,
-    height: 0,
-  });
+  // const [reactFlowDimensions, setReactFlowDimensions] = useState({
+  //   width: 0,
+  //   height: 0,
+  // });
 
   useEffect(() => {
     if (!reactFlowRef.current) return;
 
     const observer = new ResizeObserver((entries) => {
       const entry = entries[0];
-      setReactFlowDimensions({
+      setExternalReactFlowDimensions({
         width: entry.contentRect.width,
         height: entry.contentRect.height,
       });
@@ -36,31 +42,31 @@ export function useReactFlowContextMenu() {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [setExternalReactFlowDimensions]);
   const onNodeContextMenu = useCallback(
     (event: ReactMouseEvent, node: PossibleNode) => {
-      if (node.type !== "Cell10Kv") return;
+      if (!(node.type === "Cell10Kv" || node.type === "Cell04Kv" || node.type === "Cell35Kv"))
+        return;
       event.preventDefault();
 
-      // Calculate position of the context menu. We want to make sure it
-      // doesn't get positioned off-screen.
       const pane = reactFlowRef.current?.getBoundingClientRect();
-      if (pane)
+      if (pane) {
         setMenu({
           id: node.id,
-          top: event.clientY < pane.height - 200 ? event.clientY : undefined,
-          left: event.clientX < pane.width - 200 ? event.clientX : undefined,
-          right: event.clientX >= pane.width - 200 ? pane.width - event.clientX : undefined,
-          bottom: event.clientY >= pane.height - 200 ? pane.height - event.clientY : undefined,
+          top: event.clientY < pane.height - 150 ? event.clientY : undefined,
+          left: event.clientX < pane.width - 150 ? event.clientX : undefined,
+          right: event.clientX >= pane.width - 150 ? pane.width - event.clientX : undefined,
+          bottom: event.clientY >= pane.height - 150 ? pane.height - event.clientY : undefined,
         });
-      setSelectedNodeId([node.id]);
+        setSelectedNodeId([node.id]);
+      }
     },
-    [setMenu, setSelectedNodeId],
+    [reactFlowRef, setSelectedNodeId, setMenu],
   );
   const onPaneClick = useCallback(() => {
     setMenu(null);
     setSelectedNodeId([]);
   }, [setMenu, setSelectedNodeId]);
 
-  return { menu, reactFlowRef, onNodeContextMenu, onPaneClick, reactFlowDimensions };
+  return { menu, reactFlowRef, onNodeContextMenu, onPaneClick, externalReactFlowDimensions };
 }

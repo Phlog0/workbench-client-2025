@@ -15,7 +15,7 @@ export const useRegistration = () => {
   const setUser = useBoundStore((state) => state.setUser);
   return useMutation<SuccessAuthResponse, AxiosError<BadAuthResponse>, TRegistrationForm>({
     mutationFn: async (registrationData) =>
-      await $api.auth.registration({
+      await $api.auth.register({
         email: registrationData.email,
         firstName: registrationData.firstName,
         secondName: registrationData.secondName,
@@ -25,20 +25,27 @@ export const useRegistration = () => {
     onSuccess: (data) => {
       setAuth(true);
       setUser(data.user);
-      console.log({ data });
-      localStorage.removeItem(LOCAL_STORAGE_KEYS.TOKEN);
+
+      // localStorage.removeItem(LOCAL_STORAGE_KEYS.TOKEN);
       localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, data.accessToken);
       navigate(APP_ROUTES.PROJECTS_LIST);
     },
     onError: (error) => {
-      if (error.status && error.status >= 500) {
-        console.error(error);
-        toast.error(`Внутренняя ошибка!`, {
-          closeButton: true,
-        });
-      } else {
+      if (error.response) {
         toast.error(`Ошибка: ${error.response?.data.message.toString()} `, {
           closeButton: true,
+          id: "use-register-error",
+        });
+      } else if (error.request) {
+        toast.error(`Сервер временно недоступен. Проверьте подключение к интернету`, {
+          closeButton: true,
+          id: "use-register-error",
+        });
+      } else {
+        console.error(error);
+        toast.error(`Произошла неизвестная ошибка`, {
+          closeButton: true,
+          id: "use-register-error",
         });
       }
     },

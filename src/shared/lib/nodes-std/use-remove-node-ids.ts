@@ -1,8 +1,9 @@
 import { PossibleNode, ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
 import { useNodes } from "@xyflow/react";
 
+// Переименовать. Это не просто useRemoveNodeIds, это найти всех детей по иерархии (section -> section-container -> fixator -> cell)
 export function useRemoveNodeIds() {
-  const nodes = useNodes() as PossibleNode[];
+  const nodes = useNodes<PossibleNode>();
 
   const extractIds = (rootId: ReactFlowNodeId[]) => {
     const ids: ReactFlowNodeId[] = [];
@@ -13,9 +14,7 @@ export function useRemoveNodeIds() {
           if (item.parentId) return parentId.includes(item?.parentId);
         })
         .map((item) => item.id);
-      // console.log({ childrenIds })
       childrenIds.forEach((item) => ids.push(item));
-      // console.log({ ids })
       if (childrenIds.length !== 0) {
         findChildren(childrenIds);
       } else {

@@ -1,4 +1,5 @@
 import { RFJsonObject } from "@/shared/react-flow/types";
+import { toast } from "sonner";
 
 export function readJsonFile(file: File): Promise<RFJsonObject> {
   return new Promise((resolve, reject) => {
@@ -19,6 +20,7 @@ export function readJsonFile(file: File): Promise<RFJsonObject> {
           !("viewport" in result)
         ) {
           reject(new Error("Неверная структура JSON"));
+          toast.error("Неверная структура JSON");
         }
         resolve(result as RFJsonObject);
       } catch {

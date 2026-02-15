@@ -137,8 +137,6 @@ export const gostTable = (doc: jsPDF, pdfPageWidth: number, pdfPageHeight: numbe
     horizontalPageBreak: false, // This option prevents horizontal page breaks for the table
     horizontalPageBreakRepeat: 0,
     // rowPageBreak: "avoid",
-
-    // didParseCell: (d) => console.log(d.table.body?.[0]),
   });
 };
 

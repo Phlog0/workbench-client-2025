@@ -31,7 +31,6 @@ export const useUpdateProject = (projectId: ProjectId) => {
       }
     },
     onError: (error: AxiosError<BadAuthResponse>) => {
-      console.log(error);
       toast.error(error.response?.data.message.toString(), {
         closeButton: true,
       });

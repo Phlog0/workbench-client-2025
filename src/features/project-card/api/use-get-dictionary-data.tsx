@@ -25,7 +25,6 @@ export function useGetDictionaryData({
           }`,
         );
       const data = $api.projects.getReadySolutionsList(query, dictionaryFolder);
-      // console.log(response);
 
       return data;
     },

@@ -20,7 +20,6 @@ export function ResizeButtons({
   sectionWidth?: number;
   sectionVoltage: Exclude<ElectricityVoltage, "06">;
 }) {
-  // console.log("<<<resize-buttons-render>>>");
   const [fixatorContainerId] = useGetNodeChildrenIds(sectionId);
   const fixatorsIds = useGetNodeChildrenIds(fixatorContainerId);
   const increaseSectionWidth = useBoundStore((state) => state.increaseSectionWidth);
@@ -28,7 +27,7 @@ export function ResizeButtons({
 
   const addNode = useBoundStore((state) => state.addNode);
   const removeNode = useBoundStore((state) => state.removeNode);
-  const { lastFixatorId } = useGetLastFixator(fixatorContainerId, sectionVoltage);
+  const lastFixatorId = useGetLastFixator(fixatorContainerId, sectionVoltage);
   const extractIds = useRemoveNodeIds();
   const handleIncrease = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
@@ -44,14 +43,10 @@ export function ResizeButtons({
       deletable: false,
       draggable: false,
     };
-    const fixatorId:
-      | TFixator10Kv["id"]
-      | TFixator35Kv["id"]
-      | TFixator04Kv["id"] = `fixator-${sectionVoltage}-kv-${Date.now()}`;
-    const fixatorType:
-      | TFixator10Kv["type"]
-      | TFixator04Kv["type"]
-      | TFixator35Kv["type"] = `Fixator${sectionVoltage}Kv`;
+    const fixatorId: TFixator10Kv["id"] | TFixator35Kv["id"] | TFixator04Kv["id"] =
+      `fixator-${sectionVoltage}-kv-${Date.now()}`;
+    const fixatorType: TFixator10Kv["type"] | TFixator04Kv["type"] | TFixator35Kv["type"] =
+      `Fixator${sectionVoltage}Kv`;
 
     addNode({ ...newFixatorData, type: fixatorType, id: fixatorId });
     return;
@@ -61,9 +56,11 @@ export function ResizeButtons({
     e.stopPropagation();
     if (sectionWidth && sectionWidth <= 800) return;
     decreaseSectionWidth({ sectionId, fixatorContainerId });
-    //DECREASE SECTION WIDTH
-    const fixatorChild = extractIds([lastFixatorId]);
-    removeNode([...fixatorChild, lastFixatorId]);
+
+    if (lastFixatorId) {
+      const fixatorChild = extractIds([lastFixatorId]);
+      removeNode([...fixatorChild, lastFixatorId]);
+    }
   };
   return (
     <div className={cn("flex gap-3", className)}>

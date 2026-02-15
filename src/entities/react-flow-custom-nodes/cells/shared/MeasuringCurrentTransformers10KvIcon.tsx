@@ -23,8 +23,10 @@ export const MeasuringCurrentTransformers10KvIcon = memo(
     className,
     value = "Нет",
     transformersData,
+    color,
   }: {
     className?: string;
+    color?: string;
     value?:
       | TTypeOfMeasuringCurrentTransformersDeviceOptionsCell10Kv
       | TTypeOfMeasuringCurrentTransformersDeviceCell04Kv;
@@ -32,22 +34,20 @@ export const MeasuringCurrentTransformers10KvIcon = memo(
       | TMeasuringCurrentTransformersDeviceCell10Kv
       | TMeasuringCurrentTransformersDeviceCell04Kv;
   }) {
-    // console.log(value);
-
     const hasEmptyFields = useMemo(() => {
       if (!transformersData) return true;
       return Object.values(transformersData).every(
         (item) => item === "" || item === undefined || item === null,
       );
     }, [transformersData]);
-    const iconColor = hasEmptyFields ? "yellow" : undefined;
+    const iconColor = hasEmptyFields ? "yellow" : color;
     return (
       <div className={className}>
         {/* {Object.entries(myObject).map(([key, component]) => {
         if (value === key) return { component };
       })} */}
         {value === TYPE_OF_MEASURING_CURRENT_TRANSFORMERS_DEVICE_CELL_10KV_OPTIONS.no && (
-          <VerticalLineIcon />
+          <VerticalLineIcon color={color} />
         )}
         {value === TYPE_OF_MEASURING_CURRENT_TRANSFORMERS_DEVICE_CELL_10KV_OPTIONS.tt2ac && (
           <Tt2AcIcon color={iconColor} />

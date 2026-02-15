@@ -14,6 +14,7 @@ import { FormInput } from "@/entities/auth";
 export function RegistrationForm() {
   const registrationMutation = useRegistration();
   const form = useForm({
+    mode: "onSubmit",
     resolver: zodResolver(RegistrationSchema),
     defaultValues: {
       email: "",
@@ -66,7 +67,7 @@ export function RegistrationForm() {
             </Button>
           </div>
 
-          <Button>Войти</Button>
+          <Button type="submit">Зарегистрироваться</Button>
           <p>
             Уже есть аккаунт?&nbsp;
             <Link to={APP_ROUTES.LOGIN} className="text-blue-600 underline font-bold">

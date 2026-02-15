@@ -50,12 +50,9 @@ export const VirtualizedTableNEW = ({ param, key_1, setIsModalOpen }: Virtualize
     return [];
   }, [data?.tableColumns]);
 
-  // const tableBody = useMemo(() => data?.tableBody, [data?.tableBody]);
-  // console.log({ data });
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  // const [globalFilter, setGlobalFilter] = useState("");
+
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  console.log(data);
   const table = useReactTable({
     data: data?.tableBody ?? [],
     // data: data?.tableBody ?? [],
@@ -91,102 +88,3 @@ export const VirtualizedTableNEW = ({ param, key_1, setIsModalOpen }: Virtualize
 
   return <VirtualizedTableContainer setIsModalOpen={setIsModalOpen} keyOne={key_1} table={table} />;
 };
-
-// const { rows } = table.getRowModel();
-//   const parentRef = useRef<HTMLDivElement>(null);
-//   const virtualizer = useVirtualizer({
-//     count: rows.length,
-//     getScrollElement: () => parentRef.current,
-//     estimateSize: () => 100,
-//     overscan: 10,
-//   });
-
-//  {data?.tableBody && data.tableColumns && (
-//         <div ref={parentRef} className="overflow-auto bg-blue-900">
-//           <div style={{ height: `${virtualizer.getTotalSize()}px` }} className="relative">
-//             <Table
-//               className="border bg-red-300 "
-//               style={{
-//                 width: table.getCenterTotalSize(),
-//               }}
-//             >
-//               {table.getHeaderGroups().map((headerGroup) => (
-//                 <TableHeader key={headerGroup.id} className="sticky top-15 z-10 overflow-y-scroll">
-//                   <tr className="border-4 shadow-2xs bg-slate-100">
-//                     {headerGroup.headers.map((header) => (
-//                       <TableHead
-//                         key={header.id}
-//                         style={{ width: header.getSize() }}
-//                         className={cn(
-//                           "relative select-none ",
-
-//                           {
-//                             "cursor-pointer select-none grow": header.column.getCanSort(),
-//                           },
-//                         )}
-//                         onClick={header.column.getToggleSortingHandler()}
-//                       >
-//                         {header.column.getCanFilter() ? (
-//                           <div className="h-[49%] w-full">
-//                             <ColumnFilter column={header.column} />
-//                           </div>
-//                         ) : null}
-//                         <div className=" min-h-8 h-[50%] overflow-y-auto w-full">
-//                           {flexRender(header.column.columnDef.header, header.getContext())}
-//                           {{
-//                             asc: " 🔼",
-//                             desc: " 🔽",
-//                           }[header.column.getIsSorted() as string] ?? null}
-//                         </div>
-//                         <div
-//                           className={cn(
-//                             "absolute top-0 right-0 h-full bg-blue-500 w-4 cursor-e-resize z-100",
-//                             {
-//                               "bg-blue-800": header.column.getIsResizing(),
-//                             },
-//                           )}
-//                           onMouseDown={(e) => {
-//                             e.stopPropagation();
-//                             header.getResizeHandler()(e);
-//                           }}
-//                           onClick={(e) => e.stopPropagation()}
-//                           onTouchStart={(e) => {
-//                             e.stopPropagation();
-//                             header.getResizeHandler()(e);
-//                           }}
-//                         />
-//                       </TableHead>
-//                     ))}
-//                   </tr>
-//                 </TableHeader>
-//               ))}
-//               <TableBody className="flex-1">
-//                 {virtualizer.getVirtualItems().map((virtualRow, index) => {
-//                   const row = rows[virtualRow.index];
-//                   return (
-//                     <TableRow
-//                       key={row.id}
-//                       className={cn(
-//                         "cursor-pointer",
-//                         `${row.getIsSelected() ? "bg-blue-400" : null}`,
-//                         "hover:bg-blue-200",
-//                       )}
-//                       style={{
-//                         height: `${virtualRow.size}px`,
-//                         transform: `translateY(${virtualRow.start - index * virtualRow.size}px)`,
-//                       }}
-//                       onClick={() => handleClick(row)}
-//                     >
-//                       {row.getVisibleCells().map((cell) => (
-//                         <TableCell className="" key={cell.id}>
-//                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
-//                         </TableCell>
-//                       ))}
-//                     </TableRow>
-//                   );
-//                 })}
-//               </TableBody>{" "}
-//             </Table>
-//           </div>
-//         </div>
-//       )}

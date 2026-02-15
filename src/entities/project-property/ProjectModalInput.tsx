@@ -1,4 +1,4 @@
-import { BookOpen } from "lucide-react";
+import { Table } from "lucide-react";
 
 import { ProjectPropertyInput } from "@/entities/project-property";
 
@@ -32,7 +32,7 @@ export function ProjectModalInput({
 }: FirstInputProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <div className="flex">
+    <div className="flex items-end theme-bg theme-text">
       <div className="flex-1">
         <ProjectPropertyInput {...data} selectedNodeId={selectedNodeId} value={defaultValue} />
       </div>
@@ -48,7 +48,7 @@ export function ProjectModalInput({
           />
         }
         dialogTitle={LABEL}
-        triggerTitle={<BookOpen className="" />}
+        triggerTitle={<Table />}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import "./App.css";
+// import "./App.css";
 import { Toaster, TooltipProvider } from "shared/ui";
 import { AppRouter } from "./AppRouter";
 import { QueryClientProvider } from "@tanstack/react-query";

@@ -3,6 +3,8 @@ import { memo, useState } from "react";
 import { LabelPoint } from "./LabelPoint";
 import { createOrthogonalEdgePath } from "./generate-orthogonal-edge-path";
 
+import { useGetLineColor } from "@/shared/lib/use-get-line-color";
+
 export const EditableWireEdge = memo(
   ({ sourceX, sourceY, targetX, targetY, markerEnd, markerStart, selected }: EdgeProps) => {
     const [points, setPoints] = useState([
@@ -16,6 +18,7 @@ export const EditableWireEdge = memo(
       { id: 7, x: targetX, y: targetY }, // Конечная точка
     ]);
 
+    const edgeDefaultColor = useGetLineColor();
     const [tempPoints, setTempPoints] = useState(points);
     const edgePath = createOrthogonalEdgePath(points);
     return (
@@ -23,8 +26,9 @@ export const EditableWireEdge = memo(
         {/* Основная линия */}
 
         <BaseEdge
+          className="rf-scheme-line"
           style={{
-            stroke: selected ? "#3b82f6" : "#000000",
+            stroke: selected ? "#3b82f6" : edgeDefaultColor,
             strokeWidth: selected ? 3 : 2,
             fill: "none",
           }}

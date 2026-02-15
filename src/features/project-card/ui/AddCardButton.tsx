@@ -7,7 +7,7 @@ import { ProjectInfoTextData } from "@/shared/api/types";
 import { useAddProject } from "../api";
 import { useState } from "react";
 import { ProjectInfoFormSchema } from "../model";
-import { FormInput, FormModalComponent, FormSelect } from "@/entities/auth";
+import { FormInput, FormModalComponent, FormSelect, FormTextarea } from "@/entities/auth";
 
 export function AddCardButton({ className }: { className?: string }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -38,39 +38,13 @@ export function AddCardButton({ className }: { className?: string }) {
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormSelect options={["КТП", "РП", "ТП"]} />
             <FormInput label="Название проекта" name="title" />
-            <FormInput label="Описание проекта" name="description" />
+            <FormTextarea label="Описание проекта" name="description" />
 
             <Button type="submit">
               {addProjectMutation.isPending ? "Создание..." : "Создать проект"}
             </Button>
           </form>
         </FormProvider>
-        // <Form {...form}>
-        //   <form onSubmit={form.handleSubmit(onSubmit)} className="p-8 max-w-5xl mx-auto">
-        //     <Controller
-        //       control={form.control}
-        //       name="projectType"
-        //       render={({ field }) => (
-        //         <AuthSelect label={"Тип проекта"} field={field} options={["КТП", "ТП", "РП"]} />
-        //       )}
-        //     ></Controller>
-        //     <AuthFormField
-        //       control={form.control}
-        //       formLabel={"Название проекта"}
-        //       name="title"
-        //       inputType="text"
-        //     />
-        //     <AuthFormField
-        //       control={form.control}
-        //       formLabel={"Описание проекта"}
-        //       name="description"
-        //       inputType="text"
-        //     />
-        //     <Button type="submit">
-        //       {addProjectMutation.isPending ? "Создание..." : "Создать проект"}
-        //     </Button>
-        //   </form>
-        // </Form>
       }
       dialogTitle={"Создание проекта"}
       triggerTitle={<Plus />}

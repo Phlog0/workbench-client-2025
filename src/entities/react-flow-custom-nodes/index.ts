@@ -34,5 +34,5 @@ export const nodeTypesEntities: NodeTypes = {
 };
 
 export const rfEdgeTypes = {
-  Wire: EditableWireEdge,
+  Wire: WireEdge,
 } as const;

@@ -39,7 +39,6 @@ export function VirtualizedTableBodyRow({
   const handleClick = (row: Row<TableModelApi>) => {
     row.getToggleSelectedHandler();
     const currnetRowData = table.getRow(row.id).original;
-    console.log({ currnetRowData });
     selectReadyMadeSolution({
       nodeId: selectedNodeId,
       keyOne: keyOne, // ТАКОЙ, ЧТО ЯВЛЯЕТСЯ КЛЮЧОМ ДЛЯ ОБЪЕКТОВ switching-device, opn, ...

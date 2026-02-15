@@ -27,7 +27,8 @@ export function ContextMenu({ contextMenuCoordinats, onClick }: ContextMenuProps
   const handleClick = () => {
     setMultipleProps({
       nodeId: id,
-      options: {
+
+      properties: {
         parentId: undefined,
         draggable: true,
         position: {

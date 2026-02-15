@@ -41,8 +41,8 @@ export const FormModalComponent = ({
         <Button className={className}>{triggerTitle}</Button>
       </DialogTrigger>
 
-      <DialogContent>
-        <DialogHeader>
+      <DialogContent className="theme-bg theme-text">
+        <DialogHeader className="theme-bg theme-text">
           <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription className="h-full overflow-hidden">
             {dialogDescription}

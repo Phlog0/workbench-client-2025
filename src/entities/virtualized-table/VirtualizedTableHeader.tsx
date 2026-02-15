@@ -18,7 +18,7 @@ export function VirtualizedTableHead({
   virtualPaddingRight,
 }: TableHeadProps) {
   return (
-    <TableHeaderUi className="grid sticky z-10 top-0 bg-white shadow-2xl">
+    <TableHeaderUi className="grid sticky z-10 top-0 theme-bg theme-text shadow-2xl">
       {table.getHeaderGroups().map((headerGroup) => (
         <VirtualizedTableHeadRow
           columnVirtualizer={columnVirtualizer}

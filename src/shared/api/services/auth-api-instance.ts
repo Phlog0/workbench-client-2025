@@ -10,10 +10,10 @@ type LogoutSucessResponse = {
   token: string;
 };
 export const authApiService = {
-  registration: async (registrationData: Omit<TRegistrationForm, "confirmPassword">) => {
+  register: async (registerData: Omit<TRegistrationForm, "confirmPassword">) => {
     const response = await apiInstance.post<SuccessAuthResponse>(
-      API_ROUTES.AUTH + "/registration",
-      registrationData,
+      API_ROUTES.AUTH + "/register",
+      registerData,
     );
 
     return response.data;

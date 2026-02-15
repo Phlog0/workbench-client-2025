@@ -25,9 +25,9 @@ export const FormInput = ({ name, label, required, className, ...props }: AuthIn
     });
   };
   return (
-    <Field className={cn("flex flex-col gap-0", className)}>
+    <Field className={cn("flex flex-col gap-0 justify-center", className)}>
       {label && (
-        <FieldLabel className="font-medium mb-2">
+        <FieldLabel htmlFor={name} className="font-medium mb-2">
           {label} {required && <RequiredSymbol />}
         </FieldLabel>
       )}
@@ -37,6 +37,7 @@ export const FormInput = ({ name, label, required, className, ...props }: AuthIn
           {...register(name)}
           {...props}
           className={errorText && "outline-red-400 outline-1"}
+          id={name}
         />
         {value && <ClearButton onClick={onClickClear} />}
       </div>

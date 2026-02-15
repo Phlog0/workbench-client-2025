@@ -16,6 +16,7 @@ import { APP_ROUTES } from "@/shared/constants";
 export function LoginForm() {
   const signInMutation = useLogin();
   const form = useForm({
+    mode: "onBlur",
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "sergey.zadorkin.1@yandex.ru",
@@ -53,7 +54,7 @@ export function LoginForm() {
             </Button>
           </div>
 
-          <Button>Войти</Button>
+          <Button type="submit">Войти</Button>
           <p>
             У вас нет аккаунта?&nbsp;
             <Link to={APP_ROUTES.REGISTRATION} className="text-blue-600 underline font-bold">
