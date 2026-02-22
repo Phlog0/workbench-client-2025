@@ -26,7 +26,7 @@ type VirtualizedTableProps = {
   setIsModalOpen: (value: boolean) => void;
 };
 export const VirtualizedTableNEW = ({ param, key_1, setIsModalOpen }: VirtualizedTableProps) => {
-  const folderType = useBoundStore((state) => state.folderType);
+  const folderType = useBoundStore(state => state.folderType);
   const { isLoading, isError, error, data } = useGetDictionaryData({
     query: param,
     dictionaryFolder: folderType,
@@ -37,7 +37,7 @@ export const VirtualizedTableNEW = ({ param, key_1, setIsModalOpen }: Virtualize
     if (data?.tableColumns) {
       const columnCount = Object.entries(data?.tableColumns).length;
 
-      return Object.entries(data?.tableColumns).map((colConfig) => ({
+      return Object.entries(data?.tableColumns).map(colConfig => ({
         accessorKey: colConfig[0],
         header: colConfig[1],
         size: Math.max(viewportWidth / columnCount, 160),
@@ -78,13 +78,28 @@ export const VirtualizedTableNEW = ({ param, key_1, setIsModalOpen }: Virtualize
       </div>
     );
   if (isError) {
-    return (
-      <div>
-        <h2>{error.statusCode}</h2>
-        <p>{error.message.toString()}</p>
-      </div>
-    );
+    if (error.status === 404) {
+      return (
+        <div>
+          <h2>{error.status}</h2>
+          <p>Файл не найден</p>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h2>{error.status}</h2>
+          <p>{error.message.toString()}</p>
+        </div>
+      );
+    }
   }
 
-  return <VirtualizedTableContainer setIsModalOpen={setIsModalOpen} keyOne={key_1} table={table} />;
+  return (
+    <VirtualizedTableContainer
+      setIsModalOpen={setIsModalOpen}
+      keyOne={key_1}
+      table={table}
+    />
+  );
 };

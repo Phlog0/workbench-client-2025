@@ -11,6 +11,6 @@ export const useBoundStore = create<FlowOptionsSlice & ReactFlowNodesSlice & Aut
       ...createFlowOptionsSlice(...a),
       ...createReactFlowNodesSlice(...a),
       ...createAuthSlice(...a),
-    })),
-  ),
+    }))
+  )
 );

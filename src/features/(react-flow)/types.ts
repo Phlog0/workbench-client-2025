@@ -10,5 +10,5 @@ export type TGetIntersectingNodes = (
         id: PossibleNode["id"];
       },
   partially?: boolean,
-  nodes?: PossibleNode[] | undefined,
+  nodes?: PossibleNode[] | undefined
 ) => PossibleNode[];

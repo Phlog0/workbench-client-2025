@@ -7,7 +7,7 @@ import {
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
-  DrawerOverlay,
+  // DrawerOverlay,
   DrawerTitle,
   DrawerTrigger,
 } from "../drawer";

@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { motion } from "motion/react";
 import {
   ReactFlow,
@@ -26,14 +26,6 @@ import { cn } from "@/shared/lib";
 
 import { ContextMenu, useReactFlowContextMenu } from "@/features/(react-flow)/context-menu";
 
-// import { HelperLinesRenderer } from "@/features/(react-flow)/helper-lines";
-// import { useReactFlowHelperLine } from "@/features/(react-flow)/helper-lines";
-// const { helperLineHorizontal, helperLineVertical, updateHelperLines } = useReactFlowHelperLine();
-
-// import { HelperLinesRenderer, useHelperLines } from "@/features/(react-flow)/helper-lines/new";
-
-// const { rebuildIndex, updateHelperLines, helperLineVertical, helperLineHorizontal } =
-//   useHelperLines();
 import {
   useReactFlowOnNodeDrag,
   useReactFlowOnNodeDragStop,
@@ -56,8 +48,8 @@ import { toast } from "sonner";
 import { useKeyboard } from "@/features/(react-flow)/keyboard-events";
 import { CircuitBoard } from "lucide-react";
 import { DrawerUI } from "@/shared/ui";
-import { SidebarFigures } from "@/widgets";
-import { ActionButtons } from "./ActionsButtons";
+import { ErrorModal, SidebarFigures } from "@/widgets";
+
 import { ExternalReactFlowDimensions, SetExternalReactFlowDimensions } from "./FlowLayout";
 
 export const Flow = ({
@@ -79,23 +71,23 @@ export const Flow = ({
   const extractIds = useRemoveNodeIds();
   const { menu, onNodeContextMenu, onPaneClick, reactFlowRef } = useReactFlowContextMenu(
     externalReactFlowDimensions,
-    setExternalReactFlowDimensions,
+    setExternalReactFlowDimensions
   );
 
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, setEdges } = useBoundStore(
-    useShallow(reactFlowBaseSelector),
+    useShallow(reactFlowBaseSelector)
   );
 
-  const setViewportSync = useBoundStore((state) => state.setViewportSync);
-  const selectedNodeIds = useBoundStore(useShallow((state) => state.selectedNodeIds));
-  const viewport = useBoundStore((state) => state.viewport);
-  const removeNode = useBoundStore((state) => state.removeNode);
+  const setViewportSync = useBoundStore(state => state.setViewportSync);
+  const selectedNodeIds = useBoundStore(useShallow(state => state.selectedNodeIds));
+  const viewport = useBoundStore(state => state.viewport);
+  const removeNode = useBoundStore(state => state.removeNode);
   const projectTheme = useBoundStore(getThemeSelector);
-  const setProjectId = useBoundStore((state) => state.setProjectId);
+  const setProjectId = useBoundStore(state => state.setProjectId);
   const { projectId } = useParams();
 
-  const { isLoading, data, isError, error } = useGetProjectScheme(projectId);
-  const setAfterFetch = useBoundStore((state) => state.setAfterFetch);
+  const { isLoading, data, isError, error } = useGetProjectScheme(projectId ?? "");
+  const setAfterFetch = useBoundStore(state => state.setAfterFetch);
 
   const { setViewport } = useReactFlow();
   useEffect(() => {
@@ -104,7 +96,7 @@ export const Flow = ({
       setAfterFetch(
         data.projectScheme.nodes,
         data.projectScheme.edges,
-        data.projectScheme.viewport,
+        data.projectScheme.viewport
       );
     }
   }, [data, setViewport, setAfterFetch]);
@@ -122,7 +114,7 @@ export const Flow = ({
       toast.error(
         `Ошибка. Не смогли загрузить проект из хранилища. Ваши действия не синхронизированы... ${
           error.response?.data.message || "Ошибка"
-        }`,
+        }`
       );
     }
   }, [isError, error]);
@@ -131,10 +123,10 @@ export const Flow = ({
 
   const isValidConnection = useValidConnection();
 
-  const selectedEdgeIds = useBoundStore(useShallow((state) => state.selectedEdgeIds));
+  const selectedEdgeIds = useBoundStore(useShallow(state => state.selectedEdgeIds));
   useKeyboard();
 
-  const removeEdge = useBoundStore((state) => state.removeEdge);
+  const removeEdge = useBoundStore(state => state.removeEdge);
 
   const handleDelete = () => {
     const idsToDelete = extractIds([...selectedNodeIds]);
@@ -154,7 +146,7 @@ export const Flow = ({
       // onNodesChange(updatedChanges);
       onNodesChange(changes);
     },
-    [onNodesChange],
+    [onNodesChange]
   );
 
   // * -------------------------SELECTING -------------------------
@@ -176,11 +168,15 @@ export const Flow = ({
 
   // edge отсоединять и переподсоединять на другие ячейки и тд...
   const onReconnect = (oldEdge: PossibleEdge, newConnection: Connection) =>
-    setEdges((els) => reconnectEdge(oldEdge, newConnection, els));
+    setEdges(els => reconnectEdge(oldEdge, newConnection, els));
 
   return (
     <main className={cn("project-flow dark:bg-slate-800}", className)}>
-      <div style={{ width: "100%", height: "100%" }} ref={reactFlowWrapper} className="relative">
+      <div
+        style={{ width: "100%", height: "100%" }}
+        ref={reactFlowWrapper}
+        className="relative"
+      >
         <motion.div
           variants={{
             visible: { opacity: 1, display: "block" },
@@ -190,13 +186,11 @@ export const Flow = ({
           animate={!isLoading && "hidden"}
           className={cn(
             "absolute top-0 left-0 backdrop-blur-2xl w-full h-full z-10",
-            "grid place-content-center",
+            "grid place-content-center"
           )}
         >
           <Spinner />
         </motion.div>
-
-        {/* ФЛАГИ-КОНСТАНТЫ */}
 
         <ReactFlow
           ref={reactFlowRef}
@@ -216,9 +210,8 @@ export const Flow = ({
           onDelete={handleDelete}
           onNodeContextMenu={onNodeContextMenu}
           onPaneClick={onPaneClick}
-          // onInit={setRfInstance}
           defaultViewport={viewport}
-          onViewportChange={(viewport) => debouncedSetViewport(viewport)}
+          onViewportChange={viewport => debouncedSetViewport(viewport)}
           connectionLineComponent={ConnectionLine}
           isValidConnection={isValidConnection}
           panOnScroll={true}
@@ -253,15 +246,18 @@ export const Flow = ({
             </>
           )}
 
-          {menu && <ContextMenu onClick={onPaneClick} contextMenuCoordinats={menu} />}
-          {/* <HelperLinesRenderer horizontal={helperLineHorizontal} vertical={helperLineVertical} /> */}
+          {menu && (
+            <ContextMenu
+              onClick={onPaneClick}
+              contextMenuCoordinats={menu}
+            />
+          )}
 
-          {/* <ActionButtons
-            projectId={projectId}
-            reactFlowWidth={reactFlowDimensions.width}
-            reactFLowHeight={reactFlowDimensions.height}
-          /> */}
-          <Panel position="bottom-left" style={{ bottom: "7rem" }} className="hidden max-lg:block">
+          <Panel
+            position="bottom-left"
+            style={{ bottom: "7rem" }}
+            className="hidden max-lg:block"
+          >
             <DrawerUI
               trigger={<CircuitBoard />}
               content={<SidebarFigures isModalOpen={true} />}
@@ -270,6 +266,7 @@ export const Flow = ({
               className="h-screen max-w-[33%] shadow-2xl"
             />
           </Panel>
+          <ErrorModal />
         </ReactFlow>
       </div>
     </main>

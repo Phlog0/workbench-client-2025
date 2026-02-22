@@ -157,8 +157,8 @@ describe("useGetLastFixator", () => {
         measured: { width: 16, height: 16 },
       },
     ];
-    (useBoundStore as unknown as Mock).mockImplementation((selector) =>
-      selector({ nodes: mockNodes }),
+    (useBoundStore as unknown as Mock).mockImplementation(selector =>
+      selector({ nodes: mockNodes })
     );
     const { result } = renderHook(() => useGetLastFixator(mockNodes[0]["id"], "10"));
     expect(result.current).toBe(mockNodes[1]["id"]);

@@ -66,13 +66,19 @@ export const TypeOfSwitchingDevice = memo(
           )}
         {typeOfSwitchingDevice === TYPE_OF_SWITCHING_DEVICE_CELL_10KV_OPTIONS.vn &&
           isVN(switchingDevice) && (
-            <SwitchingDeviceVn switchingDevice={switchingDevice} selectedNodeId={selectedNodeId} />
+            <SwitchingDeviceVn
+              switchingDevice={switchingDevice}
+              selectedNodeId={selectedNodeId}
+            />
           )}
         {typeOfSwitchingDevice === TYPE_OF_SWITCHING_DEVICE_CELL_10KV_OPTIONS.r &&
           isR(switchingDevice) && (
-            <SwitchingDeviceR selectedNodeId={selectedNodeId} switchingDevice={switchingDevice} />
+            <SwitchingDeviceR
+              selectedNodeId={selectedNodeId}
+              switchingDevice={switchingDevice}
+            />
           )}
       </div>
     );
-  },
+  }
 );

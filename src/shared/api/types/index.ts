@@ -21,3 +21,6 @@ export type {
 
 export { RegistrationSchema, LoginSchema } from "./auth.schema";
 export type { UserDto, SuccessAuthResponse, BadAuthResponse } from "./auth-response";
+
+export { AiBodySchema } from "./ai-body.schema";
+export type { AiBody } from "./ai-body.schema";

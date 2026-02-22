@@ -1,1 +1,1 @@
-export {useKeyboard} from "./use-keyboard"
+export { useKeyboard } from "./use-keyboard";

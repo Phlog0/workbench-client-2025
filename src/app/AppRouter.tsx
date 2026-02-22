@@ -45,17 +45,17 @@ export const AppRouter = () => {
       future: {
         v7_relativeSplatPath: true,
       },
-    },
+      basename: "/constructor",
+    }
   );
 
-  const changeProjectTheme = useBoundStore((state) => state.changeProjectTheme);
+  const changeProjectTheme = useBoundStore(state => state.changeProjectTheme);
   useEffect(() => {
     // Функция для определения и установки начальной темы
     const setInitialTheme = () => {
       const savedTheme = localStorage.getItem("theme");
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-      console.log({ prefersDark, prefersLight });
+
       if (!savedTheme) {
         if (prefersDark) {
           changeProjectTheme("dark");

@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { ProjectId, ProjectInfoTextData } from "@/shared/api/types";
 
-import { useUpdateProject } from "../api";
+import { useUpdateProjectInfo } from "../api";
 import { useState } from "react";
 import { ProjectInfoFormSchema } from "../model";
 import { FormInput, FormModalComponent, FormSelect } from "@/entities/auth";
@@ -28,9 +28,9 @@ export function EditCardButton({
     },
   });
 
-  const updateProjectMutation = useUpdateProject(id);
+  const updateProjectMutation = useUpdateProjectInfo(id);
 
-  const onSubmit: SubmitHandler<ProjectInfoTextData> = (data) => {
+  const onSubmit: SubmitHandler<ProjectInfoTextData> = data => {
     updateProjectMutation.mutate(data);
     setModalOpen(false);
   };
@@ -43,8 +43,14 @@ export function EditCardButton({
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormSelect options={["КТП", "РП", "ТП"]} />
-            <FormInput label="Название проекта" name="title" />
-            <FormInput label="Описание проекта" name="description" />
+            <FormInput
+              label="Название проекта"
+              name="title"
+            />
+            <FormInput
+              label="Описание проекта"
+              name="description"
+            />
 
             <Button type="submit">
               {updateProjectMutation.isPending ? "Обновление..." : "Обновить данные о проекте"}

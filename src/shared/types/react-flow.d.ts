@@ -8,6 +8,6 @@ declare module "@xyflow/react" {
   };
 
   export function useOnSelectionChange<N extends Node = PossibleNode>(
-    options: UseOnSelectionChangeOptions<N>,
+    options: UseOnSelectionChangeOptions<N>
   ): void;
 }

@@ -34,12 +34,12 @@ export function VirtualizedTableHeadCell({ header }: TableHeadCellProps) {
         className={cn("absolute top-0 right-0 h-full bg-blue-500 w-4 cursor-e-resize z-100", {
           "bg-blue-800": header.column.getIsResizing(),
         })}
-        onMouseDown={(e) => {
+        onMouseDown={e => {
           e.stopPropagation();
           header.getResizeHandler()(e);
         }}
-        onClick={(e) => e.stopPropagation()}
-        onTouchStart={(e) => {
+        onClick={e => e.stopPropagation()}
+        onTouchStart={e => {
           e.stopPropagation();
           header.getResizeHandler()(e);
         }}

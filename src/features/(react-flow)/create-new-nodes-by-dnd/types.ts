@@ -6,6 +6,6 @@ export type CreateEntitiesArguments = {
     clientPosition: XYPosition,
     options?: {
       snapToGrid: boolean;
-    },
+    }
   ) => XYPosition;
 };

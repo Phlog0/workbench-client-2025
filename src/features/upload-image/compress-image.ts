@@ -1,5 +1,5 @@
 export const compressImage = (file: File, maxWidth = 1920, quality = 0.7): Promise<Blob> => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     const img = new Image();
@@ -17,12 +17,12 @@ export const compressImage = (file: File, maxWidth = 1920, quality = 0.7): Promi
       canvas.height = height;
       ctx?.drawImage(img, 0, 0, width, height);
       canvas.toBlob(
-        (blob) => {
+        blob => {
           resolve(blob as Blob);
           URL.revokeObjectURL(objUrl);
         },
         "image/jpeg",
-        quality,
+        quality
       );
     };
   });

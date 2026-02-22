@@ -7,19 +7,22 @@ import { ProjectInfo, ProjectInfoTextData } from "@/shared/api/types";
 import { $api } from "@/shared/api/services";
 import { BadAuthResponse } from "@/shared/api/types";
 
-export const useAddProject = () => {
+export const useCreateProject = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
+    mutationKey: [CACHE_KEYS.PROJECTS.createProject],
+
     mutationFn: async (createProjectData: ProjectInfoTextData) =>
-      $api.projects.addProject(createProjectData),
-    onSuccess: (data) => {
+      $api.projects.createProject(createProjectData),
+    onSuccess: data => {
       try {
-        queryClient.setQueryData([CACHE_KEYS.PROJECTS], (prev: ProjectInfo[]) => [
+        // queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.PROJECTS.get] });
+        queryClient.setQueryData([CACHE_KEYS.PROJECTS.get], (prev: ProjectInfo[]) => [
           ...prev,
           data.newProject,
         ]);
-        toast.success(data.message, {
+        toast.success("Проект успешно создан", {
           closeButton: true,
         });
       } catch (error) {
@@ -27,7 +30,7 @@ export const useAddProject = () => {
       }
     },
     onError: (error: AxiosError<BadAuthResponse>) => {
-      console.log(error);
+      console.error(error);
       toast.error(error.response?.data.message.toString(), {
         closeButton: true,
       });

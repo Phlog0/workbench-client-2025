@@ -73,7 +73,7 @@ export const SidebarFigures = ({
       .on("start", () => {
         setIsLeftDragging(true);
       })
-      .on("drag", (event) => {
+      .on("drag", event => {
         const deltaVw = (event.dx / window.innerWidth) * 100;
         const newWidth = Math.max(0, Math.min(45, leftWidthRef.current + deltaVw));
         setLeftWidth(newWidth);
@@ -101,11 +101,11 @@ export const SidebarFigures = ({
         }}
       >
         <div className="flex flex-col">
-          {items.map((item) => (
+          {items.map(item => (
             <Button
               className="rounded-none border-b border-slate-300"
               key={item.type}
-              onDragStart={(event) => onDragStart(event, item.type)}
+              onDragStart={event => onDragStart(event, item.type)}
               draggable
             >
               {item.title}
@@ -120,7 +120,7 @@ export const SidebarFigures = ({
             "bg-blue-400": isLeftDragging,
           },
           "block max-lg:hidden",
-          { hidden: isModalOpen },
+          { hidden: isModalOpen }
         )}
         ref={leftDragRef}
         style={{

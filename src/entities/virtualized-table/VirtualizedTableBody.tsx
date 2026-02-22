@@ -46,7 +46,7 @@ export function VirtualizedTableBody({
         position: "relative", //needed for absolute positioning of rows
       }}
     >
-      {virtualRows.map((virtualRow) => {
+      {virtualRows.map(virtualRow => {
         const row = rows[virtualRow.index] as Row<TableModelApi>;
 
         return (

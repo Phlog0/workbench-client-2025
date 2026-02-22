@@ -9,6 +9,11 @@
 @custom-variant dark (&:is(.dark *));
 /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
+html,
+body {
+  margin: 0; /* По умолчанию body имеет margin 8px */
+  padding: 0;
+}
 @theme {
   --font-gost: GOST Type A, sans-serif;
   --font-cascadia-mono: Cascadia Mono, sans-serif;

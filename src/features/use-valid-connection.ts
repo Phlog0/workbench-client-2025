@@ -38,7 +38,7 @@ const validConnectionsNodeTypes = [
 ];
 
 export function useValidConnection() {
-  const nodes = useBoundStore((state) => state.nodes);
+  const nodes = useBoundStore(state => state.nodes);
 
   const isValidConnection = useCallback(
     (connection: PossibleEdge | Connection) => {
@@ -46,8 +46,8 @@ export function useValidConnection() {
         return false;
       }
 
-      const sourceNode = nodes.find((node) => node.id === connection.source);
-      const targetNode = nodes.find((node) => node.id === connection.target);
+      const sourceNode = nodes.find(node => node.id === connection.source);
+      const targetNode = nodes.find(node => node.id === connection.target);
 
       for (const validConnectionsNodeType of validConnectionsNodeTypes) {
         if (
@@ -64,7 +64,7 @@ export function useValidConnection() {
       }
       return false;
     },
-    [nodes],
+    [nodes]
   );
   return isValidConnection;
 }

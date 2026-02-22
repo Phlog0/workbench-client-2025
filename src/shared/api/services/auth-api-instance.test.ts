@@ -19,7 +19,6 @@ describe("authApiService", () => {
       const mockResponse: Partial<AxiosResponse<SuccessAuthResponse>> = {
         data: {
           accessToken: "meow",
-          refreshToken: "woof",
           user: {
             id: 1,
             email: "test@example.com",
@@ -31,7 +30,7 @@ describe("authApiService", () => {
 
       const result = await authApiService.register(registrationData);
 
-      expect(apiInstance.post).toHaveBeenCalledWith("/auth/registration", registrationData);
+      expect(apiInstance.post).toHaveBeenCalledWith("/auth/register", registrationData);
       expect(result).toEqual(mockResponse.data);
     });
     it("Ошибка: пользователь существует", async () => {
@@ -48,7 +47,7 @@ describe("authApiService", () => {
       vi.spyOn(apiInstance, "post").mockRejectedValueOnce(mockError);
 
       await expect(authApiService.register(registrationData)).rejects.toEqual(mockError);
-      expect(apiInstance.post).toHaveBeenCalledWith("/auth/registration", registrationData);
+      expect(apiInstance.post).toHaveBeenCalledWith("/auth/register", registrationData);
     });
   });
 
@@ -61,7 +60,6 @@ describe("authApiService", () => {
       const mockResponse: Partial<AxiosResponse<SuccessAuthResponse>> = {
         data: {
           accessToken: "meow",
-          refreshToken: "woof",
           user: {
             id: 1,
             email: "test@example.com",

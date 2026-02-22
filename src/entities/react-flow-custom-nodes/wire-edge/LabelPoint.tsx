@@ -27,8 +27,8 @@ export function LabelPoint({ points, type, setPoints, sourceX, sourceY }: LabelP
 
       d3Selection.call(
         drag().on("drag", (event: D3DragEvent<HTMLDivElement, unknown, unknown>) =>
-          dragEdge({ event, setPoints, type, zoom, points, sourceY, sourceX }),
-        ),
+          dragEdge({ event, setPoints, type, zoom, points, sourceY, sourceX })
+        )
       );
     }
   }, [edgeRef, zoom, setPoints, type, points, sourceY, sourceX]);

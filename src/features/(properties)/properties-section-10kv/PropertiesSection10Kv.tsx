@@ -11,7 +11,7 @@ import { TSection10Kv } from "@/shared/react-flow/nodes/sections/section-10kv/ty
 import { TypeOfVoltage } from "../shared";
 
 export function PropertiesSection10Kv({ className }: { className?: string }) {
-  const selectedNodeIds = useBoundStore((state) => state.selectedNodeIds);
+  const selectedNodeIds = useBoundStore(state => state.selectedNodeIds);
   const selectedNodeId = selectedNodeIds[0] as ReactFlowNodeId;
   const section10Kv = useGetCurrentNode(selectedNodeId) as TSection10Kv;
 

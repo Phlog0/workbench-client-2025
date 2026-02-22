@@ -5,7 +5,7 @@ export interface UserDto {
 }
 export interface SuccessAuthResponse {
   accessToken: string;
-  refreshToken: string;
+  // refreshToken: string;
   user: UserDto;
 }
 

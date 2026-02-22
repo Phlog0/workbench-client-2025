@@ -4,14 +4,14 @@ import { ElectricityVoltage } from "@/shared/react-flow/nodes/shared/type-of-vol
 
 export function useGetLastFixator(
   fixatorContainerId: ReactFlowNodeId,
-  fixatorVoltage: ElectricityVoltage,
+  fixatorVoltage: ElectricityVoltage
 ): string | undefined {
-  const nodes = useBoundStore((state) => state.nodes);
+  const nodes = useBoundStore(state => state.nodes);
   if (!nodes.length) {
-    throw new Error("Пустой массив Nodes");
+    return;
   }
   const fixators = nodes.filter(
-    (item) => item.type === `Fixator${fixatorVoltage}Kv` && item.parentId === fixatorContainerId,
+    item => item.type === `Fixator${fixatorVoltage}Kv` && item.parentId === fixatorContainerId
   );
 
   const lastFixator = fixators.length

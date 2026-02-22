@@ -1,1 +1,1 @@
-export type { TNonPrimitiveDataKeysSection35Kv, TSection35Kv } from "./section-35-kv";
+export type { TSection35Kv } from "./section-35-kv";

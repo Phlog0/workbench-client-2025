@@ -22,11 +22,11 @@ export function ResizeButtons({
 }) {
   const [fixatorContainerId] = useGetNodeChildrenIds(sectionId);
   const fixatorsIds = useGetNodeChildrenIds(fixatorContainerId);
-  const increaseSectionWidth = useBoundStore((state) => state.increaseSectionWidth);
-  const decreaseSectionWidth = useBoundStore((state) => state.decreaseSectionWidth);
+  const increaseSectionWidth = useBoundStore(state => state.increaseSectionWidth);
+  const decreaseSectionWidth = useBoundStore(state => state.decreaseSectionWidth);
 
-  const addNode = useBoundStore((state) => state.addNode);
-  const removeNode = useBoundStore((state) => state.removeNode);
+  const addNode = useBoundStore(state => state.addNode);
+  const removeNode = useBoundStore(state => state.removeNode);
   const lastFixatorId = useGetLastFixator(fixatorContainerId, sectionVoltage);
   const extractIds = useRemoveNodeIds();
   const handleIncrease = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

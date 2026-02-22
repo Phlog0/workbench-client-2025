@@ -28,10 +28,8 @@ export const createCell = ({
     x: event.clientX - metrics.width / 8,
     y: event.clientY - metrics.height / 8,
   });
-  const newCellId:
-    | TCell10Kv["id"]
-    | TCell04Kv["id"]
-    | TCell35Kv["id"] = `cell-${cellVoltage}-kv-${uuidv4()}`;
+  const newCellId: TCell10Kv["id"] | TCell04Kv["id"] | TCell35Kv["id"] =
+    `cell-${cellVoltage}-kv-${uuidv4()}`;
   if (cellVoltage === "10") {
     return {
       id: newCellId,

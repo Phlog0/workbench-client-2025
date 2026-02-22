@@ -8,7 +8,7 @@ export function readJsonFile(file: File): Promise<RFJsonObject> {
     }
     const reader = new FileReader();
 
-    reader.onload = (event) => {
+    reader.onload = event => {
       try {
         const result: unknown = JSON.parse(event.target?.result as string);
 

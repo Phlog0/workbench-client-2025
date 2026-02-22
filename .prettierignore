@@ -1,0 +1,19 @@
+# Зависимости
+node_modules/
+
+# Сборка
+dist/
+build/
+out/
+
+# Системные файлы
+.DS_Store
+*.log
+
+# Твой shadcn/ui (если не хочешь форматировать)
+src/shared/ui/**
+
+# Сгенерированные типы
+src/generated/**
+*.d.ts
+bun.lock

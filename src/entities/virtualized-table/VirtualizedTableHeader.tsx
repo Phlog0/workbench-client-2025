@@ -19,7 +19,7 @@ export function VirtualizedTableHead({
 }: TableHeadProps) {
   return (
     <TableHeaderUi className="grid sticky z-10 top-0 theme-bg theme-text shadow-2xl">
-      {table.getHeaderGroups().map((headerGroup) => (
+      {table.getHeaderGroups().map(headerGroup => (
         <VirtualizedTableHeadRow
           columnVirtualizer={columnVirtualizer}
           headerGroup={headerGroup}

@@ -14,9 +14,9 @@ type MenuType = {
 };
 export function useReactFlowContextMenu(
   externalReactFlowDimensions: ExternalReactFlowDimensions,
-  setExternalReactFlowDimensions: SetExternalReactFlowDimensions,
+  setExternalReactFlowDimensions: SetExternalReactFlowDimensions
 ) {
-  const setSelectedNodeId = useBoundStore((state) => state.setSelectedNodeId);
+  const setSelectedNodeId = useBoundStore(state => state.setSelectedNodeId);
 
   const [menu, setMenu] = useState<MenuType | null>();
 
@@ -29,7 +29,7 @@ export function useReactFlowContextMenu(
   useEffect(() => {
     if (!reactFlowRef.current) return;
 
-    const observer = new ResizeObserver((entries) => {
+    const observer = new ResizeObserver(entries => {
       const entry = entries[0];
       setExternalReactFlowDimensions({
         width: entry.contentRect.width,
@@ -61,7 +61,7 @@ export function useReactFlowContextMenu(
         setSelectedNodeId([node.id]);
       }
     },
-    [reactFlowRef, setSelectedNodeId, setMenu],
+    [reactFlowRef, setSelectedNodeId, setMenu]
   );
   const onPaneClick = useCallback(() => {
     setMenu(null);

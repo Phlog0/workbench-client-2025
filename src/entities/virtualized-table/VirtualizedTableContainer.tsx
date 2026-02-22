@@ -16,7 +16,7 @@ export function VirtualizedTableContainer({ table, keyOne, setIsModalOpen }: Tab
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const columnVirtualizer = useVirtualizer<HTMLDivElement, HTMLTableCellElement>({
     count: visibleColumns.length,
-    estimateSize: (index) => visibleColumns[index].getSize(), //estimate width of each column for accurate scrollbar dragging
+    estimateSize: index => visibleColumns[index].getSize(), //estimate width of each column for accurate scrollbar dragging
     getScrollElement: () => tableContainerRef.current,
     horizontal: true,
     overscan: 3, //how many columns to render on each side off screen each way (adjust this for performance)
@@ -40,7 +40,6 @@ export function VirtualizedTableContainer({ table, keyOne, setIsModalOpen }: Tab
     }
     const calculateContainerHeight = () => {
       const height = parent.clientHeight;
-      console.log({ height });
       if (height) {
         setContainerHeight(height);
       }
@@ -54,7 +53,6 @@ export function VirtualizedTableContainer({ table, keyOne, setIsModalOpen }: Tab
       myObserver.disconnect();
     };
   }, [containerHeight, tableContainerRef]);
-  console.log({ containerHeight });
   return (
     <>
       {containerHeight > 0 && (

@@ -33,7 +33,7 @@ export const Cell35KvNode = memo((props: NodeProps<TCell35Kv>) => {
 
             "flex flex-col items-center max-w-full w-full gap-0 h-full bg-none",
             "overflow-hidden relative",
-            { "bg-blue-100/20 outline-dashed outline-indigo-600": selected },
+            { "bg-blue-100/20 outline-dashed outline-indigo-600": selected }
           )}
           style={{
             width: INITIAL_CELL_10KV_METRICS.width,
@@ -57,13 +57,23 @@ export const Cell35KvNode = memo((props: NodeProps<TCell35Kv>) => {
           />
 
           {data?.typeOfCell === "ТН (Трансформатор напряжения)" ? (
-            <Tn10KvIcon className="bg-violet-300" color={borderColor} />
+            <Tn10KvIcon
+              className="bg-violet-300"
+              color={borderColor}
+            />
           ) : (
             <VerticalLineIcon color={borderColor} />
           )}
-          <Opn10KvIcon value={data?.typeOfOpnDevice} color={borderColor} />
+          <Opn10KvIcon
+            value={data?.typeOfOpnDevice}
+            color={borderColor}
+          />
 
-          <Terminal id={`${id}-source`} type="source" position={Position.Bottom} />
+          <Terminal
+            id={`${id}-source`}
+            type="source"
+            position={Position.Bottom}
+          />
         </div>
       </TooltipTrigger>
       <TooltipContent className="p-4">

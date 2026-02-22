@@ -15,8 +15,8 @@ describe("useGetCurrentNode", () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    (useBoundStore as unknown as Mock).mockImplementation((selector) =>
-      selector({ nodes: mockNodes }),
+    (useBoundStore as unknown as Mock).mockImplementation(selector =>
+      selector({ nodes: mockNodes })
     );
   });
 

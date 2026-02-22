@@ -10,12 +10,13 @@ export const useDeleteProject = (projectId: ProjectId) => {
   const queryClient = useQueryClient();
 
   return useMutation({
+    mutationKey: [CACHE_KEYS.PROJECTS.deleteProject],
     mutationFn: () => $api.projects.deleteProject(projectId),
 
-    onSuccess: (data) => {
+    onSuccess: data => {
       try {
-        queryClient.setQueryData([CACHE_KEYS.PROJECTS], (prev: ProjectInfo[]) =>
-          prev.filter((project) => project.id !== projectId),
+        queryClient.setQueryData([CACHE_KEYS.PROJECTS.get], (prev: ProjectInfo[]) =>
+          prev.filter(project => project.id !== projectId)
         );
         toast.success(data.message, {
           closeButton: true,

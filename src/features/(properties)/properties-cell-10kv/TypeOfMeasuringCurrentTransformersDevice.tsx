@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useMemo } from "react";
 
 import { GenericInputs, GenericInputsWithSelect } from "@/entities/project-property";
 import { ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
@@ -31,34 +31,49 @@ export const TypeOfMeasuringCurrentTransformersDevice = memo(function ({
   //     q: isMeasuringCurrentTransformersDeviceParam,
   //   });
 
-  const [
-    measuringCurrentTransformersDeviceAccuracyClassValue,
-    setMeasuringCurrentTransformersDeviceAccuracyClassValue,
-  ] = useState<TMeasuringCurrentTransformersDeviceAccuracyClass>(1);
+  // const [
+  //   measuringCurrentTransformersDeviceAccuracyClassValue,
+  //   setMeasuringCurrentTransformersDeviceAccuracyClassValue,
+  // ] = useState<TMeasuringCurrentTransformersDeviceAccuracyClass>(1);
 
-  useEffect(() => {
-    if (typeOfMeasuringCurrentTransformersDevice === "Нет")
-      setMeasuringCurrentTransformersDeviceAccuracyClassValue(1);
+  // useEffect(() => {
+  //   if (typeOfMeasuringCurrentTransformersDevice === "Нет")
+  //     setMeasuringCurrentTransformersDeviceAccuracyClassValue(1);
+  //   if (
+  //     typeOfMeasuringCurrentTransformersDevice === "2 Трансформатора тока 2 обмотки" ||
+  //     typeOfMeasuringCurrentTransformersDevice === "3 Трансформатора тока 2 обмотки"
+  //   )
+  //     setMeasuringCurrentTransformersDeviceAccuracyClassValue(2);
+  //   if (
+  //     typeOfMeasuringCurrentTransformersDevice === "2 Трансформатора тока 3 обмотки" ||
+  //     typeOfMeasuringCurrentTransformersDevice === "3 Трансформатора тока 3 обмотки"
+  //   )
+  //     setMeasuringCurrentTransformersDeviceAccuracyClassValue(3);
+  //   if (
+  //     typeOfMeasuringCurrentTransformersDevice === "2 Трансформатора тока 4 обмотки" ||
+  //     typeOfMeasuringCurrentTransformersDevice === "3 Трансформатора тока 4 обмотки"
+  //   )
+  //     setMeasuringCurrentTransformersDeviceAccuracyClassValue(4);
+  // }, [typeOfMeasuringCurrentTransformersDevice]);
+
+  const measuringCurrentTransformersDeviceAccuracyClassValue = useMemo(() => {
+    if (typeOfMeasuringCurrentTransformersDevice === "Нет") return 1;
     if (
       typeOfMeasuringCurrentTransformersDevice === "2 Трансформатора тока 2 обмотки" ||
       typeOfMeasuringCurrentTransformersDevice === "3 Трансформатора тока 2 обмотки"
     )
-      setMeasuringCurrentTransformersDeviceAccuracyClassValue(2);
+      return 2;
     if (
       typeOfMeasuringCurrentTransformersDevice === "2 Трансформатора тока 3 обмотки" ||
       typeOfMeasuringCurrentTransformersDevice === "3 Трансформатора тока 3 обмотки"
     )
-      setMeasuringCurrentTransformersDeviceAccuracyClassValue(3);
+      return 3;
     if (
       typeOfMeasuringCurrentTransformersDevice === "2 Трансформатора тока 4 обмотки" ||
       typeOfMeasuringCurrentTransformersDevice === "3 Трансформатора тока 4 обмотки"
     )
-      setMeasuringCurrentTransformersDeviceAccuracyClassValue(4);
+      return 4;
   }, [typeOfMeasuringCurrentTransformersDevice]);
-
-  //! measuringCurrentTransformersDeviceAccuracyClass={
-  //!             measuringCurrentTransformersDeviceAccuracyClassValue
-  //!           }
   const options = useMemo(() => {
     return Object.values(TYPE_OF_MEASURING_CURRENT_TRANSFORMERS_DEVICE_CELL_10KV_OPTIONS);
   }, []);

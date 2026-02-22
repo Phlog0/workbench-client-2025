@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL, apiInstance } from "../api-instacne";
+import { apiInstance } from "../api-instacne";
 import { API_ROUTES } from "../api-routes";
 import { TLoginForm, TRegistrationForm } from "../types";
 import { SuccessAuthResponse } from "../types/auth-response";
@@ -13,7 +13,7 @@ export const authApiService = {
   register: async (registerData: Omit<TRegistrationForm, "confirmPassword">) => {
     const response = await apiInstance.post<SuccessAuthResponse>(
       API_ROUTES.AUTH + "/register",
-      registerData,
+      registerData
     );
 
     return response.data;
@@ -22,7 +22,15 @@ export const authApiService = {
   login: async (loginData: TLoginForm) => {
     const response = await apiInstance.post<SuccessAuthResponse>(
       API_ROUTES.AUTH + "/login",
-      loginData,
+      loginData
+    );
+    return response.data;
+  },
+
+  // при перезагрузке можно сразу перенестись в проекты.
+  verifyUser: async () => {
+    const response = await apiInstance.post<Omit<SuccessAuthResponse, "accessToken">>(
+      API_ROUTES.AUTH + "/verifyUser"
     );
     return response.data;
   },
@@ -31,10 +39,13 @@ export const authApiService = {
     const response = await apiInstance.post<LogoutSucessResponse>(API_ROUTES.AUTH + "/logout");
     return response;
   },
-  checkAuth: async () => {
-    const response = await axios.get<SuccessAuthResponse>(API_URL + API_ROUTES.AUTH + "/refresh", {
-      withCredentials: true,
-    });
-    return response;
+  refresh: async () => {
+    const response = await axios.get<SuccessAuthResponse>(
+      import.meta.env.SERVER_API_URL + API_ROUTES.AUTH + "/refresh",
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data;
   },
 };

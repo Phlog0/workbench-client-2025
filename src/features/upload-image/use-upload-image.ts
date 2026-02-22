@@ -9,7 +9,7 @@ export const useUploadImageHandle = (reactFlowWidth?: number, reactFLowHeight?: 
   const { getViewport } = useReactFlow();
   const [widgetLoading, setWidgetLoading] = useState(false);
   const viewport = getViewport();
-  const addNode = useBoundStore((state) => state.addNode);
+  const addNode = useBoundStore(state => state.addNode);
   const uploadFileHandle = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       setWidgetLoading(true);
@@ -42,7 +42,7 @@ export const useUploadImageHandle = (reactFlowWidth?: number, reactFLowHeight?: 
       e.target.value = "";
       setWidgetLoading(false);
     },
-    [addNode, reactFLowHeight, reactFlowWidth, viewport.x, viewport.y],
+    [addNode, reactFLowHeight, reactFlowWidth, viewport.x, viewport.y]
   );
   return { widgetLoading, uploadFileHandle };
 };

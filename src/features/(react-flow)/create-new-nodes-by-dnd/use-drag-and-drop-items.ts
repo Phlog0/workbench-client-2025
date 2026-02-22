@@ -11,8 +11,8 @@ import { useDnD } from "@/app/DnDContext";
 import { createPowerTransformer3510kv } from "./create-initial-power-transformer3510kv-node";
 
 export function useDragAndDropItems() {
-  const addNode = useBoundStore((state) => state.addNode);
-  const setNodes = useBoundStore((state) => state.setNodes);
+  const addNode = useBoundStore(state => state.addNode);
+  const setNodes = useBoundStore(state => state.setNodes);
   const { screenToFlowPosition } = useReactFlow();
   const { type, setType } = useDnD();
   const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
@@ -38,7 +38,7 @@ export function useDragAndDropItems() {
         case "Section10Kv":
           newNodes = createSection({ event, screenToFlowPosition, sectionVoltage: "10" });
 
-          setNodes((prev) => [...newNodes, ...prev]);
+          setNodes(prev => [...newNodes, ...prev]);
 
           break;
         case "PowerTransformer1004Kv":
@@ -56,7 +56,7 @@ export function useDragAndDropItems() {
         case "Section04Kv":
           newNodes = createSection({ event, screenToFlowPosition, sectionVoltage: "04" });
 
-          setNodes((prev) => [...newNodes, ...prev]);
+          setNodes(prev => [...newNodes, ...prev]);
 
           break;
         case "Cell35Kv":
@@ -66,7 +66,7 @@ export function useDragAndDropItems() {
         case "Section35Kv":
           newNodes = createSection({ event, screenToFlowPosition, sectionVoltage: "35" });
 
-          setNodes((prev) => [...newNodes, ...prev]);
+          setNodes(prev => [...newNodes, ...prev]);
 
           break;
 
@@ -76,7 +76,7 @@ export function useDragAndDropItems() {
 
       setType(null);
     },
-    [screenToFlowPosition, type, addNode, setNodes, setType],
+    [screenToFlowPosition, type, addNode, setNodes, setType]
   );
 
   return { onDragOver, onReactFlowDrop };

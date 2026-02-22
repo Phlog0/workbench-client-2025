@@ -134,6 +134,9 @@ export type TCell10KvData = {
   tsn?: TTsnCell10Kv;
   tn?: TTnCell10Kv;
   ukrm?: TUkrmCell10Kv;
+
+  switchDeviceHasEmptyFields?: boolean;
+  switchDeviceHasInvalidVv?: boolean;
 };
 
 export type TNonPrimitiveDataKeysTCell10Kv = TNonPrimitiveKeys<TCell10KvData>;

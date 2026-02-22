@@ -15,7 +15,11 @@ export function GenericInputs({
 }: GenericInputsProps) {
   return (
     <div>
-      <Accordion type="single" collapsible className={className}>
+      <Accordion
+        type="single"
+        collapsible
+        className={className}
+      >
         <AccordionItem value={`accordion-${inputPropertiesKey1}`}>
           <AccordionTrigger className="flex items-center">{inputsLabel}</AccordionTrigger>
           <AccordionContent className="px-4 flex flex-col gap-3">
@@ -27,14 +31,16 @@ export function GenericInputs({
               selectedNodeId={selectedNodeId}
               param={param}
             />
-            {inputRenderData.slice(1).map((item) => (
-              <ProjectPropertyInput
-                key={item.inputId}
-                {...item}
-                selectedNodeId={selectedNodeId}
-                value={inputProperties?.[item.keyTwo]}
-              />
-            ))}
+            {inputRenderData.slice(1).map(item => {
+              return (
+                <ProjectPropertyInput
+                  key={item.inputId}
+                  {...item}
+                  selectedNodeId={selectedNodeId}
+                  value={inputProperties?.[item.keyTwo]}
+                />
+              );
+            })}
           </AccordionContent>
         </AccordionItem>
       </Accordion>

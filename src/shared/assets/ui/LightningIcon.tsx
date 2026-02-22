@@ -1,4 +1,4 @@
-export function LightningIcon({ color }: { color?: string }) {
+export function LightningIcon() {
   return (
     <svg
       height="800px"
@@ -12,17 +12,54 @@ export function LightningIcon({ color }: { color?: string }) {
     >
       <defs>
         {/* <!-- Градиент для сияния --> */}
-        <linearGradient id="shineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#FFFFA0" stopOpacity="0.9" />
-          <stop offset="50%" stopColor="#F7CF52" stopOpacity="1" />
-          <stop offset="100%" stopColor="#FFA500" stopOpacity="0.9" />
+        <linearGradient
+          id="shineGrad"
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="100%"
+        >
+          <stop
+            offset="0%"
+            stop-color="#FFFFA0"
+            stopOpacity="0.9"
+          />
+          <stop
+            offset="50%"
+            stopColor="#F7CF52"
+            stopOpacity="1"
+          />
+          <stop
+            offset="100%"
+            stopColor="#FFA500"
+            stopOpacity="0.9"
+          />
         </linearGradient>
 
         {/* <!-- Фильтр свечения --> */}
-        <filter id="glowFilter" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur" />
-          <feFlood flood-color="#FFFF00" flood-opacity="0.8" result="color" />
-          <feComposite in="color" in2="blur" operator="in" result="glow" />
+        <filter
+          id="glowFilter"
+          x="-50%"
+          y="-50%"
+          width="200%"
+          height="200%"
+        >
+          <feGaussianBlur
+            in="SourceAlpha"
+            stdDeviation="3"
+            result="blur"
+          />
+          <feFlood
+            flood-color="#FFFF00"
+            flood-opacity="0.8"
+            result="color"
+          />
+          <feComposite
+            in="color"
+            in2="blur"
+            operator="in"
+            result="glow"
+          />
           <feMerge>
             <feMergeNode in="glow" />
             <feMergeNode in="SourceGraphic" />
@@ -31,8 +68,19 @@ export function LightningIcon({ color }: { color?: string }) {
 
         {/* <!-- Маска для эффекта рисования --> */}
         <mask id="drawingMask">
-          <rect width="400" height="400" fill="white">
-            <animate attributeName="height" from="0" to="400" dur="1.5s" begin="0s" fill="freeze" />
+          <rect
+            width="400"
+            height="400"
+            fill="white"
+          >
+            <animate
+              attributeName="height"
+              from="0"
+              to="400"
+              dur="1.5s"
+              begin="0s"
+              fill="freeze"
+            />
           </rect>
         </mask>
       </defs>
@@ -94,7 +142,10 @@ export function LightningIcon({ color }: { color?: string }) {
       </g>
 
       {/* <!-- Яркие вспышки в точках изгиба --> */}
-      <g id="sparkles" opacity="0">
+      <g
+        id="sparkles"
+        opacity="0"
+      >
         <animate
           attributeName="opacity"
           values="0;1;0"
@@ -105,10 +156,25 @@ export function LightningIcon({ color }: { color?: string }) {
         />
 
         {/* <!-- Точки вспышек в вершинах молнии --> */}
-        <circle cx="157.055" cy="0" r="5" fill="#FFFFFF">
-          <animate attributeName="r" values="3;8;3" dur="0.8s" repeatCount="indefinite" />
+        <circle
+          cx="157.055"
+          cy="0"
+          r="5"
+          fill="#FFFFFF"
+        >
+          <animate
+            attributeName="r"
+            values="3;8;3"
+            dur="0.8s"
+            repeatCount="indefinite"
+          />
         </circle>
-        <circle cx="90.798" cy="196.319" r="4" fill="#FFFF80">
+        <circle
+          cx="90.798"
+          cy="196.319"
+          r="4"
+          fill="#FFFF80"
+        >
           <animate
             attributeName="r"
             values="2;7;2"
@@ -117,7 +183,12 @@ export function LightningIcon({ color }: { color?: string }) {
             begin="0.1s"
           />
         </circle>
-        <circle cx="164.417" cy="196.319" r="4" fill="#FFFF80">
+        <circle
+          cx="164.417"
+          cy="196.319"
+          r="4"
+          fill="#FFFF80"
+        >
           <animate
             attributeName="r"
             values="2;7;2"
@@ -126,7 +197,12 @@ export function LightningIcon({ color }: { color?: string }) {
             begin="0.2s"
           />
         </circle>
-        <circle cx="88.344" cy="400" r="5" fill="#FFFFFF">
+        <circle
+          cx="88.344"
+          cy="400"
+          r="5"
+          fill="#FFFFFF"
+        >
           <animate
             attributeName="r"
             values="3;8;3"
@@ -135,7 +211,12 @@ export function LightningIcon({ color }: { color?: string }) {
             begin="0.3s"
           />
         </circle>
-        <circle cx="289.571" cy="159.509" r="4" fill="#FFFF80">
+        <circle
+          cx="289.571"
+          cy="159.509"
+          r="4"
+          fill="#FFFF80"
+        >
           <animate
             attributeName="r"
             values="2;7;2"
@@ -144,7 +225,12 @@ export function LightningIcon({ color }: { color?: string }) {
             begin="0.4s"
           />
         </circle>
-        <circle cx="218.405" cy="159.509" r="4" fill="#FFFF80">
+        <circle
+          cx="218.405"
+          cy="159.509"
+          r="4"
+          fill="#FFFF80"
+        >
           <animate
             attributeName="r"
             values="2;7;2"
@@ -153,7 +239,12 @@ export function LightningIcon({ color }: { color?: string }) {
             begin="0.5s"
           />
         </circle>
-        <circle cx="311.656" cy="0" r="5" fill="#FFFFFF">
+        <circle
+          cx="311.656"
+          cy="0"
+          r="5"
+          fill="#FFFFFF"
+        >
           <animate
             attributeName="r"
             values="3;8;3"

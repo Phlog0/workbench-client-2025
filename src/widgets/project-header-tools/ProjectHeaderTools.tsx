@@ -18,7 +18,7 @@ export function ProjectHeaderTools({
   className?: string;
   externalReactFlowDimensions: ExternalReactFlowDimensions;
 }) {
-  const isSyncing = useBoundStore((state) => state.isSyncing);
+  const isSyncing = useBoundStore(state => state.isSyncing);
 
   const { projectId } = useParams();
   return (
@@ -38,7 +38,10 @@ export function ProjectHeaderTools({
         </div>
         {isSyncing && (
           <div>
-            <Spinner size={"small"} animate={isSyncing === true ? "spin" : "none"} />
+            <Spinner
+              size={"small"}
+              animate={isSyncing === true ? "spin" : "none"}
+            />
           </div>
         )}
       </div>

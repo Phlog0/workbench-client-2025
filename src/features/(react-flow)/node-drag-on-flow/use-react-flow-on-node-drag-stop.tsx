@@ -8,26 +8,25 @@ import { cellFixatorPairs } from "./cell-fixator-pairs";
 
 export function useReactFlowOnNodeDragStop() {
   // const [fixatorIdState, setFixatorIdState] = useState<string | null | undefined>(null);
-  const nodes = useBoundStore((state) => state.nodes);
+  const nodes = useBoundStore(state => state.nodes);
 
   const { getIntersectingNodes } = useReactFlow();
-  const setNodes = useBoundStore((state) => state.setNodes);
-  const setMultipleProps = useBoundStore((state) => state.setMultipleProps);
+  const setNodes = useBoundStore(state => state.setNodes);
+  const setMultipleProps = useBoundStore(state => state.setMultipleProps);
   // const childOfFixator = useGetNodeChildrenIds(fixatorIdState)
   const onReactFlowNodeDragStop = useCallback(
     (_: ReactMouseEvent, node: PossibleNode) => {
       const cells =
         nodes.filter(
-          (item) =>
-            item.type === "Cell10Kv" || item.type === "Cell04Kv" || item.type === "Cell35Kv",
+          item => item.type === "Cell10Kv" || item.type === "Cell04Kv" || item.type === "Cell35Kv"
         ) || [];
       const intersec = getIntersectingNodes(node);
       if (!intersec.length) return;
       for (const { cellType, fixatorType } of cellFixatorPairs) {
         if (node.type === cellType) {
-          const fixatorId = intersec?.find((item) => item.type === fixatorType)?.id;
+          const fixatorId = intersec?.find(item => item.type === fixatorType)?.id;
           if (fixatorId) {
-            const childOfFixator = cells.find((item) => item.parentId === fixatorId);
+            const childOfFixator = cells.find(item => item.parentId === fixatorId);
 
             if (childOfFixator !== undefined) return;
 
@@ -44,8 +43,8 @@ export function useReactFlowOnNodeDragStop() {
               },
             });
 
-            setNodes((ns) =>
-              ns.map((n) => {
+            setNodes(ns =>
+              ns.map(n => {
                 if (
                   n.type === "Fixator04Kv" ||
                   n.type === "Fixator10Kv" ||
@@ -61,14 +60,14 @@ export function useReactFlowOnNodeDragStop() {
                 } else {
                   return n;
                 }
-              }),
+              })
             );
           }
         }
       }
     },
 
-    [getIntersectingNodes, setMultipleProps, setNodes, nodes],
+    [getIntersectingNodes, setMultipleProps, setNodes, nodes]
   );
   return onReactFlowNodeDragStop;
 }

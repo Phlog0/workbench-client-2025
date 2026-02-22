@@ -3,7 +3,6 @@
 import { Spinner } from "shared/ui/spinners";
 
 import { AddCardButton, ProjectCard } from "@/features/project-card/ui";
-import { motion } from "motion/react";
 
 import { useGetProjectsList } from "@/features/project-card/api";
 
@@ -15,7 +14,7 @@ import { $api } from "@/shared/api/services";
 import { Button } from "@/shared/ui";
 export const ProjectsMenu = () => {
   const { isPending, error, data } = useGetProjectsList();
-  const user = useBoundStore((state) => state.user);
+  const user = useBoundStore(state => state.user);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -33,28 +32,35 @@ export const ProjectsMenu = () => {
 
   const testHandle = async () => {
     const data = await $api.projects.getAllProjects();
-    console.log("TEST HANDLE", data);
+    console.warn("[JWT_TEST]: ", data);
   };
   if (isPending) return <Spinner />;
 
   if (error) return "An error has occurred: " + error.message;
 
   return (
-    <motion.section className="grid grid-rows-[max-content_1fr] grid-cols-[1200px] justify-center py-4 gap-4 honeycomb-bg h-screen max-xl:grid-cols-[700px] max-md:grid-cols-[600px] max-sm:grid-cols-[1fr] p-4">
-      <div>
+    <section className="px-20 min-h-screen">
+      <header className="flex items-center justify-center flex-wrap gap-4 sticky top-0 left-0 theme-bg">
         <h1 className="text-center text-3xl py-4">Проекты</h1>
-        <div className="overflow-auto h-full grid grid-cols-4 gap-4 max-xl:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
-          {data?.map((item) => (
-            <ProjectCard key={`${item.id}`} {...item} />
+        <AddCardButton />
+        <LogoutButton />
+        <Button
+          onClick={testHandle}
+          type="button"
+        >
+          JWT TEST
+        </Button>
+      </header>
+      <div className="grid grid-rows-[max-content_1fr] h-full">
+        <div className="overflow-auto grid grid-cols-4 gap-4 max-xl:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 min-h-0">
+          {data?.map(item => (
+            <ProjectCard
+              key={`${item.id}`}
+              {...item}
+            />
           ))}
         </div>
       </div>
-      <LogoutButton className="fixed top-3 right-3" />
-      <AddCardButton className="fixed bottom-3 right-3" />
-      {/* <SponsorIcon className="fixed bottom-3 right-16" /> */}
-      <Button onClick={testHandle} className="fixed top-3 right-40" type="button">
-        JWT TEST
-      </Button>
-    </motion.section>
+    </section>
   );
 };

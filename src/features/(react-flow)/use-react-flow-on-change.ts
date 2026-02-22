@@ -8,14 +8,14 @@ import { useCallback } from "react";
 
 export function useReactFlowOnChange() {
   // const [selectedNodes, setSelectedNodes] = useState<string[] | []>([]);
-  const setSelectedNodeId = useBoundStore((state) => state.setSelectedNodeId);
-  const setSelectedEdgeId = useBoundStore((state) => state.setSelectedEdgeId);
-  const setFolderType = useBoundStore((state) => state.setFolderType);
+  const setSelectedNodeId = useBoundStore(state => state.setSelectedNodeId);
+  const setSelectedEdgeId = useBoundStore(state => state.setSelectedEdgeId);
+  const setFolderType = useBoundStore(state => state.setFolderType);
 
   const onChange = useCallback(
     ({ nodes, edges }: { nodes: PossibleNode[]; edges: PossibleEdge[] }) => {
-      setSelectedNodeId(nodes.map((node) => node.id));
-      setSelectedEdgeId(edges.map((edge) => edge.id));
+      setSelectedNodeId(nodes.map(node => node.id));
+      setSelectedEdgeId(edges.map(edge => edge.id));
       setFolderType(nodes[0]?.type || "");
     },
     //   {
@@ -45,7 +45,7 @@ export function useReactFlowOnChange() {
     //     setFolderType(nodes[0].type);
     //   }
     // }
-    [setFolderType, setSelectedEdgeId, setSelectedNodeId],
+    [setFolderType, setSelectedEdgeId, setSelectedNodeId]
   );
   return onChange;
 }

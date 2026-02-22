@@ -10,12 +10,12 @@ export function ExitProjectButton() {
   const [isExiting, setIsExiting] = useState(false);
   const { projectId } = useParams();
   const navigate = useNavigate();
-  const resetState = useBoundStore((state) => state.resetState);
-  const isSyncing = useBoundStore((state) => state.isSyncing);
+  const resetState = useBoundStore(state => state.resetState);
+  const isSyncing = useBoundStore(state => state.isSyncing);
   const exitProject = async (sync?: boolean) => {
     setIsExiting(true);
     const currentIsSyncing = useBoundStore.getState().isSyncing;
-    await new Promise((resolve) => {
+    await new Promise(resolve => {
       if (!currentIsSyncing || !sync) {
         resolve(true);
       } else {

@@ -24,7 +24,7 @@ export const ProjectPropertySelect = memo(function ({
   selectedNodeId,
   className,
 }: ProjectPropertySelectProps) {
-  const changeSelectPropery = useBoundStore((state) => state.changeSelectPropery);
+  const changeSelectPropery = useBoundStore(state => state.changeSelectPropery);
   const handleChange = (value: string) => {
     const parsedValue = Number(value) ? Number(value) : value;
     changeSelectPropery({ nodeId: selectedNodeId, key1, value: parsedValue });
@@ -36,7 +36,7 @@ export const ProjectPropertySelect = memo(function ({
         {
           "bg-yellow-200 border-yellow-400": valueFromProp === "Не выбрано",
         },
-        className,
+        className
       )}
     >
       <Label>{label}</Label>
@@ -44,14 +44,17 @@ export const ProjectPropertySelect = memo(function ({
         data-id={key1}
         // defaultValue={value}
         value={String(valueFromProp)}
-        onValueChange={(value) => handleChange(value)}
+        onValueChange={value => handleChange(value)}
       >
         <SelectTrigger>
           <SelectValue placeholder={label} />
         </SelectTrigger>
         <SelectContent>
-          {options?.map((opt) => (
-            <SelectItem key={opt} value={String(opt)}>
+          {options?.map(opt => (
+            <SelectItem
+              key={opt}
+              value={String(opt)}
+            >
               {opt}
             </SelectItem>
           ))}

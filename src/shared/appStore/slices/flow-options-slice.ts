@@ -1,8 +1,8 @@
 import { FlowOptionsSlice, ImmerStateCreator } from "./types";
 
-export const createFlowOptionsSlice: ImmerStateCreator<FlowOptionsSlice> = (set) => ({
+export const createFlowOptionsSlice: ImmerStateCreator<FlowOptionsSlice> = set => ({
   projectTheme: "light",
-  changeProjectTheme: (newTheme) => {
+  changeProjectTheme: newTheme => {
     if (newTheme === "dark") {
       document.documentElement.classList.add(newTheme);
       localStorage.setItem("theme", newTheme);

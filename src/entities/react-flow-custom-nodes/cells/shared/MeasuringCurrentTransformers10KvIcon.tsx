@@ -37,7 +37,7 @@ export const MeasuringCurrentTransformers10KvIcon = memo(
     const hasEmptyFields = useMemo(() => {
       if (!transformersData) return true;
       return Object.values(transformersData).every(
-        (item) => item === "" || item === undefined || item === null,
+        item => item === "" || item === undefined || item === null
       );
     }, [transformersData]);
     const iconColor = hasEmptyFields ? "yellow" : color;
@@ -69,5 +69,5 @@ export const MeasuringCurrentTransformers10KvIcon = memo(
         )}
       </div>
     );
-  },
+  }
 );

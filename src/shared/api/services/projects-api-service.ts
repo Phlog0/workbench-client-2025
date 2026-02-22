@@ -9,6 +9,7 @@ import {
   SuccessDeleteProjectResponse,
   SuccessUpdateProjectResponse,
   SuccessSyncProjectScheme,
+  AiBody,
 } from "../types";
 import { SuccessGetProjectScheme } from "../types/project.schema";
 import { API_ROUTES } from "../api-routes";
@@ -30,44 +31,48 @@ export const projectApiService = {
   updateProject: async (projectId: ProjectId, projectMetaData: ProjectInfoTextData) => {
     const response = await apiInstance.patch<SuccessUpdateProjectResponse>(
       API_ROUTES.PROJECTS + `/${projectId}`,
-      projectMetaData,
+      projectMetaData
     );
     return response.data;
   },
   deleteProject: async (projectId: ProjectId) => {
     const response = await apiInstance.delete<SuccessDeleteProjectResponse>(
-      API_ROUTES.PROJECTS + `/${projectId}`,
+      API_ROUTES.PROJECTS + `/${projectId}`
     );
     return response.data;
   },
-  addProject: async (projectMetaData: ProjectInfoTextData) => {
+  createProject: async (projectMetaData: ProjectInfoTextData) => {
     const response = await apiInstance.post<SuccessAddProjectResponse>(
       API_ROUTES.PROJECTS + "/create",
-      projectMetaData,
+      projectMetaData
     );
+    return response.data;
+  },
+  addProjectAi: async (prompt: AiBody["prompt"]) => {
+    const response = await apiInstance.post<SuccessAddProjectResponse>("/ai", { prompt });
     return response.data;
   },
 
   syncProjectScheme: async (
     id: ProjectId,
-    projectScheme: { nodes: PossibleNode[]; edges: PossibleEdge[] },
+    projectScheme: { nodes: PossibleNode[]; edges: PossibleEdge[] }
   ) => {
     const response = await apiInstance.patch<SuccessSyncProjectScheme>(
       API_ROUTES.PROJECTS + `/project-scheme/${id}`,
-      projectScheme,
+      projectScheme
     );
     return response;
   },
   getProjectScheme: async (id: ProjectId) => {
     const response = await apiInstance.get<SuccessGetProjectScheme>(
-      API_ROUTES.PROJECTS + `/project-scheme/${id}`,
+      API_ROUTES.PROJECTS + `/project-scheme/${id}`
     );
     return response.data;
   },
 
   getReadySolutionsList: async (query: string, dictionaryFolder: RFNodeTypesValues) => {
     const response = await apiInstance.get<SuccessGetProjectResponse>(
-      `getReadySolutionsList/${dictionaryFolder}/${query}`,
+      `getReadySolutionsList/${dictionaryFolder}/${query}`
     );
     return response.data.dictionaryData;
   },

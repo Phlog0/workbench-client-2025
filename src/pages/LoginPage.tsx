@@ -1,13 +1,14 @@
 import { LoginForm } from "@/features/auth";
 import { useBoundStore } from "@/shared/appStore";
-import { LOCAL_STORAGE_KEYS } from "@/shared/constants";
+import { APP_ROUTES, LOCAL_STORAGE_KEYS } from "@/shared/constants";
 import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 
 export function LoginPage() {
-  const checkAuth = useBoundStore((state) => state.checkAuth);
-  const isAuth = useBoundStore((state) => state.isAuth);
+  const navigate = useNavigate();
+  const checkAuth = useBoundStore(state => state.checkAuth);
+  const isAuth = useBoundStore(state => state.isAuth);
   const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
     const timeoutId1 = setTimeout(() => {
@@ -30,9 +31,14 @@ export function LoginPage() {
     };
   }, [checkAuth, searchParams, setSearchParams]);
 
+  useEffect(() => {
+    if (isAuth) {
+      navigate(APP_ROUTES.PROJECTS_LIST);
+    }
+  }, [navigate, isAuth]);
   return (
-    <div className="w-full min-h-screen ">
-      <h1>{isAuth ? "Авторизован!" : "Нет!"}</h1>
+    <div className="w-full min-h-screen grid place-content-center">
+      {/* <h1>{isAuth ? "Авторизован!" : "Нет!"}</h1> */}
       <LoginForm />
     </div>
   );

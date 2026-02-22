@@ -9,10 +9,6 @@ import { INITIAL_SECTION_35KV_METRICS } from "@/shared/react-flow/nodes/sections
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui";
 
 export const Section35KvNode = memo(function Section35KvNode(props: NodeProps<TSection35Kv>) {
-  // const onChange = useCallback((evt) => {
-  //   console.log(evt.target.value);
-  // }, []);
-
   //* https://pixelsconverter.com/pixels-to-millimeters
   // const millimeters = nodeInfo?.width * (25.4 / 96);
   // `w-[${millimeters}mm]`
@@ -34,7 +30,11 @@ export const Section35KvNode = memo(function Section35KvNode(props: NodeProps<TS
         section35kv:
         {`measured: ${nodeInfo.measured?.width}`}
       </div> */}
-          <Handle type="target" position={Position.Top} id={`${props.id}Target`} />
+          <Handle
+            type="target"
+            position={Position.Top}
+            id={`${props.id}Target`}
+          />
           {props.selected && (
             <ResizeButtons
               sectionVoltage="35"
@@ -43,7 +43,11 @@ export const Section35KvNode = memo(function Section35KvNode(props: NodeProps<TS
               className="absolute -top-12"
             />
           )}
-          <Handle type="source" position={Position.Bottom} id={`${props.id}Source`} />
+          <Handle
+            type="source"
+            position={Position.Bottom}
+            id={`${props.id}Source`}
+          />
         </div>{" "}
       </TooltipTrigger>
       <TooltipContent className="bg-primary text-white p-4">

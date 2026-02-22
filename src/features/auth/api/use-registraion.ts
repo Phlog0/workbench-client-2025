@@ -11,10 +11,10 @@ import { BadAuthResponse, SuccessAuthResponse } from "@/shared/api/types/auth-re
 
 export const useRegistration = () => {
   const navigate = useNavigate();
-  const setAuth = useBoundStore((state) => state.setAuth);
-  const setUser = useBoundStore((state) => state.setUser);
+  const setAuth = useBoundStore(state => state.setAuth);
+  const setUser = useBoundStore(state => state.setUser);
   return useMutation<SuccessAuthResponse, AxiosError<BadAuthResponse>, TRegistrationForm>({
-    mutationFn: async (registrationData) =>
+    mutationFn: async registrationData =>
       await $api.auth.register({
         email: registrationData.email,
         firstName: registrationData.firstName,
@@ -22,15 +22,17 @@ export const useRegistration = () => {
         password: registrationData.password,
       }),
 
-    onSuccess: (data) => {
+    onSuccess: data => {
       setAuth(true);
       setUser(data.user);
-
-      // localStorage.removeItem(LOCAL_STORAGE_KEYS.TOKEN);
       localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, data.accessToken);
       navigate(APP_ROUTES.PROJECTS_LIST);
+      //    setAuth(true);
+      // setUser(data.user);
+      // localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, data.accessToken);
+      // navigate(APP_ROUTES.PROJECTS_LIST);
     },
-    onError: (error) => {
+    onError: error => {
       if (error.response) {
         toast.error(`Ошибка: ${error.response?.data.message.toString()} `, {
           closeButton: true,

@@ -31,10 +31,15 @@ export function ProjectModalInput({
   param,
 }: FirstInputProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="flex items-end theme-bg theme-text">
       <div className="flex-1">
-        <ProjectPropertyInput {...data} selectedNodeId={selectedNodeId} value={defaultValue} />
+        <ProjectPropertyInput
+          {...data}
+          selectedNodeId={selectedNodeId}
+          value={defaultValue}
+        />
       </div>
 
       <ModalComponent

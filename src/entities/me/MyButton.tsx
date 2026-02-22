@@ -20,7 +20,6 @@ export function MyButton({
         return;
       }
       await navigator.clipboard.writeText(copyText);
-      console.log(copyText);
       toast.success("Скопировано! :)");
     } catch (err) {
       console.error("Не удалось скопировать текст: ", err);
@@ -32,15 +31,20 @@ export function MyButton({
       variant="outline"
       className={cn(
         "group relative overflow-hidden border-2 transition-all duration-300",
-        classname,
+        { "p-0 grid place-content-center": link },
+        classname
       )}
     >
       {link ? (
-        <a href={link} target="_blank">
+        <a
+          className="block w-full h-full px-2"
+          href={link}
+          target="_blank"
+        >
           <div
             className={cn(
               "absolute inset-0 -z-10 bg-linear-to-r from-transparent to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500",
-              "via-white/25",
+              "via-white/25"
             )}
           />
           {text}
@@ -50,7 +54,7 @@ export function MyButton({
           <div
             className={cn(
               "absolute inset-0 -z-10 bg-linear-to-r from-transparent to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500",
-              "via-white/25",
+              "via-white/25"
             )}
           />
           {text}

@@ -27,18 +27,27 @@ export function ActionButtons({
       <div className="flex gap-3 max-lg:hidden">
         <ExportJsonProjectButton projectId={projectId} />
         <ImportProjectJsonButton />
-        <UploadImageButton reactFlowWidth={reactFlowWidth} reactFLowHeight={reactFLowHeight} />
+        <UploadImageButton
+          reactFlowWidth={reactFlowWidth}
+          reactFLowHeight={reactFLowHeight}
+        />
         <SaveSchemeButton />
       </div>
-      <div className="hidden gap-3 max-lg:flex" ref={ref}>
-        <Button onClick={() => setMenuOpen((prev) => !prev)}>
+      <div
+        className="hidden gap-3 max-lg:flex"
+        ref={ref}
+      >
+        <Button onClick={() => setMenuOpen(prev => !prev)}>
           <TableOfContents />
         </Button>
         {isMenuOpen && (
           <div className="absolute bg-black/20 top-18 left-0 p-2 rounded-3xl z-1">
             <ExportJsonProjectButton projectId={projectId} />
             <ImportProjectJsonButton />
-            <UploadImageButton reactFlowWidth={reactFlowWidth} reactFLowHeight={reactFLowHeight} />
+            <UploadImageButton
+              reactFlowWidth={reactFlowWidth}
+              reactFLowHeight={reactFLowHeight}
+            />
             <SaveSchemeButton />
           </div>
         )}

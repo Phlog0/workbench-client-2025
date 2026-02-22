@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 export function useKeyboard() {
   const { setSelectedNodeId, nodes, edges, setSelectedEdgeId, selectedNodeIds, setNodes } =
-    useBoundStore((state) => state);
+    useBoundStore(state => state);
   const [copyNodesTemp, setCopyNodesTemp] = useState<PossibleNode[]>([]);
   //   const [copyEdgesTemp, setCopyEdgesTemp] = useState<PossibleEdge[]>([]);
   useEffect(() => {
@@ -17,9 +17,8 @@ export function useKeyboard() {
         (event.key.toLowerCase() === "a" || event.key.toLowerCase() === "ф")
       ) {
         event.preventDefault();
-        console.log({ nodes });
-        setSelectedNodeId(nodes.map((item) => item.id));
-        setSelectedEdgeId(edges.map((item) => item.id));
+        setSelectedNodeId(nodes.map(item => item.id));
+        setSelectedEdgeId(edges.map(item => item.id));
       }
       if (
         (event.ctrlKey || event.metaKey) &&
@@ -30,8 +29,8 @@ export function useKeyboard() {
           return;
         }
         const newNodes: PossibleNode[] = nodes
-          .filter((item) => selectedNodeIds.includes(item.id))
-          .map((node) => ({
+          .filter(item => selectedNodeIds.includes(item.id))
+          .map(node => ({
             ...node,
             id: uuidv4(),
             position: {
@@ -58,7 +57,7 @@ export function useKeyboard() {
         (event.key.toLowerCase() === "v" || event.key.toLowerCase() === "м")
       ) {
         event.preventDefault();
-        setNodes((prev) => [...prev, ...copyNodesTemp]);
+        setNodes(prev => [...prev, ...copyNodesTemp]);
         // setEdges((prev) => [...prev, ...copyEdgesTemp]);
       }
     };

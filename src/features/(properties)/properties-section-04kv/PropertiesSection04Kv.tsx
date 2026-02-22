@@ -10,7 +10,7 @@ import {
 import { TSection04Kv } from "@/shared/react-flow/nodes/sections/section-04kv/types";
 
 export function PropertiesSection04Kv({ className }: { className?: string }) {
-  const selectedNodeIds = useBoundStore((state) => state.selectedNodeIds);
+  const selectedNodeIds = useBoundStore(state => state.selectedNodeIds);
   const selectedNodeId = selectedNodeIds[0] as ReactFlowNodeId;
   const section04Kv = useGetCurrentNode(selectedNodeId) as TSection04Kv;
 

@@ -19,7 +19,7 @@ import { TTypeOfCellCell10Kv } from "@/shared/react-flow/nodes/cells/cell-10kv/t
 
 // TODO из объекта TCell10Kv сделать тип [key1,key2]
 export const resetCell10Kv = (typeOfCell: TTypeOfCellCell10Kv, cell10KvData: TCell10Kv["data"]) => {
-  let properties: (keyof TCell10Kv["data"])[] = []; //массив ключей TCell10Kv
+  let properties: string[] = []; //массив ключей TCell10Kv
   switch (typeOfCell) {
     case "ТСН (Трансформатор собсвтенных нужд)":
       properties = ["tn"];
@@ -106,6 +106,13 @@ export const resetCell10Kv = (typeOfCell: TTypeOfCellCell10Kv, cell10KvData: TCe
   }
 
   for (const prop in cell10KvData) {
-    if (properties.includes(prop)) delete cell10KvData?.[prop];
+    // Проверка на всякий случай (runtime)
+    if (Object.hasOwn(cell10KvData, prop)) {
+      const key = prop as keyof TCell10Kv["data"];
+
+      if (properties.includes(key)) {
+        delete cell10KvData[key];
+      }
+    }
   }
 };

@@ -7,9 +7,8 @@ import { cellFixatorPairs } from "./cell-fixator-pairs";
 
 export function useReactFlowOnNodeDrag() {
   const { getIntersectingNodes } = useReactFlow();
-  const setNodes = useBoundStore((state) => state.setNodes);
+  const setNodes = useBoundStore(state => state.setNodes);
   const onReactFlowNodeDrag = useCallback(
-    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     (_: ReactMouseEvent, node: PossibleNode) => {
       const intersections = getIntersectingNodes(node);
       if (intersections.length === 0) {
@@ -17,9 +16,9 @@ export function useReactFlowOnNodeDrag() {
       }
       for (const { cellType, fixatorType } of cellFixatorPairs) {
         if (node.type === cellType) {
-          const fixatorId = intersections?.find((item) => item.type === fixatorType)?.id;
-          setNodes((ns) =>
-            ns.map((n) => {
+          const fixatorId = intersections?.find(item => item.type === fixatorType)?.id;
+          setNodes(ns =>
+            ns.map(n => {
               if (
                 n.type === "Fixator04Kv" ||
                 n.type === "Fixator10Kv" ||
@@ -38,12 +37,12 @@ export function useReactFlowOnNodeDrag() {
               } else {
                 return n;
               }
-            }),
+            })
           );
         }
       }
     },
-    [getIntersectingNodes, setNodes],
+    [getIntersectingNodes, setNodes]
   );
   return onReactFlowNodeDrag;
 }

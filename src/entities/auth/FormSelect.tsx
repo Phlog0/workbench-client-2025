@@ -26,13 +26,20 @@ export const FormSelect = ({ label, options }: AuthSelectProps) => {
       render={({ field }) => (
         <Field>
           <FieldLabel>{label}</FieldLabel>
-          <Select name={field.name} value={field.value} onValueChange={field.onChange}>
+          <Select
+            name={field.name}
+            value={field.value}
+            onValueChange={field.onChange}
+          >
             <SelectTrigger>
               <SelectValue placeholder={label} />
             </SelectTrigger>
             <SelectContent>
-              {options?.map((option) => (
-                <SelectItem key={option} value={option}>
+              {options?.map(option => (
+                <SelectItem
+                  key={option}
+                  value={option}
+                >
                   {option}
                 </SelectItem>
               ))}

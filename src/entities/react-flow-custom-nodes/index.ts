@@ -14,7 +14,7 @@ import { Cell35KvNode } from "./cells/cell-35kv";
 import { Section35KvNode } from "./sections/section-35kv";
 import { Fixator35KvNode } from "./fixators/fixator-35kv";
 import { PowerTransformer3510KvNode } from "./power-transformer-35-10kv";
-import { EditableWireEdge } from "./wire-edge/EditableWireEdge";
+// import { EditableWireEdge } from "./wire-edge/EditableWireEdge";
 
 export const nodeTypesEntities: NodeTypes = {
   [RF_NODE_TYPES.cell10Kv]: Cell10KvNode,
@@ -30,8 +30,7 @@ export const nodeTypesEntities: NodeTypes = {
   [RF_NODE_TYPES.section35Kv]: Section35KvNode,
   [RF_NODE_TYPES.fixator35Kv]: Fixator35KvNode,
   [RF_NODE_TYPES.image]: ImageNode,
-  //! satisfies убрать. Он пока нужен чтобы увидеть ошибку.
-};
+} as const;
 
 export const rfEdgeTypes = {
   Wire: WireEdge,

@@ -12,7 +12,7 @@ export function WidgetSpinner({
     <div
       className={cn(
         "fixed top-0 bottom-0 left-0 right-0 bg-slate-400/65 grid place-content-center z-9999",
-        className,
+        className
       )}
     >
       {title && <h1 className="select-none">{title}</h1>}

@@ -19,13 +19,13 @@ export function dragEdge({
 }: DragEdgeProps) {
   const isFirstPair = points[0].id === 0;
   if (isFirstPair) {
-    setPoints((prev) => {
+    setPoints(prev => {
       const newSegment = [
         { id: -2, x: sourceX, y: sourceY },
         { id: -1, x: points[0].x, y: points[0].y },
       ];
 
-      const shiftedPoints = prev.map((p) => ({
+      const shiftedPoints = prev.map(p => ({
         ...p,
         id: p.id + 2,
       }));
@@ -34,8 +34,8 @@ export function dragEdge({
     });
   }
 
-  setPoints((prev) => {
-    return prev?.map((item) => {
+  setPoints(prev => {
+    return prev?.map(item => {
       if (points[0].id === item.id || points[1].id === item.id) {
         if (type === "horizontal") {
           return {

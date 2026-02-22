@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { VirtualItem, Virtualizer } from "@tanstack/react-virtual";
 
 import { Row, Table } from "@tanstack/react-table";
@@ -34,14 +37,14 @@ export function VirtualizedTableBodyRow({
   const visibleCells = row.getVisibleCells();
   const virtualColumns = columnVirtualizer.getVirtualItems();
 
-  const selectReadyMadeSolution = useBoundStore((state) => state.selectReadyMadeSolution);
-  const selectedNodeId = useBoundStore(useShallow((state) => state.selectedNodeIds))[0];
+  const selectReadyMadeSolution = useBoundStore(state => state.selectReadyMadeSolution);
+  const selectedNodeId = useBoundStore(useShallow(state => state.selectedNodeIds))[0];
   const handleClick = (row: Row<TableModelApi>) => {
     row.getToggleSelectedHandler();
     const currnetRowData = table.getRow(row.id).original;
     selectReadyMadeSolution({
       nodeId: selectedNodeId,
-      keyOne: keyOne, // ТАКОЙ, ЧТО ЯВЛЯЕТСЯ КЛЮЧОМ ДЛЯ ОБЪЕКТОВ switching-device, opn, ...
+      keyOne: keyOne,
       values: currnetRowData,
     });
     setIsModalOpen(false);
@@ -50,7 +53,7 @@ export function VirtualizedTableBodyRow({
   return (
     <TableRowUi
       data-index={virtualRow.index} //needed for dynamic row height measurement
-      ref={(node) => rowVirtualizer.measureElement(node)} //measure dynamic row height
+      ref={node => rowVirtualizer.measureElement(node)} //measure dynamic row height
       key={row.id}
       style={{
         display: "flex",
@@ -61,7 +64,7 @@ export function VirtualizedTableBodyRow({
       className={cn(
         "cursor-pointer",
         `${row.getIsSelected() ? "bg-blue-400" : null}`,
-        "hover:bg-blue-200",
+        "hover:bg-blue-200"
       )}
       onClick={() => handleClick(row)}
     >
@@ -69,9 +72,14 @@ export function VirtualizedTableBodyRow({
         //fake empty column to the left for virtualization scroll padding
         <td style={{ display: "flex", width: virtualPaddingLeft }} />
       ) : null}
-      {virtualColumns.map((vc) => {
+      {virtualColumns.map(vc => {
         const cell = visibleCells[vc.index];
-        return <VirtualizedTableBodyCell key={cell.id} cell={cell} />;
+        return (
+          <VirtualizedTableBodyCell
+            key={cell.id}
+            cell={cell}
+          />
+        );
       })}
       {virtualPaddingRight ? (
         //fake empty column to the right for virtualization scroll padding

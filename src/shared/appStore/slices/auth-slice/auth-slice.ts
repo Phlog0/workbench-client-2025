@@ -5,7 +5,7 @@ import { LOCAL_STORAGE_KEYS } from "@/shared/constants";
 import axios, { AxiosError } from "axios";
 import { BadAuthResponse } from "@/shared/api/types/auth-response";
 
-export const createAuthSlice: ImmerStateCreator<AuthSlice> = (set) => ({
+export const createAuthSlice: ImmerStateCreator<AuthSlice> = set => ({
   isAuth: false,
   user: null,
   setAuth(val) {
@@ -45,9 +45,9 @@ export const createAuthSlice: ImmerStateCreator<AuthSlice> = (set) => ({
   },
   async checkAuth() {
     try {
-      const response = await $api.auth.checkAuth();
-      localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, response.data.accessToken);
-      set({ isAuth: true, user: response.data.user });
+      const response = await $api.auth.verifyUser();
+
+      set({ isAuth: true, user: response.user });
     } catch (error) {
       if (axios.isAxiosError<BadAuthResponse>(error)) {
         console.error(error.response?.data.message);

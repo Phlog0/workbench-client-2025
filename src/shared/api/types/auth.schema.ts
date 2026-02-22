@@ -26,7 +26,7 @@ export const RegistrationSchema = LoginSchema.extend({
     .min(7, { error: "Пароль должен быть не менее 7 символов" })
     .max(24, { error: "Пароль должен быть не более 24 символов" })
     .trim(),
-}).refine((data) => data.password === data.confirmPassword, {
+}).refine(data => data.password === data.confirmPassword, {
   error: "Пароли не совпадают",
   path: ["confirmPassword"],
 });

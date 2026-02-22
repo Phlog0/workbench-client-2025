@@ -10,10 +10,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui";
 import { lightningIcon } from "@/shared/assets/ui";
 
 export const Section10KvNode = memo(function Section10KvNode(props: NodeProps<TSection10Kv>) {
-  // const onChange = useCallback((evt) => {
-  //   console.log(evt.target.value);
-  // }, []);
-
   //* https://pixelsconverter.com/pixels-to-millimeters
   // const millimeters = nodeInfo?.width * (25.4 / 96);
   // `w-[${millimeters}mm]`
@@ -34,7 +30,11 @@ export const Section10KvNode = memo(function Section10KvNode(props: NodeProps<TS
         section10kv:
         {`measured: ${nodeInfo.measured?.width}`}
       </div> */}
-          <Handle type="target" position={Position.Top} id={`${props.id}Target`} />
+          <Handle
+            type="target"
+            position={Position.Top}
+            id={`${props.id}Target`}
+          />
           {props.selected && (
             <ResizeButtons
               sectionVoltage="10"
@@ -43,12 +43,20 @@ export const Section10KvNode = memo(function Section10KvNode(props: NodeProps<TS
               className="absolute -top-12"
             />
           )}
-          <Handle type="source" position={Position.Bottom} id={`${props.id}Source`} />
+          <Handle
+            type="source"
+            position={Position.Bottom}
+            id={`${props.id}Source`}
+          />
         </div>{" "}
       </TooltipTrigger>
       <TooltipContent className="bg-primary text-white p-4">
         <ul>
-          <img className="w-20 h-20" src={lightningIcon} alt="⚡" />
+          <img
+            className="w-20 h-20"
+            src={lightningIcon}
+            alt="⚡"
+          />
           <li> Секция 10 (06) кВ</li>
           <li>id:{props.id}</li>
         </ul>

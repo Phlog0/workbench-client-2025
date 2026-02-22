@@ -27,7 +27,10 @@ export const FormTextarea = ({ name, label, required, className, ...props }: Aut
   return (
     <Field className={cn("flex flex-col gap-0 justify-center", className)}>
       {label && (
-        <FieldLabel htmlFor={name} className="font-medium mb-2">
+        <FieldLabel
+          htmlFor={name}
+          className="font-medium mb-2"
+        >
           {label} {required && <RequiredSymbol />}
         </FieldLabel>
       )}
@@ -44,7 +47,6 @@ export const FormTextarea = ({ name, label, required, className, ...props }: Aut
       {errorText ? (
         <FieldError errors={[{ message: String(errorText) }]} />
       ) : (
-        // <ErrorText text={} className="mt-1" />
         <div className="h-5" />
       )}
     </Field>

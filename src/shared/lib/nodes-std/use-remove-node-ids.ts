@@ -10,11 +10,11 @@ export function useRemoveNodeIds() {
 
     const findChildren = (parentId: ReactFlowNodeId[]) => {
       const childrenIds = nodes
-        .filter((item) => {
+        .filter(item => {
           if (item.parentId) return parentId.includes(item?.parentId);
         })
-        .map((item) => item.id);
-      childrenIds.forEach((item) => ids.push(item));
+        .map(item => item.id);
+      childrenIds.forEach(item => ids.push(item));
       if (childrenIds.length !== 0) {
         findChildren(childrenIds);
       } else {

@@ -7,9 +7,9 @@ import { useReactFlow } from "@xyflow/react";
 
 export function ImportProjectJsonButton() {
   const { setViewport } = useReactFlow();
-  const setNodes = useBoundStore((state) => state.setNodes);
-  const setEdges = useBoundStore((state) => state.setEdges);
-  const setViewportSync = useBoundStore((state) => state.setViewportSync);
+  const setNodes = useBoundStore(state => state.setNodes);
+  const setEdges = useBoundStore(state => state.setEdges);
+  const setViewportSync = useBoundStore(state => state.setViewportSync);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => {
     if (fileInputRef.current) {

@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import { TYPE_OF_SWITCHING_DEVICE_CELL_10KV_OPTIONS } from "@/shared/react-flow/nodes/cells/cell-10kv/options";
 import {
   SwitcherRIcon,
@@ -21,34 +21,20 @@ import {
 export const Vykl10KvIcon = memo(function Vykl10KvIcon({
   className,
   value = "Нет",
-  mpdaa,
-  switchingDevice,
-  typeOfMicroprocessorDevice,
+
   color,
+  hasEmptyFields,
+  hasInvalidVv,
 }: {
   className?: string;
   color?: string;
   value?: TTypeOfSwitchingDeviceCell10Kv | TTypeOfSwitchingDeviceCell35Kv;
   mpdaa?: TmpdaaCell10Kv | TmpdaaCell35Kv;
   switchingDevice?: TSwitchingDeviceCell10Kv | TSwitchCell04Kv;
-  typeOfMicroprocessorDevice?: IsThereDevice; //TODO Сделать аллиасы для IsThereDevice на каждое свойство, которое его использует
+  typeOfMicroprocessorDevice?: IsThereDevice;
+  hasEmptyFields?: boolean;
+  hasInvalidVv?: boolean;
 }) {
-  const hasEmptyFields = useMemo(() => {
-    if (!switchingDevice) return true;
-    return Object.values({ ...switchingDevice, typeOfDevice: undefined }).every(
-      (item) => item === "" || item === undefined || item === null,
-    );
-  }, [switchingDevice]);
-  const hasInvalidVv = useMemo(() => {
-    if (!(value === "ВВ (Вакуумные выключатели)")) {
-      return false;
-    }
-    if (typeOfMicroprocessorDevice === "Нет") return true;
-
-    if (!mpdaa) return true;
-    return Object.values(mpdaa).every((item) => item === "" || item === undefined || item === null);
-  }, [mpdaa, typeOfMicroprocessorDevice, value]);
-
   const iconColor = hasEmptyFields ? "yellow" : color;
   return (
     <>

@@ -11,7 +11,17 @@ import {
 export const Fixator10KvNode = memo((props: NodeProps<TFixator10Kv>) => {
   const {
     data: { intersectionClassname },
+    parentId,
+    draggable,
+    deletable,
+    type,
   } = props;
+
+  if (!parentId || draggable !== false || deletable !== false) {
+    return (
+      <div>{`Ошибки в свойствах ${type}, parentId - обязателен, draggable=false deletable?=false,`}</div>
+    );
+  }
   return (
     <div
       style={{ width: fixator_10kv_width, height: fixator_10kv_height }}

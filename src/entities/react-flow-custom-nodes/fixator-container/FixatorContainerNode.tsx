@@ -4,6 +4,13 @@ import { TFixatorContainer } from "@/shared/react-flow/nodes/fixator-container/t
 import { INITIAL_FIXATOR_CONTAINER_METRICS } from "@/shared/react-flow/nodes/fixator-container/measures";
 
 export const FixatorContainerNode = memo((props: NodeProps<TFixatorContainer>) => {
+  const { parentId, draggable, deletable, type } = props;
+
+  if (!parentId || draggable !== false || deletable !== false) {
+    return (
+      <div>{`Ошибки в свойствах ${type}, parentId - обязателен, draggable=false deletable=false,`}</div>
+    );
+  }
   return (
     <div
       className={

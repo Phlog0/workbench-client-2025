@@ -18,7 +18,7 @@ type ContextMenuProps = {
 };
 export function ContextMenu({ contextMenuCoordinats, onClick }: ContextMenuProps) {
   //   const { getNode, setNodes, addNodes, setEdges } = useReactFlow();
-  const setMultipleProps = useBoundStore((state) => state.setMultipleProps);
+  const setMultipleProps = useBoundStore(state => state.setMultipleProps);
   const { bottom, id, left, top, right } = contextMenuCoordinats;
 
   const { getNodesBounds } = useReactFlow();
@@ -45,7 +45,10 @@ export function ContextMenu({ contextMenuCoordinats, onClick }: ContextMenuProps
       onClick={onClick}
     >
       <h3>node: {id}</h3>
-      <Button className="cursor-pointer" onClick={handleClick}>
+      <Button
+        className="cursor-pointer"
+        onClick={handleClick}
+      >
         Отсоединить ячейку
       </Button>
     </div>

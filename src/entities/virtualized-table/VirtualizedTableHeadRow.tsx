@@ -20,18 +20,32 @@ export function VirtualizedTableHeadRow({
 }: TableHeadRowProps) {
   const virtualColumns = columnVirtualizer.getVirtualItems();
   return (
-    <TableRowUi key={headerGroup.id} className="flex w-full">
+    <TableRowUi
+      key={headerGroup.id}
+      className="flex w-full"
+    >
       {virtualPaddingLeft ? (
         //fake empty column to the left for virtualization scroll padding
-        <TableHeadUi className="flex" style={{ width: virtualPaddingLeft }} />
+        <TableHeadUi
+          className="flex"
+          style={{ width: virtualPaddingLeft }}
+        />
       ) : null}
-      {virtualColumns.map((virtualColumn) => {
+      {virtualColumns.map(virtualColumn => {
         const header = headerGroup.headers[virtualColumn.index];
-        return <VirtualizedTableHeadCell key={header.id} header={header} />;
+        return (
+          <VirtualizedTableHeadCell
+            key={header.id}
+            header={header}
+          />
+        );
       })}
       {virtualPaddingRight ? (
         //fake empty column to the right for virtualization scroll padding
-        <TableHeadUi className="flex" style={{ width: virtualPaddingRight }} />
+        <TableHeadUi
+          className="flex"
+          style={{ width: virtualPaddingRight }}
+        />
       ) : null}
     </TableRowUi>
   );

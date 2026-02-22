@@ -61,8 +61,17 @@ export const EditableWireEdge = memo(
         {/* Анимированный маркер */}
         <svg style={{ overflow: "visible", position: "absolute", top: 0, left: 0 }}>
           <defs>
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="3" result="blur" />
+            <filter
+              id="glow"
+              x="-50%"
+              y="-50%"
+              width="200%"
+              height="200%"
+            >
+              <feGaussianBlur
+                stdDeviation="3"
+                result="blur"
+              />
               <feMerge>
                 <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />
@@ -79,19 +88,36 @@ export const EditableWireEdge = memo(
               markerHeight="6"
               orient="auto"
             >
-              <path d="M 0 0 L 10 5 L 0 10 z" fill="#3b82f6" />
+              <path
+                d="M 0 0 L 10 5 L 0 10 z"
+                fill="#3b82f6"
+              />
             </marker>
           </defs>
 
           {/* Анимированная точка */}
-          <circle r="4" fill="#3b82f6" filter="url(#glow)">
-            <animateMotion dur="4s" repeatCount="indefinite" path={edgePath} rotate="auto" />
-            <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" />
+          <circle
+            r="4"
+            fill="#3b82f6"
+            filter="url(#glow)"
+          >
+            <animateMotion
+              dur="4s"
+              repeatCount="indefinite"
+              path={edgePath}
+              rotate="auto"
+            />
+            <animate
+              attributeName="opacity"
+              values="0.3;1;0.3"
+              dur="2s"
+              repeatCount="indefinite"
+            />
           </circle>
         </svg>
       </>
     );
-  },
+  }
 );
 
 EditableWireEdge.displayName = "EditableWireEdge";

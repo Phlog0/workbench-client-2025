@@ -1,11 +1,6 @@
 import { ProjectId } from "@/shared/api/types";
 import { PossibleEdge } from "@/shared/react-flow/edges";
-import {
-  PossibleNode,
-  ReactFlowNodeId,
-  TNonPrimitiveDataKeysPossibleNode,
-  TPrimitiveDataKeysPossibleNode,
-} from "@/shared/react-flow/nodes/shared";
+import { PossibleNode, ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
 
 import { RFNodeTypesValues } from "@/shared/react-flow/nodes/shared/rf-nodes-types";
 import { OnNodesChange, OnEdgesChange, OnConnect, Viewport } from "@xyflow/react";
@@ -43,7 +38,7 @@ export type ReactFlowNodesBaseActions = {
 
 export type ReactFlowNodesPropertiesActions = {
   sortNodes: () => void;
-  changeSelectPropery: <T extends TPrimitiveDataKeysPossibleNode>({
+  changeSelectPropery: <T extends PossibleNode["data"]>({
     nodeId,
     key1,
     value,
@@ -64,14 +59,14 @@ export type ReactFlowNodesPropertiesActions = {
     keyTwo: string | null;
     value: number | boolean | string;
   }) => void;
-  selectReadyMadeSolution: <T extends TNonPrimitiveDataKeysPossibleNode>({
+  selectReadyMadeSolution: <T extends PossibleNode["data"], K extends keyof T>({
     nodeId,
     keyOne,
     values,
   }: {
     nodeId: ReactFlowNodeId;
-    keyOne: keyof T;
-    values: T[keyof T];
+    keyOne: K;
+    values: T[K];
   }) => void;
   // changeInputPropertyTCell10Kv: ({ nodeId, keyOne, keyTwo, value }: { nodeId: string, keyOne: NestedPropsTCell10KvKeys, keyTwo: NestedPropsTCell10Kv, value: string | number | boolean }) => void
   setMultipleProps: <T1 extends PossibleNode, T2 extends PossibleNode["data"]>({

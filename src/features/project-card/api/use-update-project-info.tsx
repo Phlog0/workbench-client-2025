@@ -7,21 +7,22 @@ import { toast } from "sonner";
 import { ProjectInfoTextData, ProjectId, ProjectInfo, BadAuthResponse } from "@/shared/api/types";
 import { $api } from "@/shared/api/services";
 
-export const useUpdateProject = (projectId: ProjectId) => {
+export const useUpdateProjectInfo = (projectId: ProjectId) => {
   const queryClient = useQueryClient();
   return useMutation({
+    mutationKey: [CACHE_KEYS.PROJECTS.updateProject],
     mutationFn: async (projectMetaData: ProjectInfoTextData) =>
       $api.projects.updateProject(projectId, projectMetaData),
-    onSuccess: (data, variables) => {
+    onSuccess: (_, variables) => {
       try {
-        queryClient.setQueryData([CACHE_KEYS.PROJECTS], (prev: ProjectInfo[]) =>
-          prev.map((item) => {
+        queryClient.setQueryData([CACHE_KEYS.PROJECTS.get], (prev: ProjectInfo[]) =>
+          prev.map(item => {
             if (item.id === projectId) {
               return { ...item, ...variables };
             } else {
               return item;
             }
-          }),
+          })
         );
         toast.success("Данные обновлены", {
           closeButton: true,

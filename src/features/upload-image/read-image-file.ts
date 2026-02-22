@@ -5,7 +5,7 @@ export function readImageFile(file: File): Promise<string> {
     // }
     const reader = new FileReader();
 
-    reader.onload = (event) => {
+    reader.onload = event => {
       try {
         resolve(event.target?.result as string);
       } catch {

@@ -20,7 +20,7 @@ export const SiderbarProperties = ({
   className?: string;
   isModalOpen?: boolean;
 }) => {
-  const selectedNodeIds = useBoundStore(useShallow((state) => state.selectedNodeIds));
+  const selectedNodeIds = useBoundStore(useShallow(state => state.selectedNodeIds));
   const selectedNodeId = selectedNodeIds && selectedNodeIds[0];
   const currentNode = useGetCurrentNode(selectedNodeId);
 
@@ -46,7 +46,7 @@ export const SiderbarProperties = ({
       .on("start", () => {
         setIsRightDragging(true);
       })
-      .on("drag", (event) => {
+      .on("drag", event => {
         const deltaVw = (event.dx / window.innerWidth) * 100;
         const newWidth = Math.max(0, Math.min(45, rightWidthRef.current - deltaVw));
         setRightWidth(newWidth);
@@ -68,7 +68,7 @@ export const SiderbarProperties = ({
         className={cn(
           "container-save-scroll overflow-auto project-properties",
 
-          className,
+          className
         )}
         style={{
           position: isModalOpen ? "static" : "absolute",
@@ -110,7 +110,7 @@ export const SiderbarProperties = ({
             "bg-blue-400": isRightDragging,
           },
           "block max-lg:hidden",
-          { hidden: isModalOpen },
+          { hidden: isModalOpen }
         )}
         ref={rightDragRef}
         style={{

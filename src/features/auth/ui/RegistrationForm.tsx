@@ -11,48 +11,69 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { WidgetSpinner } from "@/shared/ui/spinners";
 import { APP_ROUTES } from "@/shared/constants";
 import { FormInput } from "@/entities/auth";
+const random = Math.floor(Math.random() * (10000 - 1) + 1);
 export function RegistrationForm() {
   const registrationMutation = useRegistration();
   const form = useForm({
     mode: "onSubmit",
     resolver: zodResolver(RegistrationSchema),
     defaultValues: {
-      email: "",
-      firstName: "",
-      password: "",
-      secondName: "",
-      confirmPassword: "",
+      email: `test-${random}@test.test`,
+      firstName: "Test",
+      password: "1234567",
+      secondName: "Test",
+      confirmPassword: "1234567",
     },
   });
-  const onSubmit: SubmitHandler<TRegistrationForm> = (data) => {
+  const onSubmit: SubmitHandler<TRegistrationForm> = data => {
     registrationMutation.mutate(data);
   };
 
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(true);
   const handleVisible = () => {
-    setIsPasswordVisible((prev) => !prev);
+    setIsPasswordVisible(prev => !prev);
   };
 
   return (
     <>
       {registrationMutation.isPending && <WidgetSpinner title="Регистрация..." />}
       <FormProvider {...form}>
+        <h2 className="text-3xl text-center">Регистрация</h2>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="max-w-[50%] mx-auto mt-5 flex flex-col gap-10"
+          className="w-full flex flex-col gap-2 max-w-200 px-4"
         >
-          <h2>Регистрация</h2>
-
-          <FormInput name="firstName" label="Ваше имя" placeholder="Иван" type="text" />
-          <FormInput name="secondName" label="Фамилия" placeholder="Иванов" type="text" />
-          <FormInput name="email" label="E-mail" placeholder="user123@email.com" type="text" />
+          <div>
+            <FormInput
+              name="firstName"
+              label="Ваше имя"
+              placeholder="Иван"
+              type="text"
+            />
+            <FormInput
+              name="secondName"
+              label="Фамилия"
+              placeholder="Иванов"
+              type="text"
+            />
+          </div>
+          <FormInput
+            name="email"
+            label="E-mail (Вы можете ввести любую почту по шаблону, вы просто ее не сможете подтвердить)"
+            placeholder="user123@email.com"
+            type="text"
+            className="self-start"
+          />
           <div className="flex items-center">
             <FormInput
               name="password"
               label="Пароль"
               type={isPasswordVisible ? "text" : "password"}
             />
-            <Button type="button" onClick={handleVisible}>
+            <Button
+              type="button"
+              onClick={handleVisible}
+            >
               {isPasswordVisible ? <Eye /> : <EyeClosedIcon />}
             </Button>
           </div>
@@ -62,7 +83,10 @@ export function RegistrationForm() {
               label="Повторите пароль"
               type={isPasswordVisible ? "text" : "password"}
             />
-            <Button type="button" onClick={handleVisible}>
+            <Button
+              type="button"
+              onClick={handleVisible}
+            >
               {isPasswordVisible ? <Eye /> : <EyeClosedIcon />}
             </Button>
           </div>
@@ -70,7 +94,10 @@ export function RegistrationForm() {
           <Button type="submit">Зарегистрироваться</Button>
           <p>
             Уже есть аккаунт?&nbsp;
-            <Link to={APP_ROUTES.LOGIN} className="text-blue-600 underline font-bold">
+            <Link
+              to={APP_ROUTES.LOGIN}
+              className="text-blue-600 underline font-bold"
+            >
               Войдите в систему.
             </Link>
           </p>

@@ -17,7 +17,7 @@ export function ExportJsonProjectButton({ projectId }: { projectId?: ProjectId }
       link.click();
       URL.revokeObjectURL(url); // Очистка
     },
-    [toObject],
+    [toObject]
   );
   return (
     <Button onClick={() => onSave(projectId)}>

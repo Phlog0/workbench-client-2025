@@ -1,6 +1,32 @@
+import { CSSProperties } from "react";
+
+type ElementData = {
+  tag: string;
+  id: string;
+  class: string;
+  text: string;
+  position: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  style: CSSProperties;
+  children: ElementData[];
+};
+
+type ScreenshotData = {
+  timestamp: string;
+  url: string;
+  viewport: {
+    width: number;
+    height: number;
+  };
+  elements: ElementData[];
+};
 export async function createVectorScreenshot() {
   // Собираем информацию о странице
-  const screenshotData = {
+  const screenshotData: ScreenshotData = {
     timestamp: new Date().toISOString(),
     url: window.location.href,
     viewport: {
@@ -25,7 +51,7 @@ export async function createVectorScreenshot() {
       return;
     }
 
-    const elementData = {
+    const elementData: ElementData = {
       tag: element.tagName,
       id: element.id,
       class: element.className,
@@ -47,14 +73,20 @@ export async function createVectorScreenshot() {
     };
 
     // Обрабатываем детей
-    for (let child of element.children) {
-      traverseDOM(child, level + 1);
+    for (const child of element.children) {
+      if (child instanceof HTMLDivElement) {
+        traverseDOM(child, level + 1);
+      }
     }
 
     screenshotData.elements.push(elementData);
   }
 
-  traverseDOM(document.querySelector(".react-flow__viewport"));
+  const reactFlowViewport = document.querySelector(".react-flow__viewport");
+  if (!(reactFlowViewport instanceof HTMLDivElement)) {
+    throw new Error("reactFlowViewport не является div");
+  }
+  traverseDOM(reactFlowViewport);
 
   // Генерируем SVG на основе собранных данных
   const svgContent = generateSvgFromData(screenshotData);
@@ -65,11 +97,11 @@ export async function createVectorScreenshot() {
   link.click();
 }
 
-function generateSvgFromData(data) {
+function generateSvgFromData(data: ScreenshotData) {
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${data.viewport.width}" height="${data.viewport.height}">\n`;
 
   // Добавляем элементы
-  data.elements.forEach((element) => {
+  data.elements.forEach(element => {
     if (element.position.width > 0 && element.position.height > 0) {
       svg += generateSvgElement(element);
     }
@@ -79,7 +111,7 @@ function generateSvgFromData(data) {
   return svg;
 }
 
-function generateSvgElement(element) {
+function generateSvgElement(element: ElementData) {
   const { position, style, text } = element;
 
   let svgElement = "";
@@ -92,7 +124,7 @@ function generateSvgElement(element) {
   // Текст
   if (text && text.length > 0) {
     svgElement += `<text x="${position.x + 5}" y="${
-      position.y + parseInt(style.fontSize || 16)
+      position.y + parseInt(String(style.fontSize))
     }" font-family="${style.fontFamily}" font-size="${style.fontSize}" fill="${
       style.color
     }">${escapeXml(text)}</text>\n`;
@@ -106,7 +138,7 @@ function generateSvgElement(element) {
   return svgElement;
 }
 
-function escapeXml(unsafe) {
+function escapeXml(unsafe: string) {
   return unsafe.replace(/[<>&'"]/g, function (c) {
     switch (c) {
       case "<":
@@ -119,6 +151,8 @@ function escapeXml(unsafe) {
         return "&apos;";
       case '"':
         return "&quot;";
+      default:
+        return "";
     }
   });
 }

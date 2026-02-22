@@ -4,10 +4,11 @@ import { z } from "zod/v4";
 export const ProjectInfoSchema = z.object({
   id: z.string(),
   projectType: z.enum(["ТП", "КТП", "РП"]),
-  title: z.string().nonempty().trim(),
-  description: z.string().nonempty().trim(),
+  title: z.string().nonempty({ error: "Обязательное поле" }).trim(),
+  description: z.string().nonempty({ error: "Обязательное поле" }).trim(),
   createdAt: z.date(),
   updatedAt: z.date(),
+  prompt: z.string().trim().optional(),
 });
 export type ProjectInfo = z.infer<typeof ProjectInfoSchema>;
 

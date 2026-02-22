@@ -10,7 +10,7 @@ import {
 } from "@/shared/react-flow/nodes/power-transformer-35-10kv";
 
 export function PropertiesPt3510Kv() {
-  const selectedNodeIds = useBoundStore((state) => state.selectedNodeIds);
+  const selectedNodeIds = useBoundStore(state => state.selectedNodeIds);
   const selectedNodeId = selectedNodeIds[0] as ReactFlowNodeId;
   const pt3510Kv = useGetCurrentNode(selectedNodeId) as TPowerTransformer3510Kv;
   return (

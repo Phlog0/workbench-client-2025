@@ -3,6 +3,7 @@ import { CACHE_KEYS } from "@/shared/api";
 import { RFNodeTypesValues } from "@/shared/react-flow/nodes/shared/rf-nodes-types";
 import { BadAuthResponse } from "@/shared/api/types";
 import { $api, SuccessGetProjectResponse } from "@/shared/api/services";
+import { AxiosError } from "axios";
 
 export type TableColumnsApi = Record<string, string>;
 export type TableModelApi = Record<string, string | number>;
@@ -14,7 +15,7 @@ export function useGetDictionaryData({
   query?: string;
   dictionaryFolder: RFNodeTypesValues | "";
 }) {
-  return useQuery<SuccessGetProjectResponse["dictionaryData"], BadAuthResponse>({
+  return useQuery<SuccessGetProjectResponse["dictionaryData"], AxiosError<BadAuthResponse>>({
     queryKey: [CACHE_KEYS.DICTIONARY, query],
     enabled: !!query && !!dictionaryFolder,
     queryFn: async () => {
@@ -22,7 +23,7 @@ export function useGetDictionaryData({
         throw new Error(
           `Ошибка с выбором типом каталога (папки (04, 10...)), #${
             dictionaryFolder ? dictionaryFolder : "ТИП"
-          }`,
+          }`
         );
       const data = $api.projects.getReadySolutionsList(query, dictionaryFolder);
 

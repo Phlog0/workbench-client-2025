@@ -27,7 +27,7 @@ export const Cell10KvNode = memo((props: NodeProps<TCell10Kv>) => {
 
   const connections = useNodeConnections({ id });
   const pt = useGetCurrentNode(connections[0]?.target) as TPowerTransformer1004Kv;
-  const setMultipleProps = useBoundStore((state) => state.setMultipleProps);
+  const setMultipleProps = useBoundStore(state => state.setMultipleProps);
 
   useEffect(() => {
     const power = pt?.data?.parameters?.power;
@@ -49,6 +49,98 @@ export const Cell10KvNode = memo((props: NodeProps<TCell10Kv>) => {
   }, [pt?.data, setMultipleProps, data.sPower, data.ratedCurrent, data.typeOfVoltage, id]);
   const borderColor = useGetLineColor();
 
+  useEffect(() => {
+    if (!data.switchingDevice) {
+      setMultipleProps({
+        nodeId: id,
+        nodeDataFlag: true,
+        properties: {
+          switchDeviceHasEmptyFields: false,
+        },
+      });
+    }
+    const isEmpty = Object.values({ ...data.switchingDevice, typeOfDevice: undefined }).every(
+      item => item === "" || item === undefined || item === null
+    );
+    setMultipleProps({
+      nodeId: id,
+      nodeDataFlag: true,
+      properties: {
+        switchDeviceHasEmptyFields: isEmpty,
+      },
+    });
+  }, [data.switchingDevice, id, setMultipleProps]);
+  // const hasEmptyFields = useMemo(() => {
+  //   if (!data.switchingDevice) return true;
+  //   return Object.values({ ...data.switchingDevice, typeOfDevice: undefined }).every(
+  //     (item) => item === "" || item === undefined || item === null,
+  //   );
+  // }, [data.switchingDevice]);
+  useEffect(() => {
+    if (!(data.typeOfSwitchingDevice === "ВВ (Вакуумные выключатели)")) {
+      setMultipleProps({
+        nodeId: id,
+        nodeDataFlag: true,
+        properties: {
+          switchDeviceHasInvalidVv: false,
+        },
+      });
+      return;
+    }
+    if (data.typeOfSwitchingDevice === "ВВ (Вакуумные выключатели)") {
+      if (data.typeOfMicroprocessorDevice === "Нет") {
+        setMultipleProps({
+          nodeId: id,
+          nodeDataFlag: true,
+          properties: {
+            switchDeviceHasInvalidVv: true,
+          },
+        });
+        return;
+      }
+
+      if (!data.mpdaa) {
+        setMultipleProps({
+          nodeId: id,
+          nodeDataFlag: true,
+          properties: {
+            switchDeviceHasInvalidVv: true,
+          },
+        });
+      }
+
+      if (data.mpdaa) {
+        const isMpdaaEmpty = Object.values(data.mpdaa).every(
+          item => item === "" || item === undefined || item === null
+        );
+        setMultipleProps({
+          nodeId: id,
+          nodeDataFlag: true,
+          properties: {
+            switchDeviceHasInvalidVv: isMpdaaEmpty,
+          },
+        });
+      }
+    }
+  }, [
+    data.mpdaa,
+    data.typeOfMicroprocessorDevice,
+    data.typeOfSwitchingDevice,
+    id,
+    setMultipleProps,
+  ]);
+  // const hasInvalidVv = useMemo(() => {
+  //   if (!(data.typeOfSwitchingDevice === "ВВ (Вакуумные выключатели)")) {
+  //     return false;
+  //   }
+  //   if (data.typeOfMicroprocessorDevice === "Нет") return true;
+
+  //   if (!data.mpdaa) return true;
+  //   return Object.values(data.mpdaa).every(
+  //     (item) => item === "" || item === undefined || item === null,
+  //   );
+  // }, [data.mpdaa, data.typeOfMicroprocessorDevice, data.typeOfSwitchingDevice]);
+
   return (
     <Tooltip>
       <TooltipTrigger>
@@ -57,7 +149,7 @@ export const Cell10KvNode = memo((props: NodeProps<TCell10Kv>) => {
             "border-4 border-t-0",
             "flex flex-col items-center max-w-full w-full gap-0 h-full bg-none",
             "overflow-hidden, relative",
-            { "bg-blue-100/20 outline-dashed outline-indigo-600": selected },
+            { "bg-blue-100/20 outline-dashed outline-indigo-600": selected }
           )}
           style={{
             width: INITIAL_CELL_10KV_METRICS.width,
@@ -73,6 +165,8 @@ export const Cell10KvNode = memo((props: NodeProps<TCell10Kv>) => {
             typeOfMicroprocessorDevice={data?.typeOfMicroprocessorDevice}
             mpdaa={data?.mpdaa}
             color={borderColor}
+            hasEmptyFields={data?.switchDeviceHasEmptyFields}
+            hasInvalidVv={data?.switchDeviceHasInvalidVv}
           />
           <MeasuringCurrentTransformers10KvIcon
             value={data?.typeOfMeasuringCurrentTransformersDevice}
@@ -81,13 +175,23 @@ export const Cell10KvNode = memo((props: NodeProps<TCell10Kv>) => {
           />
 
           {data?.typeOfCell === "ТН (Трансформатор напряжения)" ? (
-            <Tn10KvIcon className="bg-violet-300" color={borderColor} />
+            <Tn10KvIcon
+              className="bg-violet-300"
+              color={borderColor}
+            />
           ) : (
             <VerticalLineIcon color={borderColor} />
           )}
-          <Opn10KvIcon value={data?.typeOfOpnDevice} color={borderColor} />
+          <Opn10KvIcon
+            value={data?.typeOfOpnDevice}
+            color={borderColor}
+          />
 
-          <Terminal id={`${id}-source`} type="source" position={Position.Bottom} />
+          <Terminal
+            id={`${id}-source`}
+            type="source"
+            position={Position.Bottom}
+          />
         </div>
       </TooltipTrigger>
       <TooltipContent className="p-4">

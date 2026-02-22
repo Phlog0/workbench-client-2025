@@ -47,7 +47,19 @@ import {
   MODEL_SECTION_10KV_INPUT_RENDER_DATA,
   MODEL_SECTION_10KV_LABEL,
 } from "@/shared/react-flow/nodes/sections/section-10kv/options";
-import { TNonPrimitiveDataKeysSection10Kv } from "@/shared/react-flow/nodes/sections/section-10kv/types";
+import {
+  MODEL_SECTION_35KV_INPUT_RENDER_DATA,
+  MODEL_SECTION_35KV_KEY_1,
+  MODEL_SECTION_35KV_LABEL,
+} from "@/shared/react-flow/nodes/sections/section-35kv/options";
+import {
+  POWER_TRANSFORMER_3510KV_INPUT_RENDER_DATA,
+  POWER_TRANSFORMER_3510KV_LABEL,
+} from "@/shared/react-flow/nodes/power-transformer-35-10kv";
+import {
+  MODEL_SECTION_04KV_INPUT_RENDER_DATA,
+  MODEL_SECTION_04KV_LABEL,
+} from "@/shared/react-flow/nodes/sections/section-04kv/options";
 
 type InputRenderDataCell10Kv =
   | typeof TSN_DEVICE_CELL_10KV_INPUT_RENDER_DATA
@@ -106,19 +118,25 @@ export type GenericInputsProps = {
     | InputRenderDataCell04Kv
     | InputRenderDataCell10Kv
     | InputRenderDataSection10Kv
-    | InputRenderDataPt1004Kv;
+    | InputRenderDataPt1004Kv
+    | typeof MODEL_SECTION_35KV_INPUT_RENDER_DATA
+    | typeof POWER_TRANSFORMER_3510KV_INPUT_RENDER_DATA
+    | typeof MODEL_SECTION_04KV_INPUT_RENDER_DATA;
 
   inputsLabel:
     | InputsCell10KvLabel
     | InputsCell04KvLabel
     | InputsSection10KvLabel
-    | InputsPt1004KvLabel;
+    | InputsPt1004KvLabel
+    | typeof MODEL_SECTION_35KV_LABEL
+    | typeof POWER_TRANSFORMER_3510KV_LABEL
+    | typeof MODEL_SECTION_04KV_LABEL;
 
   inputPropertiesKey1:
     | InputPropertiesKey1_CELL_10KV
     | InputPropertiesKey1_CELL_04KV
-    | TNonPrimitiveDataKeysSection10Kv
-    | InputPropertiesKey1_POWER_TRANSFORMER_1004Kv;
+    | InputPropertiesKey1_POWER_TRANSFORMER_1004Kv
+    | typeof MODEL_SECTION_35KV_KEY_1;
 
   param?: Param10Kv | string;
 };
