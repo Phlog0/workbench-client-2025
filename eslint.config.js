@@ -33,7 +33,7 @@ const customRules = {
   // ],
   "unused-imports/no-unused-imports": "error",
   "unused-imports/no-unused-vars": [
-    "warn",
+    "error",
     {
       varsIgnorePattern: "^_",
       argsIgnorePattern: "^_",
