@@ -28,7 +28,6 @@ export function RegistrationPage() {
   }, [navigate, isAuth]);
   return (
     <div className="min-h-screen flex flex-col items-center justify-center ">
-      <h1>{isAuth ? "Авторизован!" : "Нет!"}</h1>
       <RegistrationForm />
     </div>
   );
