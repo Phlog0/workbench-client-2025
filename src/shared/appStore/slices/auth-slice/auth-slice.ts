@@ -24,6 +24,8 @@ export const createAuthSlice: ImmerStateCreator<AuthSlice> = set => ({
         console.error(error.message, error.response?.data);
       }
       console.error(error);
+      set({ isAuth: false, user: null });
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.TOKEN);
     }
   },
   async registration(values) {
@@ -36,6 +38,8 @@ export const createAuthSlice: ImmerStateCreator<AuthSlice> = set => ({
         console.error(error.message, error.response?.data);
       }
       console.error(error);
+      set({ isAuth: false, user: null });
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.TOKEN);
     }
   },
   async logout() {
@@ -52,6 +56,8 @@ export const createAuthSlice: ImmerStateCreator<AuthSlice> = set => ({
       if (axios.isAxiosError<BadAuthResponse>(error)) {
         console.error(error.response?.data.message);
       }
+      set({ isAuth: false, user: null });
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.TOKEN);
     }
   },
 });

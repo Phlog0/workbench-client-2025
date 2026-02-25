@@ -10,15 +10,15 @@ export function RegistrationPage() {
   const checkAuth = useBoundStore(state => state.checkAuth);
 
   useEffect(() => {
-    const timeoutId1 = setTimeout(() => {
-      if (localStorage.getItem(LOCAL_STORAGE_KEYS.TOKEN)) {
-        checkAuth();
-      }
-    }, 0);
+    // const timeoutId1 = setTimeout(() => {
+    if (localStorage.getItem(LOCAL_STORAGE_KEYS.TOKEN)) {
+      checkAuth();
+    }
+    // }, 0);
 
-    return () => {
-      clearTimeout(timeoutId1);
-    };
+    // return () => {
+    //   clearTimeout(timeoutId1);
+    // };
   }, [checkAuth]);
 
   useEffect(() => {

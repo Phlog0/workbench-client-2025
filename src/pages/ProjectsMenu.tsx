@@ -12,6 +12,8 @@ import { toast } from "sonner";
 import { LogoutButton } from "@/features/auth";
 import { $api } from "@/shared/api/services";
 import { Button } from "@/shared/ui";
+import { APP_ROUTES, LOCAL_STORAGE_KEYS } from "@/shared/constants";
+import { useNavigate } from "react-router-dom";
 export const ProjectsMenu = () => {
   const { isPending, error, data } = useGetProjectsList();
   const user = useBoundStore(state => state.user);
@@ -29,6 +31,23 @@ export const ProjectsMenu = () => {
       clearTimeout(timeoutId);
     };
   }, [user?.activated]);
+
+  const navigate = useNavigate();
+  const isAuth = useBoundStore(state => state.isAuth);
+  const checkAuth = useBoundStore(state => state.checkAuth);
+
+  useEffect(() => {
+    if (localStorage.getItem(LOCAL_STORAGE_KEYS.TOKEN)) {
+      checkAuth();
+    }
+  }, [checkAuth]);
+
+  // ! Проблема: рефреш обновляет токены и всё хорошо. Но представь если ты не заходил на сайт много дней и все токены померли, а у тебя в locastorage они остались. useEffect мне кажеца опасным в таком случае, так как он может сработать на рефреше.
+  useEffect(() => {
+    if (!isAuth) {
+      navigate(APP_ROUTES.REGISTRATION);
+    }
+  }, [navigate, isAuth]);
 
   const testHandle = async () => {
     const data = await $api.projects.getAllProjects();

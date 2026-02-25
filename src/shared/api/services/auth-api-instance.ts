@@ -41,11 +41,12 @@ export const authApiService = {
   },
   refresh: async () => {
     const response = await axios.get<SuccessAuthResponse>(
-      import.meta.env.SERVER_API_URL + API_ROUTES.AUTH + "/refresh",
+      import.meta.env.VITE_SERVER_API_URL + API_ROUTES.AUTH + "/refresh",
       {
         withCredentials: true,
       }
     );
+    console.log({ response });
     return response.data;
   },
 };

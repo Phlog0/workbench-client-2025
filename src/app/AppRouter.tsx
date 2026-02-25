@@ -3,7 +3,7 @@ import { LoginPage, NotFoundPage, ProjectsMenu, RegistrationPage, RequireAuth } 
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { APP_ROUTES } from "@/shared/constants";
-import { Spinner, WidgetSpinner } from "@/shared/ui/spinners";
+import { WidgetSpinner } from "@/shared/ui/spinners";
 import { lazy, Suspense, useEffect } from "react";
 import { useBoundStore } from "@/shared/appStore";
 const FlowLayout = lazy(() => import("@/pages/FlowLayout"));
@@ -13,30 +13,29 @@ export const AppRouter = () => {
       {
         path: APP_ROUTES.REGISTRATION,
         element: <RegistrationPage />,
-        loader: Spinner,
       },
       {
         path: APP_ROUTES.LOGIN,
         element: <LoginPage />,
-        loader: Spinner,
       },
       {
         path: APP_ROUTES.OTHER_PAGES,
         element: <NotFoundPage />,
-        loader: Spinner,
       },
       {
         element: <RequireAuth />,
         children: [
           {
             path: APP_ROUTES.PROJECTS_LIST,
-            element: <ProjectsMenu />,
-            loader: Spinner,
+            element: (
+              <Suspense fallback={<WidgetSpinner />}>
+                <ProjectsMenu />
+              </Suspense>
+            ),
           },
           {
             path: APP_ROUTES.CURRENT_PROJECT,
             element: <FlowLayout />,
-            loader: Spinner,
           },
         ],
       },
@@ -44,6 +43,7 @@ export const AppRouter = () => {
     {
       future: {
         v7_relativeSplatPath: true,
+        v7_partialHydration: false,
       },
       basename: "/constructor",
     }
@@ -86,9 +86,7 @@ export const AppRouter = () => {
 
   return (
     <div className="font-cascadia-mono theme-bg theme-text">
-      <Suspense fallback={<WidgetSpinner />}>
-        <RouterProvider router={router} />
-      </Suspense>
+      <RouterProvider router={router} />
     </div>
   );
 };
