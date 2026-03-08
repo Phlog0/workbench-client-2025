@@ -4,7 +4,7 @@ import { API_ROUTES } from "../api-routes";
 import { TLoginForm, TRegistrationForm } from "../types";
 import { SuccessAuthResponse } from "../types/auth-response";
 
-type LogoutSucessResponse = {
+export type LogoutSucessResponse = {
   id: number;
   userId: number;
   token: string;
@@ -46,7 +46,7 @@ export const authApiService = {
         withCredentials: true,
       }
     );
-    console.log({ response });
+
     return response.data;
   },
 };

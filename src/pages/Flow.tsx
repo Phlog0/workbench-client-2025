@@ -88,7 +88,6 @@ export const Flow = ({
 
   const { isLoading, data, isError, error } = useGetProjectScheme(projectId ?? "");
   const setAfterFetch = useBoundStore(state => state.setAfterFetch);
-
   const { setViewport } = useReactFlow();
   useEffect(() => {
     if (data && "projectScheme" in data && data.projectScheme) {

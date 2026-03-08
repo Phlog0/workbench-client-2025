@@ -1,5 +1,5 @@
 //! в shared
-import { LoginPage, NotFoundPage, ProjectsMenu, RegistrationPage, RequireAuth } from "@/pages";
+import { LoginPage, NotFoundPage, RegistrationPage, RequireAuth } from "@/pages";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { APP_ROUTES } from "@/shared/constants";
@@ -7,6 +7,7 @@ import { WidgetSpinner } from "@/shared/ui/spinners";
 import { lazy, Suspense, useEffect } from "react";
 import { useBoundStore } from "@/shared/appStore";
 const FlowLayout = lazy(() => import("@/pages/FlowLayout"));
+const LazyProjectsMenu = lazy(() => import("@/pages/ProjectsMenu"));
 export const AppRouter = () => {
   const router = createBrowserRouter(
     [
@@ -29,7 +30,7 @@ export const AppRouter = () => {
             path: APP_ROUTES.PROJECTS_LIST,
             element: (
               <Suspense fallback={<WidgetSpinner />}>
-                <ProjectsMenu />
+                <LazyProjectsMenu />
               </Suspense>
             ),
           },
@@ -86,7 +87,9 @@ export const AppRouter = () => {
 
   return (
     <div className="font-cascadia-mono theme-bg theme-text">
+      {/* <SocketProvider> */}
       <RouterProvider router={router} />
+      {/* </SocketProvider> */}
     </div>
   );
 };

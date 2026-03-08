@@ -26,11 +26,8 @@ export const useRegistration = () => {
       setAuth(true);
       setUser(data.user);
       localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, data.accessToken);
+      localStorage.setItem(LOCAL_STORAGE_KEYS.USER_ID, String(data.user.id));
       navigate(APP_ROUTES.PROJECTS_LIST);
-      //    setAuth(true);
-      // setUser(data.user);
-      // localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, data.accessToken);
-      // navigate(APP_ROUTES.PROJECTS_LIST);
     },
     onError: error => {
       if (error.response) {

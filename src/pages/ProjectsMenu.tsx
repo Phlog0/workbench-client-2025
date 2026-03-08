@@ -14,10 +14,10 @@ import { $api } from "@/shared/api/services";
 import { Button } from "@/shared/ui";
 import { APP_ROUTES, LOCAL_STORAGE_KEYS } from "@/shared/constants";
 import { useNavigate } from "react-router-dom";
-export const ProjectsMenu = () => {
+import { OnlineIndicator } from "@/entities/online-status";
+export default function ProjectsMenu() {
   const { isPending, error, data } = useGetProjectsList();
   const user = useBoundStore(state => state.user);
-
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (user?.activated === null) {
@@ -35,7 +35,6 @@ export const ProjectsMenu = () => {
   const navigate = useNavigate();
   const isAuth = useBoundStore(state => state.isAuth);
   const checkAuth = useBoundStore(state => state.checkAuth);
-
   useEffect(() => {
     if (localStorage.getItem(LOCAL_STORAGE_KEYS.TOKEN)) {
       checkAuth();
@@ -53,6 +52,7 @@ export const ProjectsMenu = () => {
     const data = await $api.projects.getAllProjects();
     console.warn("[JWT_TEST]: ", data);
   };
+
   if (isPending) return <Spinner />;
 
   if (error) return "An error has occurred: " + error.message;
@@ -69,6 +69,9 @@ export const ProjectsMenu = () => {
         >
           JWT TEST
         </Button>
+        <Button>
+          <OnlineIndicator />
+        </Button>
       </header>
       <div className="grid grid-rows-[max-content_1fr] h-full">
         <div className="overflow-auto grid grid-cols-4 gap-4 max-xl:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 min-h-0">
@@ -82,4 +85,4 @@ export const ProjectsMenu = () => {
       </div>
     </section>
   );
-};
+}

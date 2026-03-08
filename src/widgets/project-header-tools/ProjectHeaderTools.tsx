@@ -10,6 +10,23 @@ import { ResponsiveButtons } from "./ResponsiveButtons";
 import { ActionButtons } from "@/pages/ActionsButtons";
 import { useParams } from "react-router-dom";
 import { ExternalReactFlowDimensions } from "@/pages/FlowLayout";
+import { useEffect, useRef, useState } from "react";
+import { socket } from "@/shared/lib";
+import { SOCKET_EVENTS } from "@/shared/constants";
+interface OnlineUser {
+  projectId: string;
+  id: string;
+  userId: number;
+  isOnline: boolean;
+  joinedAt: Date;
+  leftAt: Date | null;
+  socketId: string;
+}
+interface Response {
+  userId: number;
+  projectId: string;
+  onlineUsers: OnlineUser[];
+}
 
 export function ProjectHeaderTools({
   className,
@@ -19,11 +36,47 @@ export function ProjectHeaderTools({
   externalReactFlowDimensions: ExternalReactFlowDimensions;
 }) {
   const isSyncing = useBoundStore(state => state.isSyncing);
+  const user = useBoundStore(state => state.user);
 
+  const [onlineUsers, setOnlineUsers] = useState<OnlineUser[]>([]);
   const { projectId } = useParams();
+  const userIdRef = useRef<number | null>(null);
+  const isSubscribedRef = useRef(false);
+  useEffect(() => {
+    if (!user?.id || !projectId) {
+      return;
+    }
+    const updateOnlineUsers = (data: Response) => {
+      setOnlineUsers(data?.onlineUsers);
+    };
+
+    if (userIdRef.current !== user.id && socket.connected) {
+      socket.emit(SOCKET_EVENTS.JOIN_ROOM, { userId: user.id, projectId });
+      userIdRef.current = user.id;
+    }
+    if (!isSubscribedRef.current) {
+      socket.on(SOCKET_EVENTS.PROJECT_USER_ONLINE_COUNT, updateOnlineUsers);
+      isSubscribedRef.current = true;
+    }
+    return () => {
+      socket.off(SOCKET_EVENTS.PROJECT_USER_ONLINE_COUNT, updateOnlineUsers);
+      isSubscribedRef.current = false;
+    };
+  }, [projectId, user?.id]);
+
   return (
     <header className={cn("project-header", "overflow-y-visible", "theme-bg relative", className)}>
       <div className="flex items-center justify-start gap-4 h-full overflow-x-scroll">
+        <ul className="flex">
+          {onlineUsers?.map(item => (
+            <li
+              className="w-2 h-2 rounded-full bg-blue-400 text-white"
+              key={item.id}
+            >
+              {item.id.at(0)}
+            </li>
+          ))}
+        </ul>
         <ActionButtons
           projectId={projectId}
           reactFLowHeight={externalReactFlowDimensions.height}

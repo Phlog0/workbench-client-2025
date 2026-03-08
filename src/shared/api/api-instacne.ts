@@ -23,6 +23,7 @@ apiInstance.interceptors.response.use(
       if (error.response?.status === 401 && error.config) {
         const response = await $api.auth.refresh();
         localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, response.accessToken);
+        localStorage.setItem(LOCAL_STORAGE_KEYS.USER_ID, String(response.user.id));
         return apiInstance.request(originalRequest as InternalAxiosRequestConfig);
       }
     } catch {

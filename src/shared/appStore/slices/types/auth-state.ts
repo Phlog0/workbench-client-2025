@@ -1,4 +1,3 @@
-import { TLoginForm, TRegistrationForm } from "@/shared/api/types";
 import { UserDto } from "@/shared/api/types/auth-response";
 
 export type AuthState = {
@@ -9,9 +8,9 @@ export type AuthState = {
 export type AuthActions = {
   setAuth: (val: boolean) => void;
   setUser: (val: UserDto | null) => void;
-  login: (values: TLoginForm) => Promise<void>;
-  registration: (values: TRegistrationForm) => Promise<void>;
-  logout: () => Promise<void>;
+  // login: (values: TLoginForm) => Promise<void>;
+  // registration: (values: TRegistrationForm) => Promise<void>;
+  // logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
 };
 
