@@ -4,14 +4,17 @@ import { apiInstance } from "../api-instacne";
 import {
   ProjectInfo,
   ProjectId,
-  ProjectInfoTextData,
   SuccessAddProjectResponse,
   SuccessDeleteProjectResponse,
   SuccessUpdateProjectResponse,
   SuccessSyncProjectScheme,
   AiBody,
 } from "../types";
-import { SuccessGetProjectScheme } from "../types/project.schema";
+import {
+  CreateProjectInfo,
+  ProjectUpdateInfoTextData,
+  SuccessGetProjectScheme,
+} from "../types/project.schema";
 import { API_ROUTES } from "../api-routes";
 import { TableColumnsApi, TableModelApi } from "@/features/project-card/api";
 
@@ -28,7 +31,7 @@ export const projectApiService = {
     return response.data;
   },
 
-  updateProject: async (projectId: ProjectId, projectMetaData: ProjectInfoTextData) => {
+  updateProject: async (projectId: ProjectId, projectMetaData: ProjectUpdateInfoTextData) => {
     const response = await apiInstance.patch<SuccessUpdateProjectResponse>(
       API_ROUTES.PROJECTS + `/${projectId}`,
       projectMetaData
@@ -41,7 +44,7 @@ export const projectApiService = {
     );
     return response.data;
   },
-  createProject: async (projectMetaData: ProjectInfoTextData) => {
+  createProject: async (projectMetaData: CreateProjectInfo) => {
     const response = await apiInstance.post<SuccessAddProjectResponse>(
       API_ROUTES.PROJECTS + "/create",
       projectMetaData

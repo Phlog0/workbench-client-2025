@@ -13,6 +13,7 @@ export const ProjectCard = ({
   projectType,
   title,
   updatedAt,
+  markerColor,
 }: ProjectInfo) => {
   return (
     <div>
@@ -36,6 +37,7 @@ export const ProjectCard = ({
           description={description}
           projectType={projectType}
           title={title}
+          markerColor={markerColor}
         />
         <DeleteCardButton id={id} />
       </div>{" "}

@@ -2,11 +2,11 @@
 
 import { Spinner } from "shared/ui/spinners";
 
-import { AddCardButton, ProjectCard } from "@/features/project-card/ui";
+import { ProjectCard } from "@/features/project-card/ui";
 
 import { useGetProjectsList } from "@/features/project-card/api";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useBoundStore } from "@/shared/appStore";
 import { toast } from "sonner";
 import { LogoutButton } from "@/features/auth";
@@ -15,8 +15,15 @@ import { Button } from "@/shared/ui";
 import { APP_ROUTES, LOCAL_STORAGE_KEYS } from "@/shared/constants";
 import { useNavigate } from "react-router-dom";
 import { OnlineIndicator } from "@/entities/online-status";
+import { ProjectsMap } from "@/widgets";
+
 export default function ProjectsMenu() {
   const { isPending, error, data } = useGetProjectsList();
+
+  const [openMap, setOpenMap] = useState(false);
+  const toggleMap = () => {
+    setOpenMap(prev => !prev);
+  };
   const user = useBoundStore(state => state.user);
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -61,7 +68,7 @@ export default function ProjectsMenu() {
     <section className="px-20 min-h-screen">
       <header className="flex items-center justify-center flex-wrap gap-4 sticky top-0 left-0 theme-bg">
         <h1 className="text-center text-3xl py-4">Проекты</h1>
-        <AddCardButton />
+
         <LogoutButton />
         <Button
           onClick={testHandle}
@@ -72,17 +79,22 @@ export default function ProjectsMenu() {
         <Button>
           <OnlineIndicator />
         </Button>
+        <Button onClick={toggleMap}>Карта🗺️</Button>
       </header>
-      <div className="grid grid-rows-[max-content_1fr] h-full">
-        <div className="overflow-auto grid grid-cols-4 gap-4 max-xl:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 min-h-0">
-          {data?.map(item => (
-            <ProjectCard
-              key={`${item.id}`}
-              {...item}
-            />
-          ))}
+      {openMap ? (
+        <ProjectsMap />
+      ) : (
+        <div className="grid grid-rows-[max-content_1fr] h-full">
+          <div className="overflow-auto grid grid-cols-4 gap-4 max-xl:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 min-h-0">
+            {data?.map(item => (
+              <ProjectCard
+                key={`${item.id}`}
+                {...item}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

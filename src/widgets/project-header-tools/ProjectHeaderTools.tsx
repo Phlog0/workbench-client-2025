@@ -8,11 +8,11 @@ import { ContactMe } from "@/entities/me";
 import { ExitProjectButton } from "@/entities/exit-project";
 import { ResponsiveButtons } from "./ResponsiveButtons";
 import { ActionButtons } from "@/pages/ActionsButtons";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ExternalReactFlowDimensions } from "@/pages/FlowLayout";
 import { useEffect, useRef, useState } from "react";
 import { socket } from "@/shared/lib";
-import { SOCKET_EVENTS } from "@/shared/constants";
+import { APP_ROUTES, SOCKET_EVENTS } from "@/shared/constants";
 interface OnlineUser {
   projectId: string;
   id: string;
@@ -42,6 +42,7 @@ export function ProjectHeaderTools({
   const { projectId } = useParams();
   const userIdRef = useRef<number | null>(null);
   const isSubscribedRef = useRef(false);
+  const navigate = useNavigate();
   useEffect(() => {
     if (!user?.id || !projectId) {
       return;
@@ -50,19 +51,26 @@ export function ProjectHeaderTools({
       setOnlineUsers(data?.onlineUsers);
     };
 
+    const kickedFromRoom = () => {
+      navigate(APP_ROUTES.PROJECTS_LIST);
+    };
     if (userIdRef.current !== user.id && socket.connected) {
       socket.emit(SOCKET_EVENTS.JOIN_ROOM, { userId: user.id, projectId });
+
       userIdRef.current = user.id;
     }
     if (!isSubscribedRef.current) {
       socket.on(SOCKET_EVENTS.PROJECT_USER_ONLINE_COUNT, updateOnlineUsers);
+      socket.on(SOCKET_EVENTS.S_C_KICK_ALL_FROM_DELETED_ROOM, kickedFromRoom);
+
       isSubscribedRef.current = true;
     }
     return () => {
       socket.off(SOCKET_EVENTS.PROJECT_USER_ONLINE_COUNT, updateOnlineUsers);
+      socket.off(SOCKET_EVENTS.S_C_KICK_ALL_FROM_DELETED_ROOM, kickedFromRoom);
       isSubscribedRef.current = false;
     };
-  }, [projectId, user?.id]);
+  }, [navigate, projectId, user?.id]);
 
   return (
     <header className={cn("project-header", "overflow-y-visible", "theme-bg relative", className)}>

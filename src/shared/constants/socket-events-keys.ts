@@ -12,4 +12,6 @@ export const SOCKET_EVENTS = {
   JOIN_ROOM: "joinRoom",
   LEAVE_ROOM: "leaveRoom",
   PROJECT_USER_ONLINE_COUNT: "projectUserOnlineCount",
+  S_C_KICK_ALL_FROM_DELETED_ROOM: "kickFromRoom",
+  C_S_ROOM_IS_DELETED: "roomIsDeleted",
 };

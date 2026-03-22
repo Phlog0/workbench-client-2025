@@ -2,15 +2,16 @@ export type {
   ProjectInfo,
   ProjectId,
   ProjectType,
-  ProjectInfoTextData,
   SuccessAddProjectResponse,
   SuccessDeleteProjectResponse,
   SuccessUpdateProjectResponse,
   SuccessSyncProjectScheme,
   SuccessGetProjectScheme,
+  CreateProjectInfo,
+  UpdateProjectInfo,
 } from "./project.schema";
 
-export { ProjectInfoSchema } from "./project.schema";
+export { CreateProjectInfoSchema, UpdateProjectInfoSchema } from "./project.schema";
 
 export type {
   // RegistrationSuccessResponse,

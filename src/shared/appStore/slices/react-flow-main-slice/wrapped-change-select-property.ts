@@ -27,7 +27,7 @@ export const wrappedChangeSelectProperty = <T extends PossibleNode["data"]>(
   const node = state.nodes.find(item => item.id === nodeId);
 
   if (node) {
-    if (node.type === "Cell10Kv") {
+    if (node.type === "Cell10Kv" || node.type === "Cell35Kv" || node.type === "Cell04Kv") {
       const nodeData = node.data as WritableDraft<TCell10KvData>;
       nodeData[key1 as keyof TCell10KvData] = value as TCell10KvData[keyof TCell10KvData];
       if (key1 === "typeOfCell" && node.type === "Cell10Kv") {

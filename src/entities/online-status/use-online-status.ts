@@ -14,17 +14,15 @@ export const useOnlineStatus = () => {
       console.warn("⚠️ Socket not available in useOnlineStatus");
       return;
     }
-
+    const onOnlineCount = (count: number) => setOnlineCount(count);
     if (userIdRef.current !== user.id && socket.connected) {
-      socket.emit(SOCKET_EVENTS.SET_USER_ID, user.id, () => {
-        setIsConnected(true);
+      socket.emit(SOCKET_EVENTS.SET_USER_ID, user.id, (data: { success: true }) => {
+        setIsConnected(data.success);
       });
       userIdRef.current = user.id;
     }
 
     if (!isSubscribedRef.current) {
-      const onOnlineCount = (count: number) => setOnlineCount(count);
-
       socket.on(SOCKET_EVENTS.BROADCAST_SYSTEM_ONLINE_COUNT, onOnlineCount);
       isSubscribedRef.current = true;
 

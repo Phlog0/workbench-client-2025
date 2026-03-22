@@ -25,7 +25,7 @@ export const FormTextarea = ({ name, label, required, className, ...props }: Aut
     });
   };
   return (
-    <Field className={cn("flex flex-col gap-0 justify-center", className)}>
+    <Field className={cn("flex flex-col gap-0 justify-center group", className)}>
       {label && (
         <FieldLabel
           htmlFor={name}
@@ -42,7 +42,12 @@ export const FormTextarea = ({ name, label, required, className, ...props }: Aut
           className={errorText && "outline-red-400 outline-1"}
           id={name}
         />
-        {value && <ClearButton onClick={onClickClear} />}
+        {value && (
+          <ClearButton
+            className="group-hover:opacity-30"
+            onClick={onClickClear}
+          />
+        )}
       </div>
       {errorText ? (
         <FieldError errors={[{ message: String(errorText) }]} />

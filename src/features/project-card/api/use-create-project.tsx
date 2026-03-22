@@ -18,9 +18,17 @@ export const useCreateProject = () => {
     onSuccess: data => {
       try {
         // queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.PROJECTS.get] });
+        const newProject = {
+          ...data.newProject,
+          position: data.newProject.position
+            ? typeof data.newProject.position === "string"
+              ? JSON.parse(data.newProject.position)
+              : data.newProject.position
+            : null,
+        };
         queryClient.setQueryData([CACHE_KEYS.PROJECTS.get], (prev: ProjectInfo[]) => [
           ...prev,
-          data.newProject,
+          newProject,
         ]);
         toast.success("Проект успешно создан", {
           closeButton: true,

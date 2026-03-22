@@ -4,35 +4,36 @@ import { CACHE_KEYS } from "@/shared/api";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 
-import { ProjectInfoTextData, ProjectId, ProjectInfo, BadAuthResponse } from "@/shared/api/types";
+import {
+  ProjectId,
+  ProjectInfo,
+  BadAuthResponse,
+  ProjectUpdateInfoTextData,
+} from "@/shared/api/types";
 import { $api } from "@/shared/api/services";
 
 export const useUpdateProjectInfo = (projectId: ProjectId) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: [CACHE_KEYS.PROJECTS.updateProject],
-    mutationFn: async (projectMetaData: ProjectInfoTextData) =>
+    mutationFn: async (projectMetaData: ProjectUpdateInfoTextData) =>
       $api.projects.updateProject(projectId, projectMetaData),
     onSuccess: (_, variables) => {
-      try {
-        queryClient.setQueryData([CACHE_KEYS.PROJECTS.get], (prev: ProjectInfo[]) =>
-          prev.map(item => {
-            if (item.id === projectId) {
-              return { ...item, ...variables };
-            } else {
-              return item;
-            }
-          })
-        );
-        toast.success("Данные обновлены", {
-          closeButton: true,
-        });
-      } catch (error) {
-        console.error(error);
-      }
+      queryClient.setQueryData([CACHE_KEYS.PROJECTS.get], (prev: ProjectInfo[]) =>
+        prev.map(item => {
+          if (item.id === projectId) {
+            return { ...item, ...variables };
+          } else {
+            return item;
+          }
+        })
+      );
+      toast.success("Данные обновлены", {
+        closeButton: true,
+      });
     },
     onError: (error: AxiosError<BadAuthResponse>) => {
-      toast.error(error.response?.data.message.toString(), {
+      toast.error(`${error.status}: ${error.response?.data.message.toString()}`, {
         closeButton: true,
       });
     },

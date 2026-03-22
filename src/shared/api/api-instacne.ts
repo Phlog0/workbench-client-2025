@@ -26,10 +26,12 @@ apiInstance.interceptors.response.use(
         localStorage.setItem(LOCAL_STORAGE_KEYS.USER_ID, String(response.user.id));
         return apiInstance.request(originalRequest as InternalAxiosRequestConfig);
       }
-    } catch {
+    } catch (refreshError) {
       console.error("Вы не авторизованы!");
       localStorage.removeItem(LOCAL_STORAGE_KEYS.TOKEN);
+      return Promise.reject(refreshError);
     }
+    return Promise.reject(error);
   }
 );
 // axiosRetry(apiInstance, {

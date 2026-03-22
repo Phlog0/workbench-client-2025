@@ -24,7 +24,7 @@ export const FormModalComponent = ({
 }: {
   className?: string;
   content: ReactNode;
-  triggerTitle: string | ReactNode;
+  triggerTitle?: ReactNode;
   dialogTitle: string;
   dialogDescription: string;
   projectTheme?: ProjectTheme;
@@ -36,12 +36,17 @@ export const FormModalComponent = ({
   const isOpen = open || localOpen;
   const handleOpenChange = setOpen || setLocalOpen;
   return (
-    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <Button className={className}>{triggerTitle}</Button>
-      </DialogTrigger>
+    <Dialog
+      open={isOpen}
+      onOpenChange={handleOpenChange}
+    >
+      {triggerTitle && (
+        <DialogTrigger asChild>
+          <Button className={className}>{triggerTitle}</Button>
+        </DialogTrigger>
+      )}
 
-      <DialogContent className="theme-bg theme-text">
+      <DialogContent className="theme-bg theme-text ">
         <DialogHeader className="theme-bg theme-text">
           <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription className="h-full overflow-hidden">
