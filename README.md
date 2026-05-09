@@ -4,11 +4,11 @@
 
 Workbench Client — это мощный инструмент для инженеров-проектировщиков, позволяющий создавать однолинейные схемы в визуальном редакторе с использованием технологий Drag-n-Drop и баз знаний типовых решений.
 
-![Рабочая область](http://phlog0-portfolio.ru/screenshots/wb-client/wb-client-1.png)
+![Рабочая область](docs/screenshots/wb-client-1.png)
 
-![Пример списка типовых решений](https://phlog0-portfolio.ru/screenshots/wb-client/wb-client-2.png)
+![Пример списка готовых типовых решений](docs/screenshots/wb-client-2.png)
 
-![Обработка ошибок в построении схем](https://phlog0-portfolio.ru/screenshots/wb-client/wb-client-3.png)
+![Обработка ошибок в построении схем](docs/screenshots/wb-client-3.png)
 
 ## Ключевые возможности
 
@@ -32,5 +32,3 @@ Workbench Client — это мощный инструмент для инжен�
 ## Технологии
 
 React + TypeScript, React-Flow, zustand, react-router-dom, tailwind + ShadCN
-
-[Портфолио](https://phlog0-portfolio.ru/)

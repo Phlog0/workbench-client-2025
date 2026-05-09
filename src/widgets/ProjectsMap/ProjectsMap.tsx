@@ -125,10 +125,7 @@ export function ProjectsMap() {
                   name="markerColor"
                   label="Цвет маркера"
                 />
-                <fieldset
-                  disabled
-                  className="flex flex-col gap-0 w-full items-end outline-1 outline-slate-400 p-4"
-                >
+                <fieldset className="flex flex-col gap-0 w-full items-end outline-1 outline-slate-400 p-4">
                   <FormTextarea
                     label="AI-запрос"
                     name="prompt"
