@@ -6,8 +6,9 @@ export default defineConfig({
     plugins: [react(), tailwindcss()],
     base: "/constructor/",
     test: {
-        environment: "jsdom", // <-- ВАЖНО: обеспечивает DOM в тестах
+        environment: "jsdom",
         globals: true,
+        setupFiles: "./src/shared/configs/vitest-setup.ts",
     },
     define: {
         "import.meta.vitest": "undefined",
