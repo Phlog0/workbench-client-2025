@@ -1,30 +1,30 @@
 import { ProjectPropertySelect } from "@/entities/project-property";
 import { ReactFlowNodeId } from "@/shared/react-flow/nodes/shared";
 import {
-  RATED_CURRENT_OF_THE_MAIN_CIRCUITS_KEY_1,
-  RATED_CURRENT_OF_THE_MAIN_CIRCUITS_LABEL,
-  RATED_CURRENT_OF_THE_MAIN_CIRCUITS_OPTIONS,
+    RATED_CURRENT_OF_THE_MAIN_CIRCUITS_KEY_1,
+    RATED_CURRENT_OF_THE_MAIN_CIRCUITS_LABEL,
+    RATED_CURRENT_OF_THE_MAIN_CIRCUITS_OPTIONS,
 } from "@/shared/react-flow/nodes/cells/cell-10kv/options";
 import { TRatedCurrentOfTheMainCircuitsOptions } from "@/shared/react-flow/nodes/cells/cell-10kv/types";
 import { memo } from "react";
 
 export const RatedCurrentOfTheMainCircuits = memo(function ({
-  className,
-  selectedNodeId,
-  value,
+    className,
+    selectedNodeId,
+    value,
 }: {
-  className?: string;
-  selectedNodeId: ReactFlowNodeId;
-  value?: TRatedCurrentOfTheMainCircuitsOptions;
+    className?: string;
+    selectedNodeId: ReactFlowNodeId;
+    value?: TRatedCurrentOfTheMainCircuitsOptions;
 }) {
-  return (
-    <ProjectPropertySelect
-      options={RATED_CURRENT_OF_THE_MAIN_CIRCUITS_OPTIONS}
-      className={className}
-      key1={RATED_CURRENT_OF_THE_MAIN_CIRCUITS_KEY_1}
-      label={RATED_CURRENT_OF_THE_MAIN_CIRCUITS_LABEL}
-      selectedNodeId={selectedNodeId}
-      valueFromProp={value || RATED_CURRENT_OF_THE_MAIN_CIRCUITS_OPTIONS[0]}
-    />
-  );
+    return (
+        <ProjectPropertySelect
+            options={RATED_CURRENT_OF_THE_MAIN_CIRCUITS_OPTIONS}
+            className={className}
+            key1={RATED_CURRENT_OF_THE_MAIN_CIRCUITS_KEY_1}
+            label={RATED_CURRENT_OF_THE_MAIN_CIRCUITS_LABEL}
+            selectedNodeId={selectedNodeId}
+            valueFromProp={value || RATED_CURRENT_OF_THE_MAIN_CIRCUITS_OPTIONS[0]}
+        />
+    );
 });

@@ -5,11 +5,11 @@ import { BadAuthResponse } from "@/shared/api/types/auth-response";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 export function useGetProjectScheme(projectId: ProjectId) {
-  return useQuery<SuccessGetProjectScheme, AxiosError<BadAuthResponse>>({
-    queryKey: [CACHE_KEYS.PROJECTS.get, projectId],
+    return useQuery<SuccessGetProjectScheme, AxiosError<BadAuthResponse>>({
+        queryKey: [CACHE_KEYS.PROJECTS.get, projectId],
 
-    queryFn: () => $api.projects.getProjectScheme(projectId),
+        queryFn: () => $api.projects.getProjectScheme(projectId),
 
-    enabled: !!projectId,
-  });
+        enabled: !!projectId,
+    });
 }

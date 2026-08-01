@@ -18,268 +18,268 @@ import { wrappedChangeSelectProperty } from "./wrapped-change-select-property";
 import { $api } from "@/shared/api/services";
 
 export const createReactFlowNodesSlice: ImmerStateCreator<ReactFlowNodesSlice> = (set, get) => ({
-  nodes: [],
-  edges: [],
-  selectedNodeIds: [],
-  selectedEdgeIds: [],
-  viewport: { x: 0, y: 0, zoom: 0.5 },
-  isSyncing: false,
-  syncError: null,
-  folderType: "",
-  projectId: "",
+    nodes: [],
+    edges: [],
+    selectedNodeIds: [],
+    selectedEdgeIds: [],
+    viewport: { x: 0, y: 0, zoom: 0.5 },
+    isSyncing: false,
+    syncError: null,
+    folderType: "",
+    projectId: "",
 
-  setFolderType: value => {
-    set({
-      folderType: value,
-    });
-  },
-  setProjectId: projectId => {
-    set({
-      projectId,
-    });
-  },
-  setAfterFetch: (nodes, edges, viewport) => {
-    set({
-      nodes,
-      edges,
-      viewport,
-      isSyncing: false,
-    });
-  },
-  resetState: () => {
-    // get().syncProjectScheme();
-    set({
-      nodes: [],
-      edges: [],
-      selectedNodeIds: [],
-      selectedEdgeIds: [],
-      viewport: { x: 0, y: 0, zoom: 1 },
-      isSyncing: false,
-      syncError: null,
-    });
-  },
+    setFolderType: value => {
+        set({
+            folderType: value,
+        });
+    },
+    setProjectId: projectId => {
+        set({
+            projectId,
+        });
+    },
+    setAfterFetch: (nodes, edges, viewport) => {
+        set({
+            nodes,
+            edges,
+            viewport,
+            isSyncing: false,
+        });
+    },
+    resetState: () => {
+        // get().syncProjectScheme();
+        set({
+            nodes: [],
+            edges: [],
+            selectedNodeIds: [],
+            selectedEdgeIds: [],
+            viewport: { x: 0, y: 0, zoom: 1 },
+            isSyncing: false,
+            syncError: null,
+        });
+    },
 
-  setViewportSync: viewport => {
-    set({
-      viewport,
-    });
-    // get().syncProjectScheme();
-  },
-  onNodesChange: changes => {
-    set(state => {
-      const currentNodes = get().nodes;
-      if (currentNodes !== null) {
-        get().setNodes(oldNodes => applyNodeChanges(changes, oldNodes));
-        return {
-          isSyncing: true,
-        };
-      }
-      return state;
-    });
-    get().syncProjectScheme();
-  },
-  onEdgesChange: changes => {
-    set(state => {
-      const currentEdges = get().edges;
-      if (currentEdges !== null) {
-        get().setEdges(oldEdges => applyEdgeChanges(changes, oldEdges));
-        return {
-          isSyncing: true,
-        };
-      }
-      return state;
-    });
-    get().syncProjectScheme();
-  },
-  onConnect: connection => {
-    set(state => {
-      const currentEdges = get().edges;
-      if (currentEdges !== null) {
-        const edge: PossibleEdge = {
-          ...connection,
-          type: "Wire",
-          id: uuidv4(),
-          markerEnd: { type: MarkerType.Arrow, color: "red" },
-        };
-        return {
-          edges: addEdge(edge, currentEdges),
-        };
-      }
-      return state;
-    });
-    get().syncProjectScheme();
-  },
+    setViewportSync: viewport => {
+        set({
+            viewport,
+        });
+        // get().syncProjectScheme();
+    },
+    onNodesChange: changes => {
+        set(state => {
+            const currentNodes = get().nodes;
+            if (currentNodes !== null) {
+                get().setNodes(oldNodes => applyNodeChanges(changes, oldNodes));
+                return {
+                    isSyncing: true,
+                };
+            }
+            return state;
+        });
+        get().syncProjectScheme();
+    },
+    onEdgesChange: changes => {
+        set(state => {
+            const currentEdges = get().edges;
+            if (currentEdges !== null) {
+                get().setEdges(oldEdges => applyEdgeChanges(changes, oldEdges));
+                return {
+                    isSyncing: true,
+                };
+            }
+            return state;
+        });
+        get().syncProjectScheme();
+    },
+    onConnect: connection => {
+        set(state => {
+            const currentEdges = get().edges;
+            if (currentEdges !== null) {
+                const edge: PossibleEdge = {
+                    ...connection,
+                    type: "Wire",
+                    id: uuidv4(),
+                    markerEnd: { type: MarkerType.Arrow, color: "red" },
+                };
+                return {
+                    edges: addEdge(edge, currentEdges),
+                };
+            }
+            return state;
+        });
+        get().syncProjectScheme();
+    },
 
-  addNode: node => {
-    set(state => {
-      if (state.nodes !== null) {
-        state.nodes.push(node);
-        state.isSyncing = true;
-      }
-      return state;
-    });
-    get().sortNodes();
+    addNode: node => {
+        set(state => {
+            if (state.nodes !== null) {
+                state.nodes.push(node);
+                state.isSyncing = true;
+            }
+            return state;
+        });
+        get().sortNodes();
 
-    get().syncProjectScheme();
-  },
+        get().syncProjectScheme();
+    },
 
-  removeNode(nodeIds) {
-    set(state => {
-      state.nodes = state.nodes.filter(item => !nodeIds.includes(item.id));
-      state.isSyncing = true;
-    });
-    get().syncProjectScheme();
-  },
-  removeEdge(edgeIds) {
-    set(state => {
-      state.edges = state.edges.filter(item => !edgeIds.includes(item.id));
-      state.isSyncing = true;
-    });
-    get().syncProjectScheme();
-  },
-  setNodes: nodes => {
-    set(state => {
-      state.nodes = typeof nodes === "function" ? nodes(state.nodes) : nodes;
-      state.isSyncing = true;
-    });
-    // get().sortNodes()
-    get().syncProjectScheme();
-  },
-  setEdges: edges => {
-    set(state => {
-      state.edges = typeof edges === "function" ? edges(state.edges) : edges;
-      state.isSyncing = true;
-    });
-    get().syncProjectScheme();
-  },
+    removeNode(nodeIds) {
+        set(state => {
+            state.nodes = state.nodes.filter(item => !nodeIds.includes(item.id));
+            state.isSyncing = true;
+        });
+        get().syncProjectScheme();
+    },
+    removeEdge(edgeIds) {
+        set(state => {
+            state.edges = state.edges.filter(item => !edgeIds.includes(item.id));
+            state.isSyncing = true;
+        });
+        get().syncProjectScheme();
+    },
+    setNodes: nodes => {
+        set(state => {
+            state.nodes = typeof nodes === "function" ? nodes(state.nodes) : nodes;
+            state.isSyncing = true;
+        });
+        // get().sortNodes()
+        get().syncProjectScheme();
+    },
+    setEdges: edges => {
+        set(state => {
+            state.edges = typeof edges === "function" ? edges(state.edges) : edges;
+            state.isSyncing = true;
+        });
+        get().syncProjectScheme();
+    },
 
-  setSelectedNodeId: nodeIds => {
-    set(state => {
-      state.selectedNodeIds = nodeIds;
-      state.nodes = get().nodes.map(item => {
-        if (nodeIds.includes(item.id)) {
-          return { ...item, selected: true };
-        } else {
-          return { ...item, selected: false };
-        }
-      });
-    });
-  },
-  setSelectedEdgeId: edgeIds => {
-    set(state => {
-      state.selectedEdgeIds = edgeIds;
-      state.edges = get().edges.map(item => {
-        if (edgeIds.includes(item.id)) {
-          return { ...item, selected: true };
-        } else {
-          return item;
-        }
-      });
-    });
-  },
+    setSelectedNodeId: nodeIds => {
+        set(state => {
+            state.selectedNodeIds = nodeIds;
+            state.nodes = get().nodes.map(item => {
+                if (nodeIds.includes(item.id)) {
+                    return { ...item, selected: true };
+                } else {
+                    return { ...item, selected: false };
+                }
+            });
+        });
+    },
+    setSelectedEdgeId: edgeIds => {
+        set(state => {
+            state.selectedEdgeIds = edgeIds;
+            state.edges = get().edges.map(item => {
+                if (edgeIds.includes(item.id)) {
+                    return { ...item, selected: true };
+                } else {
+                    return item;
+                }
+            });
+        });
+    },
 
-  sortNodes() {
-    set(state => {
-      wrappedSortNodes(state);
-    });
-  },
-  changeSelectPropery: ({ nodeId, key1, value }) => {
-    set(state => {
-      wrappedChangeSelectProperty(state, { nodeId, key1, value });
-    });
-    get().syncProjectScheme();
-  },
+    sortNodes() {
+        set(state => {
+            wrappedSortNodes(state);
+        });
+    },
+    changeSelectPropery: ({ nodeId, key1, value }) => {
+        set(state => {
+            wrappedChangeSelectProperty(state, { nodeId, key1, value });
+        });
+        get().syncProjectScheme();
+    },
 
-  changeInputPropertyTCell10Kv: ({ nodeId, keyOne, keyTwo, value }) => {
-    set(state => {
-      state.isSyncing = true;
-      const node = state.nodes.find(item => item.id === nodeId);
+    changeInputPropertyTCell10Kv: ({ nodeId, keyOne, keyTwo, value }) => {
+        set(state => {
+            state.isSyncing = true;
+            const node = state.nodes.find(item => item.id === nodeId);
 
-      if (!node) return;
+            if (!node) return;
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const nodeData = (node.data as Record<string, any>) ?? {};
-      node.data = nodeData;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const nodeData = (node.data as Record<string, any>) ?? {};
+            node.data = nodeData;
 
-      if (keyTwo === null) {
-        nodeData[keyOne] = value;
-      } else {
-        const current = nodeData[keyOne];
-        if (typeof current !== "object" || current === null || Array.isArray(current)) {
-          nodeData[keyOne] = {};
-        }
-        nodeData[keyOne][keyTwo] = value;
-      }
-    });
-    get().syncProjectScheme();
-  },
-  selectReadyMadeSolution: ({ nodeId, keyOne, values }) => {
-    set(state => {
-      state.isSyncing = true;
-      const node = state.nodes.find(item => item.id === nodeId);
+            if (keyTwo === null) {
+                nodeData[keyOne] = value;
+            } else {
+                const current = nodeData[keyOne];
+                if (typeof current !== "object" || current === null || Array.isArray(current)) {
+                    nodeData[keyOne] = {};
+                }
+                nodeData[keyOne][keyTwo] = value;
+            }
+        });
+        get().syncProjectScheme();
+    },
+    selectReadyMadeSolution: ({ nodeId, keyOne, values }) => {
+        set(state => {
+            state.isSyncing = true;
+            const node = state.nodes.find(item => item.id === nodeId);
 
-      if (node) {
-        if (!node.data[keyOne]) {
-          node.data[keyOne] = {};
-        }
-        if (node.type === "Cell10Kv") {
-          if (node.data.typeOfSwitchingDevice !== "Нет") {
-            node.data[keyOne] = {
-              ...node.data[keyOne],
-              ...values,
+            if (node) {
+                if (!node.data[keyOne]) {
+                    node.data[keyOne] = {};
+                }
+                if (node.type === "Cell10Kv") {
+                    if (node.data.typeOfSwitchingDevice !== "Нет") {
+                        node.data[keyOne] = {
+                            ...node.data[keyOne],
+                            ...values,
+                        };
+                    }
+                } else {
+                    node.data[keyOne] = values;
+                }
+            }
+        });
+        get().syncProjectScheme();
+    },
+
+    // для cell10kv & fixators
+    setMultipleProps: ({ nodeId, properties, nodeDataFlag }) => {
+        set(state => {
+            wrappedSetMultipleProps(state, { nodeId, nodeDataFlag, properties });
+        });
+        get().syncProjectScheme();
+    },
+
+    increaseSectionWidth: ({ sectionId, fixatorContainerId }) => {
+        set(state => {
+            increaseSectionWidth(state, { sectionId, fixatorContainerId });
+        });
+        get().syncProjectScheme();
+    },
+    decreaseSectionWidth: ({ sectionId, fixatorContainerId }) => {
+        set(state => {
+            decreaseSectionWidth(state, { sectionId, fixatorContainerId });
+        });
+        get().syncProjectScheme();
+    },
+
+    syncProjectScheme: throttle(async () => {
+        try {
+            set({ isSyncing: true, syncError: null });
+            const nodes = get().nodes;
+            // const nodes = get().nodes;
+            const edges = get().edges;
+            const viewport = get().viewport;
+            const projectId = get().projectId;
+
+            if (!projectId) return;
+            const projectScheme: RFJsonObject = {
+                nodes: nodes.map(node => ({ ...node, selected: false })),
+                edges: edges.map(edge => ({ ...edge, selected: false })),
+                viewport: viewport,
             };
-          }
-        } else {
-          node.data[keyOne] = values;
+            await $api.projects.syncProjectScheme(projectId, projectScheme);
+        } catch (error: unknown) {
+            // if (axios.isAxiosError<BadAuthResponse>(error)) {
+            // }
+            set({ syncError: error instanceof Error ? error.message : "Sync failed" });
+        } finally {
+            set({ isSyncing: false });
         }
-      }
-    });
-    get().syncProjectScheme();
-  },
-
-  // для cell10kv & fixators
-  setMultipleProps: ({ nodeId, properties, nodeDataFlag }) => {
-    set(state => {
-      wrappedSetMultipleProps(state, { nodeId, nodeDataFlag, properties });
-    });
-    get().syncProjectScheme();
-  },
-
-  increaseSectionWidth: ({ sectionId, fixatorContainerId }) => {
-    set(state => {
-      increaseSectionWidth(state, { sectionId, fixatorContainerId });
-    });
-    get().syncProjectScheme();
-  },
-  decreaseSectionWidth: ({ sectionId, fixatorContainerId }) => {
-    set(state => {
-      decreaseSectionWidth(state, { sectionId, fixatorContainerId });
-    });
-    get().syncProjectScheme();
-  },
-
-  syncProjectScheme: throttle(async () => {
-    try {
-      set({ isSyncing: true, syncError: null });
-      const nodes = get().nodes;
-      // const nodes = get().nodes;
-      const edges = get().edges;
-      const viewport = get().viewport;
-      const projectId = get().projectId;
-
-      if (!projectId) return;
-      const projectScheme: RFJsonObject = {
-        nodes: nodes.map(node => ({ ...node, selected: false })),
-        edges: edges.map(edge => ({ ...edge, selected: false })),
-        viewport: viewport,
-      };
-      await $api.projects.syncProjectScheme(projectId, projectScheme);
-    } catch (error: unknown) {
-      // if (axios.isAxiosError<BadAuthResponse>(error)) {
-      // }
-      set({ syncError: error instanceof Error ? error.message : "Sync failed" });
-    } finally {
-      set({ isSyncing: false });
-    }
-  }, 1000),
+    }, 1000),
 });

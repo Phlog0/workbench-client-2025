@@ -20,23 +20,23 @@
   }
 } */
 @layer utilities {
-  /* Базовые стили для светлой темы */
-  .theme-bg {
-    @apply bg-slate-50;
-  }
+    /* Базовые стили для светлой темы */
+    .theme-bg {
+        @apply bg-slate-50;
+    }
 
-  .theme-text {
-    @apply text-slate-800;
-  }
+    .theme-text {
+        @apply text-slate-800;
+    }
 
-  /* Темная тема через класс */
-  .dark .theme-bg {
-    @apply bg-slate-800;
-    /* @apply transition-colors duration-500; */
-  }
+    /* Темная тема через класс */
+    .dark .theme-bg {
+        @apply bg-slate-800;
+        /* @apply transition-colors duration-500; */
+    }
 
-  .dark .theme-text {
-    @apply text-slate-50;
-    /* @apply transition-colors duration-500; */
-  }
+    .dark .theme-text {
+        @apply text-slate-50;
+        /* @apply transition-colors duration-500; */
+    }
 }

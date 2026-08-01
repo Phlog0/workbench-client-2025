@@ -6,8 +6,8 @@ import { AuthSlice } from "./auth-state";
 export type SharedSlice = ReactFlowNodesSlice & FlowOptionsSlice & AuthSlice;
 
 export type ImmerStateCreator<T> = StateCreator<
-  SharedSlice,
-  [["zustand/immer", never], never],
-  [],
-  T
+    SharedSlice,
+    [["zustand/immer", never], never],
+    [],
+    T
 >;

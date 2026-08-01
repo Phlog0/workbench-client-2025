@@ -6,11 +6,11 @@ import { devtools } from "zustand/middleware";
 import { createAuthSlice } from "./slices/auth-slice/auth-slice";
 import { AuthSlice } from "./slices/types/auth-state";
 export const useBoundStore = create<FlowOptionsSlice & ReactFlowNodesSlice & AuthSlice>()(
-  devtools(
-    immer((...a) => ({
-      ...createFlowOptionsSlice(...a),
-      ...createReactFlowNodesSlice(...a),
-      ...createAuthSlice(...a),
-    }))
-  )
+    devtools(
+        immer((...a) => ({
+            ...createFlowOptionsSlice(...a),
+            ...createReactFlowNodesSlice(...a),
+            ...createAuthSlice(...a),
+        }))
+    )
 );

@@ -8,10 +8,10 @@ import { TSection04Kv } from "../sections/section-04kv/types";
 import { TSection10Kv } from "../sections/section-10kv/types";
 import { TImageNode } from "../image";
 import {
-  TNonPrimitiveKeys,
-  TNonPrimitiveType,
-  TPrimitiveKeys,
-  TPrimitiveType,
+    TNonPrimitiveKeys,
+    TNonPrimitiveType,
+    TPrimitiveKeys,
+    TPrimitiveType,
 } from "./primitive-keys";
 import { TCell35Kv } from "../cells/cell-35kv/types";
 import { TSection35Kv } from "../sections/section-35kv/types";
@@ -19,19 +19,19 @@ import { TFixator35Kv } from "../fixators/fixator-35kv/types";
 import { TPowerTransformer3510Kv } from "../power-transformer-35-10kv";
 
 export type PossibleNode =
-  | TCell04Kv
-  | TCell10Kv
-  | TCell35Kv
-  | TSection04Kv
-  | TSection10Kv
-  | TSection35Kv
-  | TFixator04Kv
-  | TFixator10Kv
-  | TFixator35Kv
-  | TFixatorContainer
-  | TPowerTransformer1004Kv
-  | TPowerTransformer3510Kv
-  | TImageNode;
+    | TCell04Kv
+    | TCell10Kv
+    | TCell35Kv
+    | TSection04Kv
+    | TSection10Kv
+    | TSection35Kv
+    | TFixator04Kv
+    | TFixator10Kv
+    | TFixator35Kv
+    | TFixatorContainer
+    | TPowerTransformer1004Kv
+    | TPowerTransformer3510Kv
+    | TImageNode;
 
 type PossibleNodeData = PossibleNode["data"];
 

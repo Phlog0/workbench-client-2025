@@ -1,3 +1,3 @@
 export type TFixatorSharedData = {
-  intersectionClassname?: string;
+    intersectionClassname?: string;
 };

@@ -1,4 +1,4 @@
 export const API_ROUTES = {
-  AUTH: "/auth",
-  PROJECTS: "/projects",
+    AUTH: "/auth",
+    PROJECTS: "/projects",
 } as const;

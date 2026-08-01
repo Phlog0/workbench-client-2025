@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { motion } from "motion/react";
 import {
-  ReactFlow,
-  Controls,
-  MiniMap,
-  Background,
-  BackgroundVariant,
-  useOnSelectionChange,
-  NodeChange,
-  Panel,
-  Connection,
-  reconnectEdge,
-  SelectionMode,
-  useReactFlow,
-  ConnectionMode,
+    ReactFlow,
+    Controls,
+    MiniMap,
+    Background,
+    BackgroundVariant,
+    useOnSelectionChange,
+    NodeChange,
+    Panel,
+    Connection,
+    reconnectEdge,
+    SelectionMode,
+    useReactFlow,
+    ConnectionMode,
 } from "@xyflow/react";
 
 import { useShallow } from "zustand/react/shallow";
@@ -27,8 +27,8 @@ import { cn } from "@/shared/lib";
 import { ContextMenu, useReactFlowContextMenu } from "@/features/(react-flow)/context-menu";
 
 import {
-  useReactFlowOnNodeDrag,
-  useReactFlowOnNodeDragStop,
+    useReactFlowOnNodeDrag,
+    useReactFlowOnNodeDragStop,
 } from "@/features/(react-flow)/node-drag-on-flow";
 import { useDragAndDropItems } from "@/features/(react-flow)/create-new-nodes-by-dnd";
 import { useReactFlowOnChange } from "@/features/(react-flow)";
@@ -53,221 +53,221 @@ import { ErrorModal, SidebarFigures } from "@/widgets";
 import { ExternalReactFlowDimensions, SetExternalReactFlowDimensions } from "./FlowLayout";
 
 export const Flow = ({
-  className,
-  externalReactFlowDimensions,
-  setExternalReactFlowDimensions,
-}: {
-  className?: string;
-  externalReactFlowDimensions: ExternalReactFlowDimensions;
-  setExternalReactFlowDimensions: SetExternalReactFlowDimensions;
-}) => {
-  const reactFlowWrapper = useRef(null);
-
-  const onReactFlowNodeDragStop = useReactFlowOnNodeDragStop();
-  const onReactFlowNodeDrag = useReactFlowOnNodeDrag();
-  const { onDragOver, onReactFlowDrop } = useDragAndDropItems();
-  const onChange = useReactFlowOnChange();
-
-  const extractIds = useRemoveNodeIds();
-  const { menu, onNodeContextMenu, onPaneClick, reactFlowRef } = useReactFlowContextMenu(
+    className,
     externalReactFlowDimensions,
-    setExternalReactFlowDimensions
-  );
+    setExternalReactFlowDimensions,
+}: {
+    className?: string;
+    externalReactFlowDimensions: ExternalReactFlowDimensions;
+    setExternalReactFlowDimensions: SetExternalReactFlowDimensions;
+}) => {
+    const reactFlowWrapper = useRef(null);
 
-  const { nodes, edges, onNodesChange, onEdgesChange, onConnect, setEdges } = useBoundStore(
-    useShallow(reactFlowBaseSelector)
-  );
+    const onReactFlowNodeDragStop = useReactFlowOnNodeDragStop();
+    const onReactFlowNodeDrag = useReactFlowOnNodeDrag();
+    const { onDragOver, onReactFlowDrop } = useDragAndDropItems();
+    const onChange = useReactFlowOnChange();
 
-  const setViewportSync = useBoundStore(state => state.setViewportSync);
-  const selectedNodeIds = useBoundStore(useShallow(state => state.selectedNodeIds));
-  const viewport = useBoundStore(state => state.viewport);
-  const removeNode = useBoundStore(state => state.removeNode);
-  const projectTheme = useBoundStore(getThemeSelector);
-  const setProjectId = useBoundStore(state => state.setProjectId);
-  const { projectId } = useParams();
+    const extractIds = useRemoveNodeIds();
+    const { menu, onNodeContextMenu, onPaneClick, reactFlowRef } = useReactFlowContextMenu(
+        externalReactFlowDimensions,
+        setExternalReactFlowDimensions
+    );
 
-  const { isLoading, data, isError, error } = useGetProjectScheme(projectId ?? "");
-  const setAfterFetch = useBoundStore(state => state.setAfterFetch);
-  const { setViewport } = useReactFlow();
-  useEffect(() => {
-    if (data && "projectScheme" in data && data.projectScheme) {
-      setViewport(data.projectScheme.viewport);
-      setAfterFetch(
-        data.projectScheme.nodes,
-        data.projectScheme.edges,
-        data.projectScheme.viewport
-      );
-    }
-  }, [data, setViewport, setAfterFetch]);
-  // const [rfInstance, setRfInstance] = useState<RFInstance | null>(null);
-  useEffect(() => {
-    if (!projectId) {
-      console.error("Нет id проекта");
-      return;
-    }
-    setProjectId(projectId);
-  }, [projectId, setProjectId]);
+    const { nodes, edges, onNodesChange, onEdgesChange, onConnect, setEdges } = useBoundStore(
+        useShallow(reactFlowBaseSelector)
+    );
 
-  useEffect(() => {
-    if (isError && error) {
-      toast.error(
-        `Ошибка. Не смогли загрузить проект из хранилища. Ваши действия не синхронизированы... ${
-          error.response?.data.message || "Ошибка"
-        }`
-      );
-    }
-  }, [isError, error]);
+    const setViewportSync = useBoundStore(state => state.setViewportSync);
+    const selectedNodeIds = useBoundStore(useShallow(state => state.selectedNodeIds));
+    const viewport = useBoundStore(state => state.viewport);
+    const removeNode = useBoundStore(state => state.removeNode);
+    const projectTheme = useBoundStore(getThemeSelector);
+    const setProjectId = useBoundStore(state => state.setProjectId);
+    const { projectId } = useParams();
 
-  const nodeTypes = useMemo(() => nodeTypesEntities, []); //Вынести в хук
+    const { isLoading, data, isError, error } = useGetProjectScheme(projectId ?? "");
+    const setAfterFetch = useBoundStore(state => state.setAfterFetch);
+    const { setViewport } = useReactFlow();
+    useEffect(() => {
+        if (data && "projectScheme" in data && data.projectScheme) {
+            setViewport(data.projectScheme.viewport);
+            setAfterFetch(
+                data.projectScheme.nodes,
+                data.projectScheme.edges,
+                data.projectScheme.viewport
+            );
+        }
+    }, [data, setViewport, setAfterFetch]);
+    // const [rfInstance, setRfInstance] = useState<RFInstance | null>(null);
+    useEffect(() => {
+        if (!projectId) {
+            console.error("Нет id проекта");
+            return;
+        }
+        setProjectId(projectId);
+    }, [projectId, setProjectId]);
 
-  const isValidConnection = useValidConnection();
+    useEffect(() => {
+        if (isError && error) {
+            toast.error(
+                `Ошибка. Не смогли загрузить проект из хранилища. Ваши действия не синхронизированы... ${
+                    error.response?.data.message || "Ошибка"
+                }`
+            );
+        }
+    }, [isError, error]);
 
-  const selectedEdgeIds = useBoundStore(useShallow(state => state.selectedEdgeIds));
-  useKeyboard();
+    const nodeTypes = useMemo(() => nodeTypesEntities, []); //Вынести в хук
 
-  const removeEdge = useBoundStore(state => state.removeEdge);
+    const isValidConnection = useValidConnection();
 
-  const handleDelete = () => {
-    const idsToDelete = extractIds([...selectedNodeIds]);
+    const selectedEdgeIds = useBoundStore(useShallow(state => state.selectedEdgeIds));
+    useKeyboard();
 
-    removeNode([...idsToDelete, ...selectedNodeIds]);
-    removeEdge(selectedEdgeIds);
-  };
+    const removeEdge = useBoundStore(state => state.removeEdge);
 
-  const handleNodeChange = useCallback(
-    (changes: NodeChange<PossibleNode>[]) => {
-      // const sections = nodes.filter(
-      //   (item) =>
-      //     item.type === "Section10Kv" || item.type === "Section04Kv" || item.type === "Section35Kv",
-      // );
-      // const updatedChanges = updateHelperLines(changes, sections);
+    const handleDelete = () => {
+        const idsToDelete = extractIds([...selectedNodeIds]);
 
-      // onNodesChange(updatedChanges);
-      onNodesChange(changes);
-    },
-    [onNodesChange]
-  );
+        removeNode([...idsToDelete, ...selectedNodeIds]);
+        removeEdge(selectedEdgeIds);
+    };
 
-  // * -------------------------SELECTING -------------------------
-  // * https://reactflow.dev/api-reference/hooks/use-on-selection-change
+    const handleNodeChange = useCallback(
+        (changes: NodeChange<PossibleNode>[]) => {
+            // const sections = nodes.filter(
+            //   (item) =>
+            //     item.type === "Section10Kv" || item.type === "Section04Kv" || item.type === "Section35Kv",
+            // );
+            // const updatedChanges = updateHelperLines(changes, sections);
 
-  useOnSelectionChange({
-    onChange,
-  });
+            // onNodesChange(updatedChanges);
+            onNodesChange(changes);
+        },
+        [onNodesChange]
+    );
 
-  // * ------------------------------------------------------------
-  // const debouncedSetViewport = debounce(setViewportSync, 1000);
+    // * -------------------------SELECTING -------------------------
+    // * https://reactflow.dev/api-reference/hooks/use-on-selection-change
 
-  const debouncedSetViewport = useMemo(() => debounce(setViewportSync, 1000), [setViewportSync]);
+    useOnSelectionChange({
+        onChange,
+    });
 
-  // Очистка при размонтировании
-  useEffect(() => {
-    return () => debouncedSetViewport.cancel();
-  }, [debouncedSetViewport]);
+    // * ------------------------------------------------------------
+    // const debouncedSetViewport = debounce(setViewportSync, 1000);
 
-  // edge отсоединять и переподсоединять на другие ячейки и тд...
-  const onReconnect = (oldEdge: PossibleEdge, newConnection: Connection) =>
-    setEdges(els => reconnectEdge(oldEdge, newConnection, els));
+    const debouncedSetViewport = useMemo(() => debounce(setViewportSync, 1000), [setViewportSync]);
 
-  return (
-    <main className={cn("project-flow dark:bg-slate-800}", className)}>
-      <div
-        style={{ width: "100%", height: "100%" }}
-        ref={reactFlowWrapper}
-        className="relative"
-      >
-        <motion.div
-          variants={{
-            visible: { opacity: 1, display: "block" },
-            hidden: { opacity: 0, display: "none" },
-          }}
-          initial="visible"
-          animate={!isLoading && "hidden"}
-          className={cn(
-            "absolute top-0 left-0 backdrop-blur-2xl w-full h-full z-10",
-            "grid place-content-center"
-          )}
-        >
-          <Spinner />
-        </motion.div>
+    // Очистка при размонтировании
+    useEffect(() => {
+        return () => debouncedSetViewport.cancel();
+    }, [debouncedSetViewport]);
 
-        <ReactFlow
-          ref={reactFlowRef}
-          nodes={nodes}
-          edges={edges}
-          nodeTypes={nodeTypes}
-          edgeTypes={rfEdgeTypes}
-          onNodesChange={handleNodeChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          onDrop={onReactFlowDrop}
-          onDragOver={onDragOver}
-          colorMode={projectTheme}
-          onNodeDrag={onReactFlowNodeDrag}
-          onNodeDragStop={onReactFlowNodeDragStop}
-          minZoom={0.05}
-          onDelete={handleDelete}
-          onNodeContextMenu={onNodeContextMenu}
-          onPaneClick={onPaneClick}
-          defaultViewport={viewport}
-          onViewportChange={viewport => debouncedSetViewport(viewport)}
-          connectionLineComponent={ConnectionLine}
-          isValidConnection={isValidConnection}
-          panOnScroll={true}
-          selectionOnDrag={true}
-          panOnDrag={false}
-          onReconnect={onReconnect}
-          selectionMode={SelectionMode.Partial}
-          connectionMode={ConnectionMode.Loose}
-          style={{ zIndex: 1000 }}
-        >
-          <Controls />
-          <MiniMap />
-          {projectTheme === "light" ? (
-            <>
-              <Background
-                id="1"
-                gap={50}
-                color="#ccc"
-                variant={BackgroundVariant.Cross}
-                bgColor="white"
-              />
-            </>
-          ) : (
-            <>
-              <Background
-                id="2"
-                gap={50}
-                color="#747474"
-                variant={BackgroundVariant.Cross}
-                bgColor="#454545"
-              />
-            </>
-          )}
+    // edge отсоединять и переподсоединять на другие ячейки и тд...
+    const onReconnect = (oldEdge: PossibleEdge, newConnection: Connection) =>
+        setEdges(els => reconnectEdge(oldEdge, newConnection, els));
 
-          {menu && (
-            <ContextMenu
-              onClick={onPaneClick}
-              contextMenuCoordinats={menu}
-            />
-          )}
+    return (
+        <main className={cn("project-flow dark:bg-slate-800}", className)}>
+            <div
+                style={{ width: "100%", height: "100%" }}
+                ref={reactFlowWrapper}
+                className="relative"
+            >
+                <motion.div
+                    variants={{
+                        visible: { opacity: 1, display: "block" },
+                        hidden: { opacity: 0, display: "none" },
+                    }}
+                    initial="visible"
+                    animate={!isLoading && "hidden"}
+                    className={cn(
+                        "absolute top-0 left-0 backdrop-blur-2xl w-full h-full z-10",
+                        "grid place-content-center"
+                    )}
+                >
+                    <Spinner />
+                </motion.div>
 
-          <Panel
-            position="bottom-left"
-            style={{ bottom: "7rem" }}
-            className="hidden max-lg:block"
-          >
-            <DrawerUI
-              trigger={<CircuitBoard />}
-              content={<SidebarFigures isModalOpen={true} />}
-              title="Элементы"
-              direction="left"
-              className="h-screen max-w-[33%] shadow-2xl"
-            />
-          </Panel>
-          <ErrorModal />
-        </ReactFlow>
-      </div>
-    </main>
-  );
+                <ReactFlow
+                    ref={reactFlowRef}
+                    nodes={nodes}
+                    edges={edges}
+                    nodeTypes={nodeTypes}
+                    edgeTypes={rfEdgeTypes}
+                    onNodesChange={handleNodeChange}
+                    onEdgesChange={onEdgesChange}
+                    onConnect={onConnect}
+                    onDrop={onReactFlowDrop}
+                    onDragOver={onDragOver}
+                    colorMode={projectTheme}
+                    onNodeDrag={onReactFlowNodeDrag}
+                    onNodeDragStop={onReactFlowNodeDragStop}
+                    minZoom={0.05}
+                    onDelete={handleDelete}
+                    onNodeContextMenu={onNodeContextMenu}
+                    onPaneClick={onPaneClick}
+                    defaultViewport={viewport}
+                    onViewportChange={viewport => debouncedSetViewport(viewport)}
+                    connectionLineComponent={ConnectionLine}
+                    isValidConnection={isValidConnection}
+                    panOnScroll={true}
+                    selectionOnDrag={true}
+                    panOnDrag={false}
+                    onReconnect={onReconnect}
+                    selectionMode={SelectionMode.Partial}
+                    connectionMode={ConnectionMode.Loose}
+                    style={{ zIndex: 1000 }}
+                >
+                    <Controls />
+                    <MiniMap />
+                    {projectTheme === "light" ? (
+                        <>
+                            <Background
+                                id="1"
+                                gap={50}
+                                color="#ccc"
+                                variant={BackgroundVariant.Cross}
+                                bgColor="white"
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <Background
+                                id="2"
+                                gap={50}
+                                color="#747474"
+                                variant={BackgroundVariant.Cross}
+                                bgColor="#454545"
+                            />
+                        </>
+                    )}
+
+                    {menu && (
+                        <ContextMenu
+                            onClick={onPaneClick}
+                            contextMenuCoordinats={menu}
+                        />
+                    )}
+
+                    <Panel
+                        position="bottom-left"
+                        style={{ bottom: "7rem" }}
+                        className="hidden max-lg:block"
+                    >
+                        <DrawerUI
+                            trigger={<CircuitBoard />}
+                            content={<SidebarFigures isModalOpen={true} />}
+                            title="Элементы"
+                            direction="left"
+                            className="h-screen max-w-[33%] shadow-2xl"
+                        />
+                    </Panel>
+                    <ErrorModal />
+                </ReactFlow>
+            </div>
+        </main>
+    );
 };

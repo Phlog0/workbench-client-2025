@@ -4,35 +4,35 @@ import { $api } from "./services";
 // import axiosRetry from "axios-retry";
 
 export const apiInstance = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_API_URL,
-  withCredentials: true,
+    baseURL: import.meta.env.VITE_SERVER_API_URL,
+    withCredentials: true,
 });
 
 apiInstance.interceptors.request.use(config => {
-  config.headers.Authorization = `Bearer ${localStorage.getItem(LOCAL_STORAGE_KEYS.TOKEN)}`;
-  return config;
+    config.headers.Authorization = `Bearer ${localStorage.getItem(LOCAL_STORAGE_KEYS.TOKEN)}`;
+    return config;
 });
 
 apiInstance.interceptors.response.use(
-  config => {
-    return config;
-  },
-  async (error: AxiosError) => {
-    try {
-      const originalRequest = error.config;
-      if (error.response?.status === 401 && error.config) {
-        const response = await $api.auth.refresh();
-        localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, response.accessToken);
-        localStorage.setItem(LOCAL_STORAGE_KEYS.USER_ID, String(response.user.id));
-        return apiInstance.request(originalRequest as InternalAxiosRequestConfig);
-      }
-    } catch (refreshError) {
-      console.error("Вы не авторизованы!");
-      localStorage.removeItem(LOCAL_STORAGE_KEYS.TOKEN);
-      return Promise.reject(refreshError);
+    config => {
+        return config;
+    },
+    async (error: AxiosError) => {
+        try {
+            const originalRequest = error.config;
+            if (error.response?.status === 401 && error.config) {
+                const response = await $api.auth.refresh();
+                localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, response.accessToken);
+                localStorage.setItem(LOCAL_STORAGE_KEYS.USER_ID, String(response.user.id));
+                return apiInstance.request(originalRequest as InternalAxiosRequestConfig);
+            }
+        } catch (refreshError) {
+            console.error("Вы не авторизованы!");
+            localStorage.removeItem(LOCAL_STORAGE_KEYS.TOKEN);
+            return Promise.reject(refreshError);
+        }
+        return Promise.reject(error);
     }
-    return Promise.reject(error);
-  }
 );
 // axiosRetry(apiInstance, {
 //   retries: 3,

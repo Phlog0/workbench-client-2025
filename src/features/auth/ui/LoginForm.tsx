@@ -14,66 +14,66 @@ import { Link } from "react-router-dom";
 import { APP_ROUTES } from "@/shared/constants";
 
 export function LoginForm() {
-  const loginMutation = useLogin();
-  const form = useForm({
-    mode: "onBlur",
-    resolver: zodResolver(LoginSchema),
-    defaultValues: {
-      email: import.meta.env.VITE_LOGIN_FORM_DEFAULT_EMAIL || "",
-      password: import.meta.env.VITE_LOGIN_FORM_DEFAULT_PASSWORD || "",
-    },
-  });
+    const loginMutation = useLogin();
+    const form = useForm({
+        mode: "onBlur",
+        resolver: zodResolver(LoginSchema),
+        defaultValues: {
+            email: import.meta.env.VITE_LOGIN_FORM_DEFAULT_EMAIL || "",
+            password: import.meta.env.VITE_LOGIN_FORM_DEFAULT_PASSWORD || "",
+        },
+    });
 
-  const onSubmit: SubmitHandler<TLoginForm> = data => {
-    loginMutation.mutate(data);
-  };
+    const onSubmit: SubmitHandler<TLoginForm> = data => {
+        loginMutation.mutate(data);
+    };
 
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const handleVisible = () => {
-    setIsPasswordVisible(prev => !prev);
-  };
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const handleVisible = () => {
+        setIsPasswordVisible(prev => !prev);
+    };
 
-  return (
-    <>
-      {loginMutation.isPending && <WidgetSpinner title="Вход..." />}
-      <FormProvider {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="mx-auto flex flex-col gap-10"
-        >
-          <h2 className="text-3xl text-center">Авторизация</h2>
-          <FormInput
-            name="email"
-            label="E-mail (Вы можете ввести любую почту по шаблону, вы просто ее не сможете подтвердить)"
-            placeholder="test123@test.test"
-            type="text"
-          />
-          <div className="flex items-center">
-            <FormInput
-              name="password"
-              label="Пароль"
-              type={isPasswordVisible ? "text" : "password"}
-            />
-            <Button
-              type="button"
-              onClick={handleVisible}
-            >
-              {isPasswordVisible ? <Eye /> : <EyeClosedIcon />}
-            </Button>
-          </div>
+    return (
+        <>
+            {loginMutation.isPending && <WidgetSpinner title="Вход..." />}
+            <FormProvider {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="mx-auto flex flex-col gap-10"
+                >
+                    <h2 className="text-3xl text-center">Авторизация</h2>
+                    <FormInput
+                        name="email"
+                        label="E-mail (Вы можете ввести любую почту по шаблону, вы просто ее не сможете подтвердить)"
+                        placeholder="test123@test.test"
+                        type="text"
+                    />
+                    <div className="flex items-center">
+                        <FormInput
+                            name="password"
+                            label="Пароль"
+                            type={isPasswordVisible ? "text" : "password"}
+                        />
+                        <Button
+                            type="button"
+                            onClick={handleVisible}
+                        >
+                            {isPasswordVisible ? <Eye /> : <EyeClosedIcon />}
+                        </Button>
+                    </div>
 
-          <Button type="submit">Войти</Button>
-          <p>
-            У вас нет аккаунта?&nbsp;
-            <Link
-              to={APP_ROUTES.REGISTRATION}
-              className="text-blue-600 underline font-bold"
-            >
-              Зарегистрируйтесь в системе.
-            </Link>
-          </p>
-        </form>
-      </FormProvider>
-    </>
-  );
+                    <Button type="submit">Войти</Button>
+                    <p>
+                        У вас нет аккаунта?&nbsp;
+                        <Link
+                            to={APP_ROUTES.REGISTRATION}
+                            className="text-blue-600 underline font-bold"
+                        >
+                            Зарегистрируйтесь в системе.
+                        </Link>
+                    </p>
+                </form>
+            </FormProvider>
+        </>
+    );
 }

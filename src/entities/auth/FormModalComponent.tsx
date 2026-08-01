@@ -1,66 +1,66 @@
 import { ReactNode, useState } from "react";
 import {
-  Button,
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+    Button,
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
 } from "shared/ui";
 import { ProjectTheme } from "@/shared/appStore/slices/types";
 
 export const FormModalComponent = ({
-  content,
+    content,
 
-  dialogTitle,
-  triggerTitle,
-  dialogDescription,
-  open,
-  setOpen,
-  className,
+    dialogTitle,
+    triggerTitle,
+    dialogDescription,
+    open,
+    setOpen,
+    className,
 }: {
-  className?: string;
-  content: ReactNode;
-  triggerTitle?: ReactNode;
-  dialogTitle: string;
-  dialogDescription: string;
-  projectTheme?: ProjectTheme;
-  open?: boolean;
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+    className?: string;
+    content: ReactNode;
+    triggerTitle?: ReactNode;
+    dialogTitle: string;
+    dialogDescription: string;
+    projectTheme?: ProjectTheme;
+    open?: boolean;
+    setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [localOpen, setLocalOpen] = useState(false);
+    const [localOpen, setLocalOpen] = useState(false);
 
-  const isOpen = open || localOpen;
-  const handleOpenChange = setOpen || setLocalOpen;
-  return (
-    <Dialog
-      open={isOpen}
-      onOpenChange={handleOpenChange}
-    >
-      {triggerTitle && (
-        <DialogTrigger asChild>
-          <Button className={className}>{triggerTitle}</Button>
-        </DialogTrigger>
-      )}
+    const isOpen = open || localOpen;
+    const handleOpenChange = setOpen || setLocalOpen;
+    return (
+        <Dialog
+            open={isOpen}
+            onOpenChange={handleOpenChange}
+        >
+            {triggerTitle && (
+                <DialogTrigger asChild>
+                    <Button className={className}>{triggerTitle}</Button>
+                </DialogTrigger>
+            )}
 
-      <DialogContent className="theme-bg theme-text ">
-        <DialogHeader className="theme-bg theme-text">
-          <DialogTitle>{dialogTitle}</DialogTitle>
-          <DialogDescription className="h-full overflow-hidden">
-            {dialogDescription}
-            {/* // отредачить данные */}
-          </DialogDescription>
-        </DialogHeader>
-        {content}
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button>Отмена</Button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
+            <DialogContent className="theme-bg theme-text ">
+                <DialogHeader className="theme-bg theme-text">
+                    <DialogTitle>{dialogTitle}</DialogTitle>
+                    <DialogDescription className="h-full overflow-hidden">
+                        {dialogDescription}
+                        {/* // отредачить данные */}
+                    </DialogDescription>
+                </DialogHeader>
+                {content}
+                <DialogFooter>
+                    <DialogClose asChild>
+                        <Button>Отмена</Button>
+                    </DialogClose>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    );
 };

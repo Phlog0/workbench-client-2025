@@ -17,21 +17,21 @@ import { PowerTransformer3510KvNode } from "./power-transformer-35-10kv";
 // import { EditableWireEdge } from "./wire-edge/EditableWireEdge";
 
 export const nodeTypesEntities: NodeTypes = {
-  [RF_NODE_TYPES.cell10Kv]: Cell10KvNode,
-  [RF_NODE_TYPES.section10Kv]: Section10KvNode,
-  [RF_NODE_TYPES.fixatorContainer]: FixatorContainerNode,
-  [RF_NODE_TYPES.fixator10Kv]: Fixator10KvNode,
-  [RF_NODE_TYPES.powerTransformer1004Kv]: PowerTransformer1004KvNode,
-  [RF_NODE_TYPES.powerTransformer3510Kv]: PowerTransformer3510KvNode,
-  [RF_NODE_TYPES.cell04Kv]: Cell04KvNode,
-  [RF_NODE_TYPES.section04Kv]: Section04KvNode,
-  [RF_NODE_TYPES.fixator04Kv]: Fixator04KvNode,
-  [RF_NODE_TYPES.cell35Kv]: Cell35KvNode,
-  [RF_NODE_TYPES.section35Kv]: Section35KvNode,
-  [RF_NODE_TYPES.fixator35Kv]: Fixator35KvNode,
-  [RF_NODE_TYPES.image]: ImageNode,
+    [RF_NODE_TYPES.cell10Kv]: Cell10KvNode,
+    [RF_NODE_TYPES.section10Kv]: Section10KvNode,
+    [RF_NODE_TYPES.fixatorContainer]: FixatorContainerNode,
+    [RF_NODE_TYPES.fixator10Kv]: Fixator10KvNode,
+    [RF_NODE_TYPES.powerTransformer1004Kv]: PowerTransformer1004KvNode,
+    [RF_NODE_TYPES.powerTransformer3510Kv]: PowerTransformer3510KvNode,
+    [RF_NODE_TYPES.cell04Kv]: Cell04KvNode,
+    [RF_NODE_TYPES.section04Kv]: Section04KvNode,
+    [RF_NODE_TYPES.fixator04Kv]: Fixator04KvNode,
+    [RF_NODE_TYPES.cell35Kv]: Cell35KvNode,
+    [RF_NODE_TYPES.section35Kv]: Section35KvNode,
+    [RF_NODE_TYPES.fixator35Kv]: Fixator35KvNode,
+    [RF_NODE_TYPES.image]: ImageNode,
 } as const;
 
 export const rfEdgeTypes = {
-  Wire: WireEdge,
+    Wire: WireEdge,
 } as const;

@@ -10,10 +10,8 @@ out/
 .DS_Store
 *.log
 
-# Твой shadcn/ui (если не хочешь форматировать)
 src/shared/ui/**
 
 # Сгенерированные типы
 src/generated/**
 *.d.ts
-bun.lock

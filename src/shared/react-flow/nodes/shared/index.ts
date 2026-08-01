@@ -1,9 +1,9 @@
 export type {
-  PossibleNode,
-  TPossibleNodeNonPrimitiveKeys,
-  TPossibleNodeNonPrimitiveType,
-  TPossibleNodePrimitiveKeys,
-  TPossibleNodePrimitiveType,
+    PossibleNode,
+    TPossibleNodeNonPrimitiveKeys,
+    TPossibleNodeNonPrimitiveType,
+    TPossibleNodePrimitiveKeys,
+    TPossibleNodePrimitiveType,
 } from "./possible-node";
 
 export type { ReactFlowNodeId } from "./react-flow-node-ids";
@@ -15,8 +15,8 @@ export type { ReactFlowNode } from "./react-flow-node";
 export type IsThereDevice = "Есть" | "Нет";
 
 export type {
-  TNonPrimitiveKeys,
-  TNonPrimitiveType,
-  TPrimitiveKeys,
-  TPrimitiveType,
+    TNonPrimitiveKeys,
+    TNonPrimitiveType,
+    TPrimitiveKeys,
+    TPrimitiveType,
 } from "./primitive-keys";

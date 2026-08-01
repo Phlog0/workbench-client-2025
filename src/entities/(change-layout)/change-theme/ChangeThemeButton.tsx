@@ -6,21 +6,21 @@ import { Button } from "@/shared/ui";
 import { Moon, Sun } from "lucide-react";
 
 export function ChangeThemeButton({ className }: { className?: string }) {
-  const projectTheme = useBoundStore(getThemeSelector);
-  const changeProjectTheme = useBoundStore(state => state.changeProjectTheme);
-  const handleClick = () => {
-    if (projectTheme === "light") {
-      changeProjectTheme("dark");
-    } else {
-      changeProjectTheme("light");
-    }
-  };
-  return (
-    <Button
-      onClick={handleClick}
-      className={cn(className)}
-    >
-      {projectTheme === "light" ? <Sun /> : <Moon />}
-    </Button>
-  );
+    const projectTheme = useBoundStore(getThemeSelector);
+    const changeProjectTheme = useBoundStore(state => state.changeProjectTheme);
+    const handleClick = () => {
+        if (projectTheme === "light") {
+            changeProjectTheme("dark");
+        } else {
+            changeProjectTheme("light");
+        }
+    };
+    return (
+        <Button
+            onClick={handleClick}
+            className={cn(className)}
+        >
+            {projectTheme === "light" ? <Sun /> : <Moon />}
+        </Button>
+    );
 }

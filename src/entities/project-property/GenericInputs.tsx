@@ -5,45 +5,45 @@ import { ProjectModalInput, ProjectPropertyInput } from "@/entities/project-prop
 import { GenericInputsProps } from "./GenericInputsProps";
 
 export function GenericInputs({
-  className,
-  selectedNodeId,
-  inputProperties,
-  inputRenderData,
-  inputPropertiesKey1,
-  inputsLabel,
-  param,
+    className,
+    selectedNodeId,
+    inputProperties,
+    inputRenderData,
+    inputPropertiesKey1,
+    inputsLabel,
+    param,
 }: GenericInputsProps) {
-  return (
-    <div>
-      <Accordion
-        type="single"
-        collapsible
-        className={className}
-      >
-        <AccordionItem value={`accordion-${inputPropertiesKey1}`}>
-          <AccordionTrigger className="flex items-center">{inputsLabel}</AccordionTrigger>
-          <AccordionContent className="px-4 flex flex-col gap-3">
-            <ProjectModalInput
-              KEY_1={inputPropertiesKey1}
-              LABEL={inputsLabel}
-              data={inputRenderData[0]}
-              defaultValue={inputProperties?.[inputRenderData[0].keyTwo]}
-              selectedNodeId={selectedNodeId}
-              param={param}
-            />
-            {inputRenderData.slice(1).map(item => {
-              return (
-                <ProjectPropertyInput
-                  key={item.inputId}
-                  {...item}
-                  selectedNodeId={selectedNodeId}
-                  value={inputProperties?.[item.keyTwo]}
-                />
-              );
-            })}
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
-  );
+    return (
+        <div>
+            <Accordion
+                type="single"
+                collapsible
+                className={className}
+            >
+                <AccordionItem value={`accordion-${inputPropertiesKey1}`}>
+                    <AccordionTrigger className="flex items-center">{inputsLabel}</AccordionTrigger>
+                    <AccordionContent className="px-4 flex flex-col gap-3">
+                        <ProjectModalInput
+                            KEY_1={inputPropertiesKey1}
+                            LABEL={inputsLabel}
+                            data={inputRenderData[0]}
+                            defaultValue={inputProperties?.[inputRenderData[0].keyTwo]}
+                            selectedNodeId={selectedNodeId}
+                            param={param}
+                        />
+                        {inputRenderData.slice(1).map(item => {
+                            return (
+                                <ProjectPropertyInput
+                                    key={item.inputId}
+                                    {...item}
+                                    selectedNodeId={selectedNodeId}
+                                    value={inputProperties?.[item.keyTwo]}
+                                />
+                            );
+                        })}
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </div>
+    );
 }

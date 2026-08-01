@@ -13,96 +13,96 @@ import { APP_ROUTES } from "@/shared/constants";
 import { FormInput } from "@/entities/auth";
 const random = Math.floor(Math.random() * (10000 - 1) + 1);
 export function RegistrationForm() {
-  const registrationMutation = useRegistration();
-  const form = useForm({
-    mode: "onSubmit",
-    resolver: zodResolver(RegistrationSchema),
-    defaultValues: {
-      email: `test-${random}@test.test`,
-      firstName: "Test",
-      password: "1234567",
-      secondName: "Test",
-      confirmPassword: "1234567",
-    },
-  });
-  const onSubmit: SubmitHandler<TRegistrationForm> = data => {
-    registrationMutation.mutate(data);
-  };
+    const registrationMutation = useRegistration();
+    const form = useForm({
+        mode: "onSubmit",
+        resolver: zodResolver(RegistrationSchema),
+        defaultValues: {
+            email: `test-${random}@test.test`,
+            name: "Test",
+            password: "1234567",
+            lastName: "Test",
+            confirmPassword: "1234567",
+        },
+    });
+    const onSubmit: SubmitHandler<TRegistrationForm> = data => {
+        registrationMutation.mutate(data);
+    };
 
-  const [isPasswordVisible, setIsPasswordVisible] = useState(true);
-  const handleVisible = () => {
-    setIsPasswordVisible(prev => !prev);
-  };
+    const [isPasswordVisible, setIsPasswordVisible] = useState(true);
+    const handleVisible = () => {
+        setIsPasswordVisible(prev => !prev);
+    };
 
-  return (
-    <>
-      {registrationMutation.isPending && <WidgetSpinner title="Регистрация..." />}
-      <FormProvider {...form}>
-        <h2 className="text-3xl text-center">Регистрация</h2>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full flex flex-col gap-2 max-w-200 px-4"
-        >
-          <div>
-            <FormInput
-              name="firstName"
-              label="Ваше имя"
-              placeholder="Иван"
-              type="text"
-            />
-            <FormInput
-              name="secondName"
-              label="Фамилия"
-              placeholder="Иванов"
-              type="text"
-            />
-          </div>
-          <FormInput
-            name="email"
-            label="E-mail (Вы можете ввести любую почту по шаблону, вы просто ее не сможете подтвердить)"
-            placeholder="user123@email.com"
-            type="text"
-            className="self-start"
-          />
-          <div className="flex items-center">
-            <FormInput
-              name="password"
-              label="Пароль"
-              type={isPasswordVisible ? "text" : "password"}
-            />
-            <Button
-              type="button"
-              onClick={handleVisible}
-            >
-              {isPasswordVisible ? <Eye /> : <EyeClosedIcon />}
-            </Button>
-          </div>
-          <div className="flex items-center">
-            <FormInput
-              name="confirmPassword"
-              label="Повторите пароль"
-              type={isPasswordVisible ? "text" : "password"}
-            />
-            <Button
-              type="button"
-              onClick={handleVisible}
-            >
-              {isPasswordVisible ? <Eye /> : <EyeClosedIcon />}
-            </Button>
-          </div>
+    return (
+        <>
+            {registrationMutation.isPending && <WidgetSpinner title="Регистрация..." />}
+            <FormProvider {...form}>
+                <h2 className="text-3xl text-center">Регистрация</h2>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="w-full flex flex-col gap-2 max-w-200 px-4"
+                >
+                    <div>
+                        <FormInput
+                            name="name"
+                            label="Ваше имя"
+                            placeholder="Иван"
+                            type="text"
+                        />
+                        <FormInput
+                            name="lastName"
+                            label="Фамилия"
+                            placeholder="Иванов"
+                            type="text"
+                        />
+                    </div>
+                    <FormInput
+                        name="email"
+                        label="E-mail (Вы можете ввести любую почту по шаблону, вы просто ее не сможете подтвердить)"
+                        placeholder="user123@email.com"
+                        type="text"
+                        className="self-start"
+                    />
+                    <div className="flex items-center">
+                        <FormInput
+                            name="password"
+                            label="Пароль"
+                            type={isPasswordVisible ? "text" : "password"}
+                        />
+                        <Button
+                            type="button"
+                            onClick={handleVisible}
+                        >
+                            {isPasswordVisible ? <Eye /> : <EyeClosedIcon />}
+                        </Button>
+                    </div>
+                    <div className="flex items-center">
+                        <FormInput
+                            name="confirmPassword"
+                            label="Повторите пароль"
+                            type={isPasswordVisible ? "text" : "password"}
+                        />
+                        <Button
+                            type="button"
+                            onClick={handleVisible}
+                        >
+                            {isPasswordVisible ? <Eye /> : <EyeClosedIcon />}
+                        </Button>
+                    </div>
 
-          <Button type="submit">Зарегистрироваться</Button>
-          <p>
-            Уже есть аккаунт?&nbsp;
-            <Link
-              to={APP_ROUTES.LOGIN}
-              className="text-blue-600 underline font-bold"
-            >
-              Войдите в систему.
-            </Link>
-          </p>
-        </form>
-      </FormProvider>
-    </>
-  );
+                    <Button type="submit">Зарегистрироваться</Button>
+                    <p>
+                        Уже есть аккаунт?&nbsp;
+                        <Link
+                            to={APP_ROUTES.LOGIN}
+                            className="text-blue-600 underline font-bold"
+                        >
+                            Войдите в систему.
+                        </Link>
+                    </p>
+                </form>
+            </FormProvider>
+        </>
+    );
 }
