@@ -1,0 +1,185 @@
+services:
+  # 📁📁📁📁📁📁📁📁📁📁📁📁📁📁📁📁
+  # DATABASE
+  # 📁📁📁📁📁📁📁📁📁📁📁📁📁📁📁📁
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "127.0.0.1:54322:5432"
+      # - "54322:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 📊📊📊📊📊📊📊📊📊📊📊📊📊📊📊📊
+  # PG-ADMIN
+  # 📊📊📊📊📊📊📊📊📊📊📊📊📊📊📊📊
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    # env_file:
+    #   - ./server/.env.docker
+    environment:
+      # - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      # - PGADMIN_DEFAULT_PASSWORD=admin
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  # 🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃
+  # SERVER MIGRATION
+  # 🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃🏃
+  server-db-migrate:
+    build:
+      context: ./PGCD-server-2025
+      target: builder
+    env_file:
+      - ./PGCD-server-2025/.env.docker
+    command: sh -c "pnpm exec prisma migrate deploy && pnpm exec prisma generate"
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    #   DATABASE_URL: "postgresql://myuser:mypassword@db:5432/PGCD_2025_db?schema=public"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️
+  # CLIENT
+  # ⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️⚛️
+  client:
+    build:
+      context: ./client
+    restart: unless-stopped
+    # Не публикуем порты - пусть идет через nginx
+    expose:
+      - "80"
+
+  # 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩
+  # NEST JS MAIN SERVER
+  # 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩
+  server:
+    build:
+      context: ./server
+      target: production
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./server/.env.docker
+
+    depends_on:
+      db:
+        condition: service_healthy
+      server-db-migrate:
+        condition: service_completed_successfully # Ждем успешного завершения миграций!
+      loki:
+        condition: service_started
+      prometheus:
+        condition: service_started
+    restart: unless-stopped
+
+  # 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩
+  # NGINX
+  # 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - client
+      - server
+    restart: unless-stopped
+
+  # 📄📄📄📄📄📄📄📄📄📄📄📄📄📄📄📄
+  # LOKI
+  # 📄📄📄📄📄📄📄📄📄📄📄📄📄📄📄📄
+  loki:
+    image: grafana/loki:3.0.0
+    # ports:
+    # - "3100:3100"
+    volumes:
+      - ./server/monitoring/loki-config.yaml:/etc/loki/local-config.yaml
+      - loki_data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --tries=1 -O- ${LOKI_URL}/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+  # 📄📄📄📄📄📄📄📄📄📄📄📄📄📄📄📄
+  # prometheus
+  # 📄📄📄📄📄📄📄📄📄📄📄📄📄📄📄📄
+  prometheus:
+    image: prom/prometheus:v2.47.0
+    # ports:
+    # - "9090:9090"
+    volumes:
+      - ./server/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - --web.enable-remote-write-receiver
+
+  alloy:
+    image: grafana/alloy:latest
+    volumes:
+      - ./server/monitoring/config.alloy:/etc/alloy/config.alloy
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command:
+      - run
+      - --server.http.listen-addr=0.0.0.0:12345
+      - --storage.path=/var/lib/alloy/data
+      - /etc/alloy/config.alloy
+    # ports:
+    #     - "12345:12345"
+    depends_on:
+      - loki
+      - prometheus
+  # 📈📈📈📈📈📈📈📈📈📈📈📈📈📈📈📈
+  # GRAFANA
+  # 📈📈📈📈📈📈📈📈📈📈📈📈📈📈📈📈
+  grafana:
+    image: grafana/grafana:11.0.0
+    ports:
+      - "3001:3000"
+    environment:
+      GF_PATHS_PROVISIONING: ${GF_PATHS_PROVISIONING}
+      GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER}
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./PGCD-server-2025/monitoring/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - loki
+      - prometheus
+      - alloy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --tries=1 -O- ${GRAFANA_URL}/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+  # 📁📁📁📁📁📁📁📁📁📁📁📁📁📁📁📁
+  # VOLUMES
+  # 📁📁📁📁📁📁📁📁📁📁📁📁📁📁📁📁
+volumes:
+  postgres_data:
+  grafana-storage:
+  loki_data:
+  prometheus_data:
+  pgadmin_data:

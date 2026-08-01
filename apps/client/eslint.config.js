@@ -1,4 +1,3 @@
-// eslint.config.js
 import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
@@ -86,6 +85,13 @@ export default defineConfig(
     { ignores: ["dist", "public", "node_modules", "build", "coverage", "**/src/shared/ui/**"] },
 
     {
+        languageOptions: {
+            parserOptions: {
+                tsconfigRootDir: import.meta.dirname,
+            },
+        },
+    },
+    {
         files: ["**/*.{ts,tsx}"],
         languageOptions: {
             ecmaVersion: 2020,
@@ -94,6 +100,7 @@ export default defineConfig(
                 ecmaVersion: "latest",
                 ecmaFeatures: { jsx: true },
                 sourceType: "module",
+                projectService: true,
             },
         },
         settings: { react: { version: "18.2.0" } },

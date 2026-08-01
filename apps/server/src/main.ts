@@ -45,5 +45,3 @@ async function bootstrap() {
 
 // eslint-disable-next-line
 bootstrap();
-
-// Для lint-staged

@@ -21,6 +21,6 @@
         },
         "types": ["jest"]
     },
-    "include": ["src/**/*", "prisma/**/*", "prisma.config.ts"],
+    "include": ["src/**/*", "prisma/**/*", "prisma.config.ts", "test/**/*"],
     "exclude": ["node_modules", "dist"]
 }
