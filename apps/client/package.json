@@ -3,6 +3,7 @@
     "private": true,
     "description": "Power Grid Circuit Designer Client",
     "version": "3.0.0",
+    "author": "Phlog0",
     "type": "module",
     "scripts": {
         "dev": "vite",

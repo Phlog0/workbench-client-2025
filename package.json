@@ -1,15 +1,39 @@
 {
-  "name": "PGCD-client",
+  "name": "PGCD-monorepo",
   "private": true,
-  "description": "Power Grid Circuit Designer Client",
+  "description": "Power Grid Circuit Designer Monorepo",
   "version": "1.0.0",
-  "main": "index.js",
+  "author": "Phlog0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:client": "pnpm --filter PGCD-client dev",
+    "dev:server": "pnpm --filter PGCD-server dev",
+    "build:client": "pnpm --filter PGCD-client build",
+    "build:server": "pnpm --filter PGCD-server build",
+    "test": "pnpm --filter workbench-client test && pnpm --filter workbench-server test",
+    "test:client": "pnpm --filter workbench-client test",
+    "test:server": "pnpm --filter workbench-server test",
+    "prisma:generate": "pnpm --filter PGCD-server prisma:generate",
+    "prisma:migrate": "pnpm --filter PGCD-server prisma:migrate",
+    "prisma:studio": "pnpm --filter PGCD-server prisma:studio",
+    "prisma:deploy": "pnpm --filter PGCD-server prisma:deploy",
+    "prisma:reset": "pnpm --filter PGCD-server prisma:reset",
+    "prisma:seed": "pnpm --filter PGCD-server prisma:seed",
     "prepare": "husky"
   },
+  "lint-staged": {
+    "apps/client/**/*.{ts,tsx, js, jsx}": [
+      "pnpm --filter PGCD-client lint --fix",
+      "pnpm --filter PGCD-client prettier --write"
+    ],
+    "apps/server/**/*.{ts}": [
+      "pnpm --filter PGCD-server lint --fix",
+      "pnpm --filter PGCD-server prettier --write"
+    ],
+    "*.{json,md,yml}": [
+      "pnpm --filter PGCD-server prettier --write"
+    ]
+  },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "devEngines": {
     "packageManager": {
@@ -17,6 +41,9 @@
       "version": "^11.17.0",
       "onFail": "download"
     }
+  },
+  "engines": {
+    "node": ">=24"
   },
   "type": "module",
   "devDependencies": {

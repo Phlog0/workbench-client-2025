@@ -1,0 +1,31 @@
+import { Controller, Get, Param, Query } from "@nestjs/common";
+import { GetDictionaryDataService } from "./get-dictionary-data.service";
+
+import { QueryParametersGetDictionary } from "./dto/query-parameters-get-dictionary";
+import { RFNodeTypesValues } from "@/shared/rf-nodes-types";
+import { PossibleFilename } from "@/@types";
+// import { dictoinariesRequestCounter } from "@/metrics";
+// @SkipAuth()
+@Controller("getReadySolutionsList")
+// @Controller("api/get-dictionary-data")
+export class GetDictionaryDataController {
+    constructor(
+        private readonly getDictionaryDataService: GetDictionaryDataService,
+    ) {}
+
+    // @SkipAuth()
+    @Get(":typeFolder/:fileName")
+    getDictionaryData(
+        @Param("typeFolder") typeFolder: RFNodeTypesValues,
+        @Param("fileName") fileName: PossibleFilename,
+        @Query() queryParams: QueryParametersGetDictionary,
+    ) {
+        // dictoinariesRequestCounter.inc();
+        const dictionaryData = this.getDictionaryDataService.getDictionaryData(
+            typeFolder,
+            fileName,
+            queryParams,
+        );
+        return { dictionaryData };
+    }
+}
