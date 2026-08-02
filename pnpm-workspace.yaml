@@ -1,10 +1,10 @@
 packages:
-  - "apps/*"
-  - "packages/**/*"
+    - "apps/*"
+    - "packages/**/*"
 allowBuilds:
-  "@prisma/engines": true
-  "@scarf/scarf": true
-  core-js: true
-  esbuild: true
-  prisma: true
-  unrs-resolver: true
+    "@prisma/engines": true
+    "@scarf/scarf": true
+    core-js: true
+    esbuild: true
+    prisma: true
+    unrs-resolver: true

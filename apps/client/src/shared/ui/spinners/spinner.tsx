@@ -4,57 +4,57 @@ import { VariantProps, cva } from "class-variance-authority";
 import { Loader2 } from "lucide-react";
 
 const spinnerVariants = cva("flex-col items-center justify-center", {
-  variants: {
-    show: {
-      true: "flex",
-      false: "hidden",
+    variants: {
+        show: {
+            true: "flex",
+            false: "hidden",
+        },
     },
-  },
-  defaultVariants: {
-    show: true,
-  },
+    defaultVariants: {
+        show: true,
+    },
 });
 
 const loaderVariants = cva("text-primary", {
-  variants: {
-    size: {
-      small: "size-6",
-      medium: "size-8",
-      large: "size-12",
+    variants: {
+        size: {
+            small: "size-6",
+            medium: "size-8",
+            large: "size-12",
+        },
+        animate: {
+            spin: "animate-spin",
+            none: "animate-none",
+        },
     },
-    animate: {
-      spin: "animate-spin",
-      none: "animate-none",
+    defaultVariants: {
+        size: "medium",
     },
-  },
-  defaultVariants: {
-    size: "medium",
-  },
 });
 
 interface SpinnerContentProps
-  extends VariantProps<typeof spinnerVariants>, VariantProps<typeof loaderVariants> {
-  className?: string;
-  children?: React.ReactNode;
+    extends VariantProps<typeof spinnerVariants>, VariantProps<typeof loaderVariants> {
+    className?: string;
+    children?: React.ReactNode;
 }
 
 export function Spinner({
-  size,
-  animate = "spin",
-  show,
-  children,
-  className,
+    size,
+    animate = "spin",
+    show,
+    children,
+    className,
 }: SpinnerContentProps) {
-  return (
-    <span className={spinnerVariants({ show })}>
-      <Loader2
-        className={cn(
-          loaderVariants({ size }),
-          animate === "spin" ? "animate-spin" : "animate-none",
-          className
-        )}
-      />
-      {children}
-    </span>
-  );
+    return (
+        <span className={spinnerVariants({ show })}>
+            <Loader2
+                className={cn(
+                    loaderVariants({ size }),
+                    animate === "spin" ? "animate-spin" : "animate-none",
+                    className
+                )}
+            />
+            {children}
+        </span>
+    );
 }
