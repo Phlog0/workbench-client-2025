@@ -42,7 +42,7 @@ Power Grid Circuit Designer — это мой личный инициативн�
 
 **Успешная валидация** — соединение элементов одного класса напряжения (допустимо).
 
-![Валидация OK](/apps/client/ocs/screenshots/pgcd-client-accepted-validation-same-voltage.png)
+![Валидация OK](/apps/client/docs/screenshots/pgcd-client-accepted-validation-same-voltage.png)
 
 **Ошибка валидации** — попытка соединить элементы разных классов напряжения (запрещено).
 
