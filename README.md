@@ -10,7 +10,7 @@ Power Grid Circuit Designer — это мой личный инициативн�
 
 Интуитивный интерфейс создания проекта с выбором параметров и шаблонов.
 
-![Новый проект](docs/screenshots/pgcd-client-new-project.png)
+![Новый проект](/apps/client/docs/screenshots/pgcd-client-new-project.png)
 
 ---
 
@@ -18,7 +18,7 @@ Power Grid Circuit Designer — это мой личный инициативн�
 
 Визуальный конструктор с поддержкой Drag-n-Drop для построения однолинейных схем.
 
-![Рабочая область](docs/screenshots/pgcd-client-flow.png)
+![Рабочая область](/apps/client/docs/screenshots/pgcd-client-flow.png)
 
 ---
 
